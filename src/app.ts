@@ -1,6 +1,7 @@
 import express, {Express, json, urlencoded} from "express";
 
 import {jsonMiddlewareOptions, urlencodedMiddlewareOptions} from "./config/app";
+import { handleError } from "./common/middlewares/error.middleware";
 
 const app: Express = express();
 
@@ -14,5 +15,8 @@ app.get('/', (_, res) => {
 app.post("/", (req, res) => {
   res.send("Post!" + JSON.stringify(req.body));
 })
+
+
+app.use(handleError(logger));
 
 export default app;
