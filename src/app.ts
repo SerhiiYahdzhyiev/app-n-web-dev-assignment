@@ -3,6 +3,10 @@ import express, {Express, json, urlencoded} from "express";
 import {jsonMiddlewareOptions, urlencodedMiddlewareOptions} from "./config/app";
 import { handleError } from "./common/middlewares/error.middleware";
 
+
+import { logger } from "./logger";
+
+
 const app: Express = express();
 
 app.use(json(jsonMiddlewareOptions));
