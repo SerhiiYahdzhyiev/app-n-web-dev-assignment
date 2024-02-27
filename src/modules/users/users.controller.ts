@@ -58,7 +58,7 @@ function mapUserRecordToResponsePayload(user: IUser) {
     id: user._id,
     firstName: user.firstName,
     lastName: user.lastName,
-    email: user.lastName,
+    email: user.email,
     deliveryAddress: user.deliveryAddress,
     phoneNumber: user.phoneNumber,
     countryCode: user.countryCode,
