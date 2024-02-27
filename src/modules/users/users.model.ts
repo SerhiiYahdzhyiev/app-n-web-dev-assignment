@@ -1,7 +1,8 @@
-import { Document, Schema, model  } from "mongoose";
+import bcrypt from "bcrypt";
+import { Document, model, Schema } from "mongoose";
 
 import { UserRoles } from "./users.dto";
-
+import { HASH_SALT } from "../../config/bcrypt";
 
 export interface IUser extends Document {
   firstName: string;
@@ -49,6 +50,14 @@ const userSchema: Schema = new Schema<IUser>({
     required: true,
     default: UserRoles.CUSTOMER,
   },
+});
+
+userSchema.pre("save", async function(next) {
+  const user = this;
+  const hash = await bcrypt.hash(user.password as string, HASH_SALT);
+
+  user.password = hash;
+  next();
 });
 
 export default model<IUser>("User", userSchema);

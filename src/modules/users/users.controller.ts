@@ -1,18 +1,34 @@
-import { NextFunction, Request, Response} from "express";
+import { StatusCodes } from "http-status-codes";
+import { NextFunction, Request, Response } from "express";
 
 import { usersService } from "./users.service";
 import { IUser } from "./users.model";
 
-import { StatusCodes } from "http-status-codes";
+import { logger } from "../../logger";
+import { BaseHttpError, NotFound } from "../../common/exceptions";
 
+var label = "UsersController";
 
 export class UsersController {
+  public async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const newUserId = await usersService.create(req.body);
+
+      logger.info("Created user with id " + newUserId, { label });
+
+      res
+        .status(StatusCodes.OK)
+        .json({ id: newUserId });
+    } catch (error) {
+      next(error);
+    }
+  }
 
   public async getAll(_: Request, res: Response, next: NextFunction) {
     try {
       const users = await usersService.getAll();
 
-      console.log(this);
+      logger.info("Returned users", { label });
 
       res
         .status(StatusCodes.OK)
@@ -25,11 +41,13 @@ export class UsersController {
     }
   }
 
-  public async getOneById (req: Request, res: Response, next: NextFunction) {
+  public async getOneById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: string = req.params.userId;
 
       const user = await usersService.getOneById(userId);
+
+      logger.info("Returned user with id " + user._id, { label });
 
       res
         .status(StatusCodes.OK)
@@ -39,19 +57,68 @@ export class UsersController {
     }
   }
 
-  public async create (req: Request, res: Response, next: NextFunction) {
+  public async updateOneById(req: Request, res: Response, next: NextFunction) {
     try {
-      const newUserId = await usersService.create(req.body);
+      const userId: string = req.params.userId;
+      const upadatePayload = req.body;
+
+      const updatedId = await usersService.updateOneById(
+        userId,
+        upadatePayload,
+      );
+
+      if (!updatedId) {
+        throw new NotFound(`User with id "${userId}" was not found!`);
+      } else if (updatedId !== userId) {
+        throw new BaseHttpError(
+          StatusCodes.INTERNAL_SERVER_ERROR,
+          "An error occured while updating user with id: " + userId +
+          " !",
+        );
+      }
+
+      logger.info("Updated user with id " + updatedId, { label });
 
       res
         .status(StatusCodes.OK)
-        .json({id: newUserId});
+        .json({
+          updatedId,
+        });
     } catch (error) {
       next(error);
     }
   }
-};
 
+  public async removeOneById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId: string = req.params.userId;
+
+      const removedId = await usersService.removeOneById(
+        userId,
+      );
+
+      if (!removedId) {
+        throw new NotFound(`User with id "${userId}" was not found!`);
+      } else if (removedId !== userId) {
+        throw new BaseHttpError(
+          StatusCodes.INTERNAL_SERVER_ERROR,
+          "An error occured while deleting user with id: " + userId +
+          " !",
+        );
+      }
+
+      logger.info("Deleted user with id " + removedId, { label });
+
+      res
+        .status(StatusCodes.OK)
+        .json({
+          removedId,
+        });
+    } catch (error) {
+      next(error);
+    }
+  }
+}
 
 function mapUserRecordToResponsePayload(user: IUser) {
   return {

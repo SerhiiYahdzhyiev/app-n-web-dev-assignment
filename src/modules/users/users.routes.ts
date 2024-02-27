@@ -1,9 +1,14 @@
 import { Router } from "express";
 
 import { UsersController } from "./users.controller";
-import { validateSchema } from "../../common/middlewares/validation.middleware";
-import { UserValidationSchema } from "./users.dto";
-
+import {
+  validateSchema,
+  validateUserId,
+} from "../../common/middlewares/validation.middleware";
+import {
+  UserUpdatePayloadValidationSchema,
+  UserValidationSchema,
+} from "./users.dto";
 
 class UsersRouter {
   public router: Router;
@@ -15,9 +20,31 @@ class UsersRouter {
   }
 
   public route(): void {
+    this.router.post(
+      "/create",
+      validateSchema(UserValidationSchema),
+      this.usersController.create,
+    );
+
     this.router.get("/", this.usersController.getAll);
-    this.router.get("/:userId", this.usersController.getOneById);
-    this.router.post("/create", validateSchema(UserValidationSchema), this.usersController.create);
+    this.router.get(
+      "/:userId",
+      validateUserId,
+      this.usersController.getOneById,
+    );
+
+    this.router.put(
+      "/:userId",
+      validateUserId,
+      validateSchema(UserUpdatePayloadValidationSchema),
+      this.usersController.updateOneById,
+    );
+
+    this.router.delete(
+      "/:userId",
+      validateUserId,
+      this.usersController.removeOneById,
+    );
   }
 }
 
