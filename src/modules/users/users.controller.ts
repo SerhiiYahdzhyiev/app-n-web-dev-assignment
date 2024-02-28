@@ -6,12 +6,25 @@ import { IUser } from "./users.model";
 
 import { logger } from "../../logger";
 import { BaseHttpError, NotFound } from "../../common/exceptions";
+import { UserRoles } from "./users.dto";
 
 var label = "UsersController";
 
 export class UsersController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
+      if (
+        req.body.role === UserRoles.ADMIN &&
+        (req.user as IUser).role !== UserRoles.ADMIN
+      ) {
+        res
+          .status(StatusCodes.FORBIDDEN)
+          .json({
+            message: "Only admin can create new admin user!",
+          });
+        return;
+      }
+
       const newUserId = await usersService.create(req.body);
 
       logger.info("Created user with id " + newUserId, { label });
@@ -61,6 +74,18 @@ export class UsersController {
     try {
       const userId: string = req.params.userId;
       const upadatePayload = req.body;
+
+      if (
+        upadatePayload.role === UserRoles.ADMIN &&
+        (req.user as IUser).role !== UserRoles.ADMIN
+      ) {
+        res
+          .status(StatusCodes.FORBIDDEN)
+          .json({
+            message: "Only admin can make another user admin!",
+          });
+        return;
+      }
 
       const updatedId = await usersService.updateOneById(
         userId,

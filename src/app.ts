@@ -16,6 +16,9 @@ import usersRouter from "./modules/users/users.routes";
 import authRouter from "./modules/auth/auth.routes";
 
 import { logger } from "./logger";
+import { auth } from "./common/middlewares/auth.middleware";
+
+passport.use(strategy);
 
 const app: Express = express();
 
@@ -23,11 +26,10 @@ app.use(json(jsonMiddlewareOptions));
 app.use(urlencoded(urlencodedMiddlewareOptions));
 app.use(cookieParser(SECRET));
 
-app.use("/users", usersRouter);
-app.use("/auth", authRouter);
-
-passport.use(strategy);
 app.use(passport.initialize());
+
+app.use("/users", auth, usersRouter);
+app.use("/auth", authRouter);
 
 app.use(handleError(logger));
 

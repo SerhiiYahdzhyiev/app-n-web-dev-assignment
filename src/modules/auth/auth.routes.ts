@@ -1,7 +1,8 @@
 import { Router } from "express";
 
-import { AuthController } from "./auth.controller";
 import { validateSchema } from "../../common/middlewares/validation.middleware";
+
+import { AuthController } from "./auth.controller";
 import { LoginDataSchema } from "./auth.dto";
 
 class AuthRouter {
