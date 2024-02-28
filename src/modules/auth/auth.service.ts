@@ -1,25 +1,31 @@
-import { Router } from "express";
+import jwt from "jsonwebtoken";
 
-import { AuthController } from "./auth.controller";
-import { validateSchema } from "../../common/middlewares/validation.middleware";
-import { LoginDataSchema } from "./auth.dto";
+import { SECRET, TOKEN_EXPIRES } from "../../config/auth";
 
-class AuthRouter {
-  public router: Router;
-  public authController: AuthController = new AuthController();
+import { Unauthorized } from "../../common/exceptions";
 
-  constructor() {
-    this.router = Router();
-    this.route();
-  }
+import User from "../users/users.model";
 
-  public route(): void {
-    this.router.post(
-      "/login",
-      validateSchema(LoginDataSchema),
-      this.authController.login,
-    );
+interface IAuthService {
+  login: (email: string, password: string) => Promise<string>;
+}
+
+class AuthService implements IAuthService {
+  public async login(email: string, password: string): Promise<string> {
+    const user = await User.findOne({ email });
+
+    const unauthorizedMessage = "Invalid email or password!";
+
+    if (!user || !(await user.isValidPassword(password))) {
+      throw new Unauthorized(unauthorizedMessage);
+    }
+
+    const token = jwt.sign({ userId: user._id, role: user.role }, SECRET, {
+      expiresIn: TOKEN_EXPIRES,
+    });
+
+    return token;
   }
 }
 
-export default new AuthRouter().router;
+export const authService = new AuthService();

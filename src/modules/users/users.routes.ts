@@ -5,6 +5,8 @@ import {
   validateSchema,
   validateUserId,
 } from "../../common/middlewares/validation.middleware";
+import { auth } from "../../common/middlewares/auth.middleware";
+
 import {
   UserUpdatePayloadValidationSchema,
   UserValidationSchema,
@@ -26,15 +28,18 @@ class UsersRouter {
       this.usersController.create,
     );
 
-    this.router.get("/", this.usersController.getAll);
+    this.router.get("/", auth, this.usersController.getAll);
+
     this.router.get(
       "/:userId",
+      auth,
       validateUserId,
       this.usersController.getOneById,
     );
 
     this.router.put(
       "/:userId",
+      auth,
       validateUserId,
       validateSchema(UserUpdatePayloadValidationSchema),
       this.usersController.updateOneById,
@@ -42,6 +47,7 @@ class UsersRouter {
 
     this.router.delete(
       "/:userId",
+      auth,
       validateUserId,
       this.usersController.removeOneById,
     );

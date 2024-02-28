@@ -10,6 +10,7 @@ export interface IUsersService {
 
   getAll: () => Promise<IUser[]>;
   getOneById: (id: string) => Promise<IUser>;
+  getOneByEmail: (email: string) => Promise<IUser>;
 
   updateOneById: (id: string, pyload: TUserUpdatePayload) => Promise<ObjectId>;
 
@@ -43,6 +44,14 @@ class UsersService implements IUsersService {
     const user = await User.findById(id);
 
     if (!user) throw new NotFound(`User with id "${id}" was not found!`);
+
+    return user;
+  }
+
+  public async getOneByEmail(email: string) {
+    const user = await User.findOne({ email });
+
+    if (!user) throw new NotFound(`User with email "${email}" was not found!`);
 
     return user;
   }

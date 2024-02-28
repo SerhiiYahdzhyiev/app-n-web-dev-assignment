@@ -13,6 +13,8 @@ export interface IUser extends Document {
   phoneNumber?: string;
   countryCode?: string; // e.g. +49, +7...
   role: UserRoles;
+
+  isValidPassword: (password: string) => Promise<boolean>;
 }
 
 const userSchema: Schema = new Schema<IUser>({
@@ -52,12 +54,18 @@ const userSchema: Schema = new Schema<IUser>({
   },
 });
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function(next): Promise<void> {
   const user = this;
   const hash = await bcrypt.hash(user.password as string, HASH_SALT);
 
   user.password = hash;
   next();
 });
+
+userSchema.methods.isValidPassword = async function(
+  password: string,
+): Promise<boolean> {
+  return Boolean(await bcrypt.compare(password, this.password));
+};
 
 export default model<IUser>("User", userSchema);
