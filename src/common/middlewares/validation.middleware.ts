@@ -2,6 +2,7 @@ import { ZodError, ZodSchema } from "zod";
 import { NextFunction, Request, Response } from "express";
 
 import { BadRequest, BaseHttpError } from "../exceptions";
+import { isValidObjectId } from "mongoose";
 
 export function validateSchema(schema: ZodSchema) {
   return (req: Request, _: Response, next: NextFunction) => {
@@ -31,8 +32,26 @@ export function validateUserId(
   try {
     const userId = req.params.userId;
 
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+    if (!isValidObjectId(userId)) {
       throw new BadRequest(`Not valid userId value! Value: ${userId}`);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export function validateProductId(
+  req: Request,
+  _: Response,
+  next: NextFunction,
+) {
+  try {
+    const productId = req.params.productId;
+
+    if (!isValidObjectId(productId)) {
+      throw new BadRequest(`Not valid productId value! Value: ${productId}`);
     }
 
     next();
