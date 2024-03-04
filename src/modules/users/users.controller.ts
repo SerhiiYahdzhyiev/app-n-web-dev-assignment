@@ -94,7 +94,7 @@ export class UsersController {
 
       if (!updatedId) {
         throw new NotFound(`User with id "${userId}" was not found!`);
-      } else if (updatedId !== userId) {
+      } else if (String(updatedId) !== userId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating user with id: " + userId +
