@@ -8,7 +8,7 @@ import { logger } from "../../logger";
 import { BaseHttpError, NotFound } from "../../common/exceptions";
 import { UserRoles } from "./users.dto";
 
-var label = "UsersController";
+let label = "UsersController";
 
 export class UsersController {
   public async create(req: Request, res: Response, next: NextFunction) {
