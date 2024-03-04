@@ -124,7 +124,7 @@ export class UsersController {
 
       if (!removedId) {
         throw new NotFound(`User with id "${userId}" was not found!`);
-      } else if (removedId !== userId) {
+      } else if (String(removedId) !== userId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while deleting user with id: " + userId +
