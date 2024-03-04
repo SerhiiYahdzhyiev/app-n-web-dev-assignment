@@ -73,10 +73,10 @@ export class UsersController {
   public async updateOneById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: string = req.params.userId;
-      const upadatePayload = req.body;
+      const updatePayload = req.body;
 
       if (
-        upadatePayload.role === UserRoles.ADMIN &&
+        updatePayload.role === UserRoles.ADMIN &&
         (req.user as IUser).role !== UserRoles.ADMIN
       ) {
         res
@@ -89,7 +89,7 @@ export class UsersController {
 
       const updatedId = await usersService.updateOneById(
         userId,
-        upadatePayload,
+        updatePayload,
       );
 
       if (!updatedId) {
