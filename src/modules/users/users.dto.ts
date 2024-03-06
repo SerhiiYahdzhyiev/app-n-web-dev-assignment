@@ -33,25 +33,7 @@ export const UserValidationSchema = z.object({
   ),
 }).strict();
 
-export const UserUpdatePayloadValidationSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().regex(emailRegex, { message: "Invalid new email format" })
-    .optional(),
-  password: z.string().min(8).regex(passwordRegex, {
-    message:
-      "New Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number",
-  }).optional(),
-  deliveryAddress: z.string().optional(),
-  phoneNumber: z.string().regex(phoneRegex, {
-    message: "Invalid phone number format",
-  }).optional(),
-  //TODO: Improve country codes validation
-  countryCode: z.string().regex(/^\+\d{1,3}$/, {
-    message: "Invalid country code format",
-  }).optional(),
-  role: z.enum([UserRoles.ADMIN, UserRoles.CUSTOMER]).optional(),
-}).strict();
+export const UserUpdatePayloadValidationSchema = UserValidationSchema.partial();
 
 export type TUserUpdatePayload = z.infer<
   typeof UserUpdatePayloadValidationSchema
