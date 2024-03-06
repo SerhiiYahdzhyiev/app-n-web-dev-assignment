@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { NextFunction, Request, Response } from "express";
 
-import { BaseHttpError, NotFound } from "../../common/exceptions";
+import { BaseHttpError } from "../../common/exceptions";
 
 import { IUser } from "../users/users.model";
 import { UserRoles } from "../users/users.dto";
@@ -100,13 +100,11 @@ export class ProductsController {
         updatePayload,
       );
 
-      if (!updatedId) {
-        throw new NotFound(`Product with id "${productId}" was not found!`);
-      } else if (String(updatedId) !== productId) {
+      if (String(updatedId) !== productId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating product with id: " + productId +
-          " !",
+            " !",
         );
       }
 
@@ -143,13 +141,11 @@ export class ProductsController {
 
       console.log(removedId, productId);
 
-      if (!removedId) {
-        throw new NotFound(`Product with id "${productId}" was not found!`);
-      } else if (String(removedId) !== productId) {
+      if (String(removedId) !== productId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while deleting user with id: " + productId +
-          " !",
+            " !",
         );
       }
 

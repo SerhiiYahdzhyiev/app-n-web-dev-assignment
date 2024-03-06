@@ -5,7 +5,7 @@ import { usersService } from "./users.service";
 import { IUser } from "./users.model";
 
 import { logger } from "../../logger";
-import { BaseHttpError, NotFound } from "../../common/exceptions";
+import { BaseHttpError } from "../../common/exceptions";
 import { UserRoles } from "./users.dto";
 
 let label = "UsersController";
@@ -92,9 +92,7 @@ export class UsersController {
         updatePayload,
       );
 
-      if (!updatedId) {
-        throw new NotFound(`User with id "${userId}" was not found!`);
-      } else if (String(updatedId) !== userId) {
+      if (String(updatedId) !== userId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating user with id: " + userId +
@@ -122,9 +120,7 @@ export class UsersController {
         userId,
       );
 
-      if (!removedId) {
-        throw new NotFound(`User with id "${userId}" was not found!`);
-      } else if (String(removedId) !== userId) {
+      if (String(removedId) !== userId) {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while deleting user with id: " + userId +

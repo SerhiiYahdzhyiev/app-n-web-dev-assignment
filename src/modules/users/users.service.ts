@@ -59,11 +59,15 @@ class UsersService implements IUsersService {
   public async updateOneById(id: string, payload: TUserUpdatePayload) {
     let user = await User.findOneAndUpdate({ _id: id }, payload);
 
+    if (!user) throw new NotFound(`User with id "${id}" was not found!`);
+
     return user?._id;
   }
 
   public async removeOneById(id: string) {
     let user = await User.findOneAndDelete({ _id: id });
+
+    if (!user) throw new NotFound(`User with id "${id}" was not found!`);
 
     return user?._id;
   }
