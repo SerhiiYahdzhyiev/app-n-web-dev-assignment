@@ -4,7 +4,7 @@ import { SECRET, TOKEN_EXPIRES } from "../../config/auth";
 
 import { Unauthorized } from "../../common/exceptions";
 
-import User from "../users/users.model";
+import { usersService } from "../users/users.service";
 
 interface IAuthService {
   login: (email: string, password: string) => Promise<string>;
@@ -12,7 +12,7 @@ interface IAuthService {
 
 class AuthService implements IAuthService {
   public async login(email: string, password: string): Promise<string> {
-    const user = await User.findOne({ email });
+    const user = await usersService.findOneByEmail(email);
 
     const unauthorizedMessage = "Invalid email or password!";
 

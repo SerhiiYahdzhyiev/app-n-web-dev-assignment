@@ -58,7 +58,7 @@ export class UsersController {
     try {
       const userId: string = req.params.userId;
 
-      const user = await usersService.getOneById(userId);
+      const user = await usersService.findOneById(userId);
 
       logger.info("Returned user with id " + user._id, { label });
 
@@ -98,7 +98,7 @@ export class UsersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating user with id: " + userId +
-          " !",
+            " !",
         );
       }
 
@@ -128,7 +128,7 @@ export class UsersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while deleting user with id: " + userId +
-          " !",
+            " !",
         );
       }
 

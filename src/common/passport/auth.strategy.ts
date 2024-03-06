@@ -24,7 +24,7 @@ export const strategy: Strategy = new Strategy(
     try {
       const { exp: expiration } = jwtPayload;
 
-      const user: IUser = await usersService.getOneById(jwtPayload.userId);
+      const user: IUser = await usersService.findOneById(jwtPayload.userId);
 
       if (isExpired(expiration)) {
         done(new Unauthorized("Expired token!"), false);
