@@ -31,7 +31,7 @@ export const UserValidationSchema = z.object({
   role: z.enum([UserRoles.ADMIN, UserRoles.CUSTOMER]).default(
     UserRoles.CUSTOMER,
   ),
-});
+}).strict();
 
 export const UserUpdatePayloadValidationSchema = z.object({
   firstName: z.string().optional(),
@@ -51,7 +51,7 @@ export const UserUpdatePayloadValidationSchema = z.object({
     message: "Invalid country code format",
   }).optional(),
   role: z.enum([UserRoles.ADMIN, UserRoles.CUSTOMER]).optional(),
-});
+}).strict();
 
 export type TUserUpdatePayload = z.infer<
   typeof UserUpdatePayloadValidationSchema
