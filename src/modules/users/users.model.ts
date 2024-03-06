@@ -14,6 +14,9 @@ export interface IUser extends Document {
   countryCode?: string; // e.g. +49, +7...
   role: UserRoles;
 
+  createdAt: Date;
+  updatedAt: Date;
+
   isValidPassword: (password: string) => Promise<boolean>;
 }
 
@@ -53,9 +56,9 @@ const userSchema: Schema = new Schema<IUser>({
     required: true,
     default: UserRoles.CUSTOMER,
   },
-});
+}, { timestamps: true });
 
-userSchema.pre("save", async function(next): Promise<void> {
+userSchema.pre("save", async function (next): Promise<void> {
   const user = this;
   const hash = await bcrypt.hash(user.password as string, HASH_SALT);
 
@@ -63,7 +66,7 @@ userSchema.pre("save", async function(next): Promise<void> {
   next();
 });
 
-userSchema.methods.isValidPassword = async function(
+userSchema.methods.isValidPassword = async function (
   password: string,
 ): Promise<boolean> {
   return Boolean(await bcrypt.compare(password, this.password));

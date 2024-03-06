@@ -5,6 +5,9 @@ export interface IProduct extends Document {
   description: string;
   price: number;
   imageUrls: string[];
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const productSchema: Schema = new Schema<IProduct>({
@@ -21,6 +24,6 @@ const productSchema: Schema = new Schema<IProduct>({
     requred: true,
   },
   imageUrls: { type: [String], required: false },
-});
+}, { timestamps: true });
 
 export default model<IProduct>("Product", productSchema);

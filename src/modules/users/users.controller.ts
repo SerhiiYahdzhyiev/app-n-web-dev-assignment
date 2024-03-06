@@ -155,5 +155,7 @@ function mapUserRecordToResponsePayload(user: IUser) {
     phoneNumber: user.phoneNumber,
     countryCode: user.countryCode,
     role: user.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
   };
 }
