@@ -10,6 +10,9 @@ export interface IProductService {
   findAll: () => Promise<IProduct[]>;
   findManyByTitle: (title: string) => Promise<IProduct[]>;
   findOneById: (id: string) => Promise<IProduct>;
+
+  getTotalPriceForMany: (ids: string[]) => Promise<number>;
+
   updateOneById: (
     id: string,
     payload: TProductUpdatePayload,
@@ -32,6 +35,22 @@ class ProductService implements IProductService {
 
   public async findManyByTitle(title: string) {
     return await Product.find({ title: { $regex: title, $options: "i" } });
+  }
+
+  public async getTotalPriceForMany(ids: string[]) {
+    const products: IProduct[] = [];
+
+    for (const id of ids) {
+      const product = await this.findOneById(id);
+      products.push(product);
+    }
+
+    const totalPrice = products.reduce(
+      (acc, product) => acc + product.price,
+      0,
+    );
+
+    return totalPrice;
   }
 
   public async findOneById(id: string) {
