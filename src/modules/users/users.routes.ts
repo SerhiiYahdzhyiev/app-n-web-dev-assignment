@@ -1,9 +1,9 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 
 import { UsersController } from "./users.controller";
 import {
+  getObjectIdValidationMiddleware,
   validateSchema,
-  validateUserId,
 } from "../../common/middlewares/validation.middleware";
 
 import {
@@ -14,6 +14,10 @@ import {
 class UsersRouter {
   public router: Router;
   public usersController: UsersController = new UsersController();
+
+  private userIdExtractor(req: Request) {
+    return req.params.userId;
+  }
 
   constructor() {
     this.router = Router();
@@ -31,20 +35,20 @@ class UsersRouter {
 
     this.router.get(
       "/:userId",
-      validateUserId,
+      getObjectIdValidationMiddleware(this.userIdExtractor),
       this.usersController.getOneById,
     );
 
     this.router.put(
       "/:userId",
-      validateUserId,
+      getObjectIdValidationMiddleware(this.userIdExtractor),
       validateSchema(UserUpdatePayloadValidationSchema),
       this.usersController.updateOneById,
     );
 
     this.router.delete(
       "/:userId",
-      validateUserId,
+      getObjectIdValidationMiddleware(this.userIdExtractor),
       this.usersController.removeOneById,
     );
   }

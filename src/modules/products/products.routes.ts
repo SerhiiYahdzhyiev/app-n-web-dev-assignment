@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 
 import {
-  validateProductId,
+  getObjectIdValidationMiddleware,
   validateSchema,
 } from "../../common/middlewares/validation.middleware";
 
@@ -11,6 +11,10 @@ import { ProductSchema, ProductUpdatePayloadSchema } from "./products.dto";
 class UsersRouter {
   public router: Router;
   public productsController: ProductsController = new ProductsController();
+
+  private productIdExtractor(req: Request) {
+    return req.params.productId;
+  }
 
   constructor() {
     this.router = Router();
@@ -28,20 +32,20 @@ class UsersRouter {
 
     this.router.get(
       "/:productId",
-      validateProductId,
+      getObjectIdValidationMiddleware(this.productIdExtractor),
       this.productsController.getOneById,
     );
 
     this.router.put(
       "/:productId",
-      validateProductId,
+      getObjectIdValidationMiddleware(this.productIdExtractor),
       validateSchema(ProductUpdatePayloadSchema),
       this.productsController.updateOneById,
     );
 
     this.router.delete(
       "/:productId",
-      validateProductId,
+      getObjectIdValidationMiddleware(this.productIdExtractor),
       this.productsController.removeOneById,
     );
   }

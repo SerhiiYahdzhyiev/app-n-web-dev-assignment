@@ -24,38 +24,20 @@ export function validateSchema(schema: ZodSchema) {
   };
 }
 
-export function validateUserId(
-  req: Request,
-  _: Response,
-  next: NextFunction,
+export function getObjectIdValidationMiddleware(
+  requestUnpacker: (req: Request) => string | null,
 ) {
-  try {
-    const userId = req.params.userId;
+  return (req: Request, _: Response, next: NextFunction) => {
+    try {
+      const id = requestUnpacker(req);
 
-    if (!isValidObjectId(userId)) {
-      throw new BadRequest(`Not valid userId value! Value: ${userId}`);
+      if (!isValidObjectId(id)) {
+        throw new BadRequest(`Not valid userId value! Value: ${id}`);
+      }
+
+      next();
+    } catch (error) {
+      next(error);
     }
-
-    next();
-  } catch (error) {
-    next(error);
-  }
-}
-
-export function validateProductId(
-  req: Request,
-  _: Response,
-  next: NextFunction,
-) {
-  try {
-    const productId = req.params.productId;
-
-    if (!isValidObjectId(productId)) {
-      throw new BadRequest(`Not valid productId value! Value: ${productId}`);
-    }
-
-    next();
-  } catch (error) {
-    next(error);
-  }
+  };
 }
