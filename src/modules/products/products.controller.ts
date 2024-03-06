@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { NextFunction, Request, Response } from "express";
 
-import { BaseHttpError } from "../../common/exceptions";
+import { BadRequest, BaseHttpError } from "../../common/exceptions";
 
 import { IUser } from "../users/users.model";
 import { UserRoles } from "../users/users.dto";
@@ -81,6 +81,10 @@ export class ProductsController {
   public async updateOneById(req: Request, res: Response, next: NextFunction) {
     try {
       const updatePayload = req.body;
+
+      if (!Object.keys(updatePayload).length) {
+        throw new BadRequest("Nothing to update, got empty update payload!");
+      }
 
       if (
         (req.user as IUser).role !== UserRoles.ADMIN

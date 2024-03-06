@@ -5,7 +5,7 @@ import { usersService } from "./users.service";
 import { IUser } from "./users.model";
 
 import { logger } from "../../logger";
-import { BaseHttpError } from "../../common/exceptions";
+import { BadRequest, BaseHttpError } from "../../common/exceptions";
 import { UserRoles } from "./users.dto";
 
 let label = "UsersController";
@@ -74,6 +74,10 @@ export class UsersController {
     try {
       const userId: string = req.params.userId;
       const updatePayload = req.body;
+
+      if (!Object.keys(updatePayload).length) {
+        throw new BadRequest("Nothing to update, got empty update payload!");
+      }
 
       if (
         updatePayload.role === UserRoles.ADMIN &&
