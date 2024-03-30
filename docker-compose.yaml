@@ -1,0 +1,40 @@
+name: ecommerce-app
+
+services:
+  backend:
+    image: ecommerce-backend:latest
+    build: ./back
+    depends_on:
+      - db
+    environment:
+      - APP_HOST=${APP_HOST}
+      - APP_PORT=${APP_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - PSWD_HASH_SALT=${PSWD_HASH_SALT}
+      - SECRET=${SECRET}
+      - TOKEN_EXPIRES=${TOKEN_EXPIRES}
+
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    
+
+  db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    ports:
+      - ${DB_PORT}:27017
+      
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - db-data:/data/db
+
+volumes:
+  db-data:
+    driver: local
