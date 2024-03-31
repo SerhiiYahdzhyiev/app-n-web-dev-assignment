@@ -1,8 +1,23 @@
 **node_modules
 
-**dist
+**/dist
+**/tmp
+**/out-tsc
+**/bazel-out
 
 **logs/
 **/*.log
 
 **.env
+
+**npm-debug.log
+**yarn-error.log
+
+**/.angular/cache
+**.sass-cache/
+**/connect.lock
+**/libpeerconnection.log
+**/typings
+
+**.DS_Store
+**Thumbs.db
