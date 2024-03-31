@@ -35,6 +35,12 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - db-data:/data/db
 
+  front:
+    image: ecommerce-frontend:latest
+    build: ./front
+    ports:
+      - 4200:80
+
 volumes:
   db-data:
     driver: local
