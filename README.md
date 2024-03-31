@@ -3,8 +3,8 @@
 This repository contains the code for the App and Web Development Module
 Assignment, which is a simple fullstach E-commerce Web App. The provided
 `docker-compose.yaml` file allows users to easily set up and run the entire
-application stack using Docker Compose. More detailed reviview will be provided
-in the submited report of this assignment.
+application stack using Docker Compose. More detailed review will be provided in
+the submited report of this assignment.
 
 ## Getting Started
 
@@ -61,25 +61,25 @@ some exceptions:
 
 - `INIT_ADMIN_PASSWORD`
 
-After changing this value in `.env` run: `node get-passwd.js`. It will print the
-hashed password to the console. Copy it and paste to the `init-mongo.js`:
+  After changing this value in `.env` run: `node get-passwd.js`. It will print
+  the hashed password to the console. Copy it and paste to the `init-mongo.js`:
 
-```js
-db.users.insertOne({
-  firstName: "Initial",
-  lastName: "Admin",
-  email: "admin@mail.com",
-  password: <your_custom_hased_password>,
-  role: "ADMIN",
-});
-```
+  ```js
+  db.users.insertOne({
+    firstName: "Initial",
+    lastName: "Admin",
+    email: "admin@mail.com",
+    password: <your_custom_hased_password>,
+    role: "ADMIN",
+  });
+  ```
 
-`<your_custom_hased_password>` should be replaced with the value that you've got
-from `get-passwd.js`.
+  `<your_custom_hased_password>` should be replaced with the value that you've
+  got from `get-passwd.js`.
 
-By the way you could also change the email of the default admin user in
-`init-mongo.js`. But keep in mind that it should look like a valid email (in
-terms of format).
+  By the way you could also change the email of the default admin user in
+  `init-mongo.js`. But keep in mind that it should look like a valid email (in
+  terms of format).
 
 3. Build and start the Docker containers:
 
