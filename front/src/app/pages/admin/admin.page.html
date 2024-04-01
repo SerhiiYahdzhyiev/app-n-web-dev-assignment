@@ -1,0 +1,11 @@
+<ng-container *ngIf="isLoading">
+  <loader-page />
+</ng-container>
+<ng-container *ngIf="!isLoading && !isAuthorized">
+  <main>
+    <login-form />
+  </main>
+</ng-container>
+<ng-container *ngIf="isAuthorized">
+  <p>Admin</p>
+</ng-container>
