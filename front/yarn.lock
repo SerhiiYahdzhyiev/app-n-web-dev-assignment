@@ -202,7 +202,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material@17.3.2":
+"@angular/material@^17.3.2":
   version "17.3.2"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-17.3.2.tgz#100d9f6fcec78e58e5b05daf1ec79db89d880670"
   integrity sha512-FuQnzmVZQUqPYxn2AbRNKY/7LTldhazK+PCN+Y9vbTZ6L1INJLANip1r4iXfZnhAUE+dmFAPN6GzfLLh1Dg7vA==
