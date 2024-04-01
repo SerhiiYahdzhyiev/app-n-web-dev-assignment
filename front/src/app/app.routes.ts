@@ -1,8 +1,9 @@
 import { Routes } from "@angular/router";
 
-import { LandingPage, NotFoundPage } from "@pages";
-
+import { AdminPage, LandingPage, NotFoundPage } from "@pages";
 export const routes: Routes = [
-  { path: "", component: LandingPage },
+  { path: "", redirectTo: "landing", pathMatch: "full" },
+  { path: "landing", component: LandingPage },
+  { path: "admin", component: AdminPage },
   { path: "**", component: NotFoundPage },
 ];
