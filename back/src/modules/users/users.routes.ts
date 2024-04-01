@@ -25,6 +25,7 @@ class UsersRouter {
   }
 
   public route(): void {
+    this.router.get("/me", this.usersController.me);
     this.router.post(
       "/create",
       validateSchema(UserValidationSchema),
