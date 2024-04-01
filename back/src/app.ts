@@ -25,7 +25,10 @@ passport.use(strategy);
 
 const app: Express = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:4200",
+  credentials: true,
+}));
 app.use(json(jsonMiddlewareOptions));
 app.use(urlencoded(urlencodedMiddlewareOptions));
 app.use(cookieParser(SECRET));
