@@ -33,6 +33,9 @@
       ],
       "@services": [
         "app/services/index"
+      ],
+      "@interfaces": [
+        "interfaces/index"
       ]
     }
   },

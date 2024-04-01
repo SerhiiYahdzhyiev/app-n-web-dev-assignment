@@ -5,12 +5,29 @@ import { usersService } from "./users.service";
 import { IUser } from "./users.model";
 
 import { logger } from "../../logger";
-import { BadRequest, BaseHttpError } from "../../common/exceptions";
+import {
+  BadRequest,
+  BaseHttpError,
+  Unauthorized,
+} from "../../common/exceptions";
 import { UserRoles } from "./users.dto";
 
 let label = "UsersController";
 
 export class UsersController {
+  public async me(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = (req.user! as IUser)._id;
+
+      if (!userId) {
+        throw new Unauthorized("Unauthorized!");
+      }
+
+      const userData = await usersService.getOneById(userId);
+    } catch (error) {
+      next(error);
+    }
+  }
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
       if (
