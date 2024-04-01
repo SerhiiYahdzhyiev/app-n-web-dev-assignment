@@ -1,0 +1,15 @@
+<mat-card style="max-width:max-content" (keydown)="onKeydown($event)">
+  <mat-card-content>
+    <div style="padding:10px;display:flex;flex-direction:column;justify-items:center;align-items:center;">
+      <mat-form-field>
+        <input matInput type="email" placeholder="Login..." [(ngModel)]="login_">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password..." [(ngModel)]="pass">
+      </mat-form-field>
+      <button mat-flat-button style="width:100%;" color="primary" [disabled]="!login_ || !pass" (click)="login()">
+        {{ isLogging ? "Loging...": "Log In"}}
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
