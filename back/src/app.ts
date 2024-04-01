@@ -3,6 +3,7 @@ import { SECRET } from "./config/auth";
 import express, { Express, json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import cors from "cors";
 
 import {
   jsonMiddlewareOptions,
@@ -24,6 +25,7 @@ passport.use(strategy);
 
 const app: Express = express();
 
+app.use(cors());
 app.use(json(jsonMiddlewareOptions));
 app.use(urlencoded(urlencodedMiddlewareOptions));
 app.use(cookieParser(SECRET));
