@@ -7,5 +7,29 @@
   </main>
 </ng-container>
 <ng-container *ngIf="isAuthorized">
-  <p>Admin</p>
+  <header>
+    <div class="tabs">
+      <div (click)="setActiveTab('users')" class="tab {{activeTab === 'users' ? 'active': ''}}">
+        <span>
+          Users
+        </span>
+      </div>
+      <div (click)="setActiveTab('products')" class="tab {{activeTab === 'products' ? 'active': ''}}">
+        <span>
+          Products
+        </span>
+      </div>
+      <div (click)="setActiveTab('orders')" class="tab {{activeTab === 'orders' ? 'active': ''}}">
+        <span>
+          Orders
+        </span>
+      </div>
+    </div>
+    <button mat-flat-button color="primary" (click)="logout()">Log Out</button>
+  </header>
+  <div class="content">
+    <ng-container *ngIf="activeTab === 'users'"><users-list /></ng-container>
+    <ng-container *ngIf="activeTab === 'products'">Products</ng-container>
+    <ng-container *ngIf="activeTab === 'orders'">Orders</ng-container>
+  </div>
 </ng-container>

@@ -1,12 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
 
-import { LoginForm } from "@components";
-import { UserService } from "@services";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatButtonModule } from "@angular/material/button";
+
+import { LoginForm, UserListCopmonent } from "@components";
+import { ApiService, AuthService, UserService } from "@services";
 import { IUser, UserRoles } from "@interfaces";
+
 import { LoaderPage } from "../loader/loader.page";
-import { ApiService } from "app/services/api.service";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: "admin-page",
@@ -17,9 +21,13 @@ import { ApiService } from "app/services/api.service";
     CommonModule,
     LoginForm,
     LoaderPage,
+    MatTabsModule,
+    MatButtonModule,
+    UserListCopmonent,
   ],
   providers: [
     ApiService,
+    AuthService,
     UserService,
     MatSnackBar,
   ],
@@ -29,25 +37,35 @@ export class AdminPage implements OnInit {
 
   isLoading = true;
 
+  activeTab = "users";
+
   constructor(
     private userService: UserService,
     private notification: MatSnackBar,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.userService.getMe().subscribe(
       (user) => {
-        console.log(user);
         this.user = user as any;
         this.isLoading = false;
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.notification.open(err.message || "Unknown error!", "Close");
         this.isLoading = false;
       },
     );
+  }
+
+  setActiveTab(value: "users" | "products" | "orders") {
+    this.activeTab = value;
+  }
+
+  logout() {
+    this.authService.logout().subscribe(() => window.location.reload());
   }
 
   get isAuthorized() {

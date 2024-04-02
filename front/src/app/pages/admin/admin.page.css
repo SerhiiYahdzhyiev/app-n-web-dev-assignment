@@ -10,3 +10,49 @@ main {
   align-items: center;
   justify-content: center;
 }
+
+header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: 60px;
+  padding-right: 20px;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.tab {
+  display: grid;
+  place-items: center;
+
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+
+  padding-inline: 30px;
+
+  height: 60px;
+
+  border-bottom: 2px solid transparent;
+
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab.active {
+  color: purple;
+  border-bottom: 2px solid purple;
+}
+
+.content {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+}
