@@ -21,8 +21,7 @@ export class ApiService {
     }
     if (error.error.message === "Validation error") {
       message = Object.values(error.error.errors)[0] as string;
-    }
-    if (error.error.message) {
+    } else if (error.error.message) {
       message = error.error.message;
     }
     if (!message) {
