@@ -23,4 +23,20 @@ export class AuthController {
       next(error);
     }
   }
+  public async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.cookie("token", "", {
+        httpOnly: true,
+        sameSite: true,
+        signed: true,
+        secure: true,
+      });
+
+      res
+        .status(StatusCodes.NO_CONTENT)
+        .end();
+    } catch (error) {
+      next(error);
+    }
+  }
 }
