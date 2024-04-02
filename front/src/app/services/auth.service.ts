@@ -12,4 +12,10 @@ export class AuthService {
       { login, password },
     );
   }
+
+  logout() {
+    return this.client.get(
+      "/auth/logout",
+    );
+  }
 }
