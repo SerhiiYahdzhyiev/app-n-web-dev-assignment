@@ -7,12 +7,14 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatIconModule } from "@angular/material/icon";
 
 import { IProduct } from "@interfaces";
 import { ProductService } from "@services";
 
-const _newProduct = {
-  title: "Nes Product",
+//@ts-ignore
+const _newProduct: IProduct = {
+  title: "New Product",
   description: "New description",
   price: 1,
   imageUrls: [],
@@ -21,6 +23,10 @@ const _newProduct = {
 @Component({
   selector: "products-list",
   standalone: true,
+  host: {
+    "[style.height]": "'calc(100vh - 60px)'",
+    "[style.display]": "'block'",
+  },
   templateUrl: "./products-list.component.html",
   styleUrl: "./products-list.component.css",
   imports: [
@@ -30,6 +36,7 @@ const _newProduct = {
     MatFormFieldModule,
     MatButtonModule,
     MatSelectModule,
+    MatIconModule,
   ],
   providers: [
     ProductService,
@@ -49,12 +56,39 @@ export class ProductsListCopmonent implements OnInit {
   isCreatingStarted = false;
   isCreating = false;
 
+  newImageUrl = "";
+
   constructor(
     private productService: ProductService,
     private notification: MatSnackBar,
   ) {}
 
   ngOnInit() {
+  }
+
+  removeImageUrl(url: string) {
+    let target;
+    if (this.isCreatingStarted) {
+      target = this.newProduct;
+    } else {
+      target = this.activeProduct;
+    }
+
+    target.imageUrls = target.imageUrls!.filter((u) => u !== url);
+  }
+
+  addNewImageUrl() {
+    if (this.newImageUrl) {
+      let target;
+      if (this.isCreatingStarted) {
+        target = this.newProduct;
+      } else {
+        target = this.activeProduct;
+      }
+
+      target.imageUrls!.push(this.newImageUrl);
+      this.newImageUrl = "";
+    }
   }
 
   setCreating() {
@@ -76,7 +110,6 @@ export class ProductsListCopmonent implements OnInit {
 
     this.productService.createOne(this.newProduct).subscribe(
       (data) => {
-        console.log(data);
         this.notification.open(
           "Successfully created new product!",
           "Close",
@@ -84,11 +117,16 @@ export class ProductsListCopmonent implements OnInit {
         this.isCreating = false;
         this.isCreatingStarted = false;
         this.products.push({
+          //@ts-ignore
           _id: (data as unknown as { id: string }).id,
           ...this.newProduct,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
+        this.activeProductId = (data as unknown as { id: string }).id;
+        this.activeProduct = this.products.find((p) =>
+          p._id === this.activeProductId
+        )!;
         this.newProduct = Object.assign({}, _newProduct);
       },
       (err) => {
@@ -96,6 +134,29 @@ export class ProductsListCopmonent implements OnInit {
         this.isCreating = false;
       },
     );
+  }
+
+  remove() {
+    this.productService.removeOne(this.activeProductId)
+      .subscribe(
+        (data) => {
+          this.notification.open(
+            "Successfully removed product with id " +
+              (data as unknown as any).removedId,
+            "Close",
+          );
+          this.products = this.products.filter((p) =>
+            p._id !== this.activeProductId
+          );
+          this.activeProduct = this.products[0];
+          this.activeProductId = this.activeProduct._id;
+          this.isUpdating = false;
+        },
+        (err) => {
+          this.notification.open(err.message, "Close");
+          this.isUpdating = false;
+        },
+      );
   }
 
   update() {

@@ -22,4 +22,8 @@ export class UserService {
   updateOne(id: string, payload: Partial<IUser>) {
     return this.client.put<{ updatedId: string }>("/users/" + id, payload);
   }
+
+  removeOne(id: string) {
+    return this.client.delete<{ removedId: string }>("/users/" + id);
+  }
 }

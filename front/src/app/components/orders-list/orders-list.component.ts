@@ -99,6 +99,27 @@ export class ordersListCopmonent implements OnInit {
     );
   }
 
+  remove() {
+    this.orderService.removeOne(this.activeOrderId)
+      .subscribe(
+        (data) => {
+          this.notification.open(
+            "Successfully removed product with id " +
+              (data as unknown as any).removedId,
+            "Close",
+          );
+          this.orders = this.orders.filter((o) => o._id !== this.activeOrderId);
+          this.activeOrder = this.orders[0];
+          this.activeOrderId = this.activeOrder._id;
+          this.isUpdating = false;
+        },
+        (err) => {
+          this.notification.open(err.message, "Close");
+          this.isUpdating = false;
+        },
+      );
+  }
+
   update() {
     this.isUpdating = true;
 

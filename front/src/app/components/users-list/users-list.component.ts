@@ -99,6 +99,8 @@ export class UserListCopmonent implements OnInit {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
+        this.activeUserId = (data as unknown as { id: string }).id;
+        this.activeUser = this.users.find((u) => u.id === this.activeUserId)!;
         this.newUser = Object.assign({}, _newUser);
       },
       (err) => {
@@ -106,6 +108,27 @@ export class UserListCopmonent implements OnInit {
         this.isCreating = false;
       },
     );
+  }
+
+  remove() {
+    this.userService.removeOne(this.activeUserId)
+      .subscribe(
+        (data) => {
+          this.notification.open(
+            "Successfully removed product with id " +
+              (data as unknown as any).removedId,
+            "Close",
+          );
+          this.users = this.users.filter((u) => u.id !== this.activeUserId);
+          this.activeUser = this.users[0];
+          this.activeUserId = this.activeUser.id;
+          this.isUpdating = false;
+        },
+        (err) => {
+          this.notification.open(err.message, "Close");
+          this.isUpdating = false;
+        },
+      );
   }
 
   update() {

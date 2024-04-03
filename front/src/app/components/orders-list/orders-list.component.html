@@ -28,6 +28,8 @@
     <div *ngIf="activeOrderId" class="main-actions">
       <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
         "Update"}}</button>
+      <button mat-flat-button color="warn" (click)="remove()" [disabled]="isUpdating">{{isUpdating ? "Removing...":
+        "Remove"}}</button>
     </div>
     <div *ngIf="isCreatingStarted" class="main-content">
       <div class="main-item">

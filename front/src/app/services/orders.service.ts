@@ -19,4 +19,8 @@ export class OrderService {
   updateOne(id: string, payload: Partial<IOrder>) {
     return this.client.put<{ updatedId: string }>("/orders/" + id, payload);
   }
+
+  removeOne(id: string) {
+    return this.client.delete<{ removedId: string }>("/orders/" + id);
+  }
 }

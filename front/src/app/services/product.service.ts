@@ -19,4 +19,8 @@ export class ProductService {
   updateOne(id: string, payload: Partial<IProduct>) {
     return this.client.put<{ updatedId: string }>("/products/" + id, payload);
   }
+
+  removeOne(id: string) {
+    return this.client.delete<{ removedId: string }>("/products/" + id);
+  }
 }

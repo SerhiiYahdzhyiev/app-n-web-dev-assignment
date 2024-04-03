@@ -51,16 +51,20 @@
 .main-actions {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .main-item {
   display: flex;
 
   max-width: 400px;
+  min-height: 78px;
 
 
   align-items: start;
   justify-content: space-between;
+
+  gap: 20px;
 }
 
 .main-item span {
@@ -68,4 +72,6 @@
   font-weight: 500;
 
   margin-top: 15px;
+
+  text-wrap: nowrap;
 }
