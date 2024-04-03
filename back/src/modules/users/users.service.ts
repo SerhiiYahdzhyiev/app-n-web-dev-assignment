@@ -1,9 +1,11 @@
+import bcrypt from "bcrypt";
 import { ObjectId } from "mongoose";
 
 import { BadRequest, NotFound } from "../../common/exceptions";
 
 import { TUserUpdatePayload } from "./users.dto";
 import User, { IUser } from "./users.model";
+import { HASH_SALT } from "../../config/bcrypt";
 
 export interface IUsersService {
   create: (payload: IUser) => Promise<ObjectId>;
@@ -57,6 +59,9 @@ class UsersService implements IUsersService {
   }
 
   public async updateOneById(id: string, payload: TUserUpdatePayload) {
+    if (payload.password) {
+      payload.password = bcrypt.hashSync(payload.password, HASH_SALT);
+    }
     let user = await User.findOneAndUpdate({ _id: id }, payload);
 
     if (!user) throw new NotFound(`User with id "${id}" was not found!`);
