@@ -2,8 +2,17 @@
   <loader-page />
 </ng-container>
 <ng-container *ngIf="!isLoading && !isAuthorized">
-  <main>
-    <login-form />
+  <main style="background:whitesmoke">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <h3 style="font-size:24px;font-weight:600;color:purple;line-height:1;margin:0">[SY Commerce]</h3><span
+          style="color:gray;line-height:1;font-size:24px">|</span>
+        <p style="font-size:20px;margin:0">Admin</p>
+      </div>
+      <login-form />
+      <p>With great power comes great responsibility...</p>
+      <p>Use it carefully and wisely =P</p>
+    </div>
   </main>
 </ng-container>
 <ng-container *ngIf="isAuthorized">
@@ -25,11 +34,15 @@
         </span>
       </div>
     </div>
-    <button mat-flat-button color="primary" (click)="logout()">Log Out</button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a mat-flat-button color="primary" routerLink="/landing">To Landing</a>
+      <button mat-flat-button color="primary" (click)="logout()">Log Out</button>
+    </div>
   </header>
   <div class="content">
     <ng-container *ngIf="activeTab === 'users'"><users-list [users]="users" /></ng-container>
     <ng-container *ngIf="activeTab === 'products'"><products-list [products]="products" /></ng-container>
-    <ng-container *ngIf="activeTab === 'orders'"><orders-list [orders]="orders" /></ng-container>
+    <ng-container *ngIf="activeTab === 'orders'"><orders-list [orders]="orders" [users]="users"
+        [products]="products" /></ng-container>
   </div>
 </ng-container>

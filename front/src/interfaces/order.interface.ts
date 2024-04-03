@@ -12,6 +12,7 @@ export enum OrderStatus {
   CANCELED = "CANCELED",
 }
 export interface IOrder {
+  __v: number;
   _id: string;
   totalPrice: number;
   paymentStatus: OrderPaymentStatus;

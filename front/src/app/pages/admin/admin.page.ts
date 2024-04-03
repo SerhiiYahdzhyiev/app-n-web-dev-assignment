@@ -7,7 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 
 import {
   LoginForm,
-  ordersListCopmonent,
+  OrdersListCopmonent,
   ProductsListCopmonent,
   UserListCopmonent,
 } from "@components";
@@ -21,6 +21,7 @@ import {
 import { IOrder, IProduct, IUser, UserRoles } from "@interfaces";
 
 import { LoaderPage } from "../loader/loader.page";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "admin-page",
@@ -35,7 +36,8 @@ import { LoaderPage } from "../loader/loader.page";
     MatButtonModule,
     UserListCopmonent,
     ProductsListCopmonent,
-    ordersListCopmonent,
+    OrdersListCopmonent,
+    RouterLink,
   ],
   providers: [
     ApiService,

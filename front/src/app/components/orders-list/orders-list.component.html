@@ -15,28 +15,128 @@
           <input disabled matInput [value]="activeOrder._id">
         </mat-form-field>
       </div>
-      <!-- <div class="main-item"> -->
-      <!--   <span>Role:</span> -->
-      <!--   <mat-form-field> -->
-      <!--     <mat-select [(ngModel)]="activeOrder.role"> -->
-      <!--       <mat-option value="ADMIN">Admin</mat-option> -->
-      <!--       <mat-option value="CUSTOMER">Customer</mat-option> -->
-      <!--     </mat-select> -->
-      <!--   </mat-form-field> -->
-      <!-- </div> -->
-    </div>
-    <div *ngIf="activeOrderId" class="main-actions">
-      <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
-        "Update"}}</button>
-      <button mat-flat-button color="warn" (click)="remove()" [disabled]="isUpdating">{{isUpdating ? "Removing...":
-        "Remove"}}</button>
-    </div>
-    <div *ngIf="isCreatingStarted" class="main-content">
+      <div class="main-item">
+        <span>Total Price (in cents):</span>
+        <mat-form-field>
+          <input type="number" min="1" matInput [value]="activeOrder.totalPrice">
+        </mat-form-field>
+      </div>
       <div class="main-item">
         <span>Status:</span>
         <mat-form-field>
-          <input matInput [(ngModel)]="newOrder.status">
+          <mat-select [(ngModel)]="activeOrder.status">
+            <mat-option value="PENDING">Pending</mat-option>
+            <mat-option value="IN_PROCESS">In process</mat-option>
+            <mat-option value="IN_DELIVERY">Beign delivered</mat-option>
+            <mat-option value="DELIVERED">Delivered</mat-option>
+            <mat-option value="CANCELED">Canceled</mat-option>
+          </mat-select>
         </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Payment Status:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="activeOrder.paymentStatus">
+            <mat-option value="PENDING">Pending</mat-option>
+            <mat-option value="SUCCESS">Successful</mat-option>
+            <mat-option value="FAILED">Failed</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>User:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="activeOrder.userId">
+            <mat-option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Products:</span>
+        <div style="display:flex;flex-direction:column:center;gap:10px;padding-top:10px;flex-wrap:wrap;">
+          <span *ngIf="!activeOrder.productsIds.length">No products</span>
+          <button *ngFor="let id of activeOrder.productsIds" mat-flat-button (click)="removeProduct(id)">
+            {{productName(id)}}
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="main-item">
+        <mat-form-field>
+          <mat-select [(ngModel)]="newProductId">
+            <mat-option *ngFor="let product of products" [value]="product._id">{{product.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="addProduct()">Add Product</button>
+      </div>
+    </div>
+    <div *ngIf="activeOrderId" class="main-actions">
+      <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
+        "Update/Save"}}</button>
+      <button mat-flat-button color="warn" (click)="remove()" [disabled]="isUpdating">{{isUpdating ? "Removing...":
+        "Remove"}}</button>
+      <h3 style="color:red;margin:0">!!! Mind that Remove button will not ask for confirmation !!!</h3>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-content">
+      <div class="main-item">
+        <span>Id: </span>
+        <mat-form-field>
+          <input disabled matInput [value]="newOrder._id">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Total Price (in cents):</span>
+        <mat-form-field>
+          <input type="number" min="1" matInput [value]="newOrder.totalPrice">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Status:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="newOrder.status">
+            <mat-option value="PENDING">Pending</mat-option>
+            <mat-option value="IN_PROCESS">In process</mat-option>
+            <mat-option value="IN_DELIVERY">Beign delivered</mat-option>
+            <mat-option value="DELIVERED">Delivered</mat-option>
+            <mat-option value="CANCELED">Canceled</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Payment Status:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="newOrder.paymentStatus">
+            <mat-option value="PENDING">Pending</mat-option>
+            <mat-option value="SUCCESS">Successful</mat-option>
+            <mat-option value="FAILED">Failed</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>User:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="newOrder.userId">
+            <mat-option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Products:</span>
+        <div style="display:flex;flex-direction:column:center;gap:10px;padding-top:10px;flex-wrap:wrap;">
+          <span *ngIf="!newOrder.productsIds.length">No products</span>
+          <button *ngFor="let id of newOrder.productsIds" mat-flat-button (click)="removeProduct(id)">
+            {{productName(id)}}
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="main-item">
+        <mat-form-field>
+          <mat-select [(ngModel)]="newProductId">
+            <mat-option *ngFor="let product of products" [value]="product._id">{{product.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="addProduct()">Add Product</button>
       </div>
     </div>
     <div *ngIf="isCreatingStarted" class="main-actions">

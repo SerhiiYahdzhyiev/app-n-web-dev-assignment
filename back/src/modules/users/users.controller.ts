@@ -121,7 +121,7 @@ export class UsersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating user with id: " + userId +
-            " !",
+          " !",
         );
       }
 
@@ -149,7 +149,7 @@ export class UsersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while deleting user with id: " + userId +
-            " !",
+          " !",
         );
       }
 

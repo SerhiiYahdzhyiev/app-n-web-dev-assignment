@@ -19,15 +19,20 @@ export class OrdersController {
     try {
       const payload: TOrderCreationPayload = req.body;
 
-      const totalPrice = await productService.getTotalPriceForMany(
-        payload.productsIds,
-      );
+      let totalPrice: number;
+      if (!payload.totalPrice) {
+        totalPrice = await productService.getTotalPriceForMany(
+          payload.productsIds,
+        );
+      } else {
+        totalPrice = payload.totalPrice;
+      }
 
       await usersService.findOneById(payload.userId);
 
       const newOrderId = await ordersService.create({
-        totalPrice,
         ...payload,
+        totalPrice,
       });
 
       logger.info("Created order with id " + newOrderId, { label });
@@ -92,7 +97,7 @@ export class OrdersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while updating order with id: " + orderId +
-            " !",
+          " !",
         );
       }
 
@@ -124,7 +129,7 @@ export class OrdersController {
         throw new BaseHttpError(
           StatusCodes.INTERNAL_SERVER_ERROR,
           "An error occured while removing order with id: " + orderId +
-            " !",
+          " !",
         );
       }
 

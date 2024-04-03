@@ -63,9 +63,10 @@
     </div>
     <div *ngIf="activeUserId" class="main-actions">
       <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
-        "Update"}}</button>
+        "Update/Save"}}</button>
       <button mat-flat-button color="warn" (click)="remove()" [disabled]="isUpdating">{{isUpdating ? "Removing...":
         "Remove"}}</button>
+      <h3 style="color:red;margin:0">!!! Mind that Remove button will not ask for confirmation !!!</h3>
     </div>
     <div *ngIf="isCreatingStarted" class="main-content">
       <div class="main-item">
