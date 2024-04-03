@@ -28,8 +28,8 @@
     <button mat-flat-button color="primary" (click)="logout()">Log Out</button>
   </header>
   <div class="content">
-    <ng-container *ngIf="activeTab === 'users'"><users-list /></ng-container>
-    <ng-container *ngIf="activeTab === 'products'">Products</ng-container>
-    <ng-container *ngIf="activeTab === 'orders'">Orders</ng-container>
+    <ng-container *ngIf="activeTab === 'users'"><users-list [users]="users" /></ng-container>
+    <ng-container *ngIf="activeTab === 'products'"><products-list [products]="products" /></ng-container>
+    <ng-container *ngIf="activeTab === 'orders'"><orders-list [orders]="orders" /></ng-container>
   </div>
 </ng-container>

@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="side">
+    <div *ngFor="let user of users" class="side-item {{activeUserId === user.id ? 'active':''}}"
+      (click)="setActiveUserId(user.id)">
+      {{user.firstName}} {{user.lastName}}</div>
+    <div class="side-item {{isCreatingStarted ? 'active':''}}" (click)="setCreating()">
+      +</div>
+  </div>
+
+  <div class="main {{!isCreatingStarted && !activeUserId ? 'empty': ''}}">
+    <div *ngIf="activeUserId" class="main-content">
+      <div class="main-item">
+        <span>First Name:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.firstName">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Last Name:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.lastName">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Email:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.email">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>New Password:</span>
+        <mat-form-field>
+          <input matInput type="password" [(ngModel)]="activeUser.password">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Country Code:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.countryCode">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Phone Number:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.phoneNumber">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Delivery Address:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="activeUser.deliveryAddress">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Role:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="activeUser.role">
+            <mat-option value="ADMIN">Admin</mat-option>
+            <mat-option value="CUSTOMER">Customer</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="activeUserId" class="main-actions">
+      <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
+        "Update"}}</button>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-content">
+      <div class="main-item">
+        <span>First Name:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.firstName">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Last Name:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.lastName">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Email:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.email">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>New Password:</span>
+        <mat-form-field>
+          <input matInput type="password" [(ngModel)]="newUser.password">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Country Code:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.countryCode">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Phone Number:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.phoneNumber">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Delivery Address:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newUser.deliveryAddress">
+        </mat-form-field>
+      </div>
+      <div class="main-item">
+        <span>Role:</span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="newUser.role">
+            <mat-option value="ADMIN">Admin</mat-option>
+            <mat-option value="CUSTOMER">Customer</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-actions">
+      <button mat-flat-button [disabled]="isCreating" color="primary" (click)="createUser()">{{isCreating ? "Saving...":
+        "Save"}}</button>
+    </div>
+  </div>
+</div>

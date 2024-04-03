@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="side">
+    <div *ngFor="let order of orders" class="side-item {{activeOrderId === order._id ? 'active':''}}"
+      (click)="setActiveOrderId(order._id)">
+      {{order._id}}</div>
+    <div class="side-item {{isCreatingStarted ? 'active':''}}" (click)="setCreating()">
+      +</div>
+  </div>
+
+  <div class="main">
+    <div *ngIf="activeOrderId" class="main-content">
+      <div class="main-item">
+        <span>Id: </span>
+        <mat-form-field>
+          <input disabled matInput [value]="activeOrder._id">
+        </mat-form-field>
+      </div>
+      <!-- <div class="main-item"> -->
+      <!--   <span>Role:</span> -->
+      <!--   <mat-form-field> -->
+      <!--     <mat-select [(ngModel)]="activeOrder.role"> -->
+      <!--       <mat-option value="ADMIN">Admin</mat-option> -->
+      <!--       <mat-option value="CUSTOMER">Customer</mat-option> -->
+      <!--     </mat-select> -->
+      <!--   </mat-form-field> -->
+      <!-- </div> -->
+    </div>
+    <div *ngIf="activeOrderId" class="main-actions">
+      <button mat-flat-button color="primary" (click)="update()" [disabled]="isUpdating">{{isUpdating ? "Updating...":
+        "Update"}}</button>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-content">
+      <div class="main-item">
+        <span>Status:</span>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newOrder.status">
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-actions">
+      <button mat-flat-button [disabled]="isCreating" color="primary" (click)="createOrder()">{{isCreating ?
+        "Saving...":
+        "Save"}}</button>
+    </div>
+  </div>
+</div>

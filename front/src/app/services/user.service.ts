@@ -15,6 +15,10 @@ export class UserService {
     return this.client.get<{ success: boolean; elements: IUser[] }>("/users");
   }
 
+  createOne(payload: Partial<IUser>) {
+    return this.client.post<{ id: string }>("/users/create", payload);
+  }
+
   updateOne(id: string, payload: Partial<IUser>) {
     return this.client.put<{ updatedId: string }>("/users/" + id, payload);
   }
