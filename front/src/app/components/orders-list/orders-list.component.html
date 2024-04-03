@@ -7,7 +7,7 @@
       +</div>
   </div>
 
-  <div class="main">
+  <div class="main {{!isCreatingStarted && !activeOrderId ? 'empty': ''}}">
     <div *ngIf="activeOrderId" class="main-content">
       <div class="main-item">
         <span>Id: </span>

@@ -46,6 +46,13 @@
 
   padding: 30px;
   height: 100%;
+
+  border: 1px solid #3f51b5;
+}
+
+.main.empty {
+  background-color: whitesmoke;
+  border: none;
 }
 
 .main-actions {

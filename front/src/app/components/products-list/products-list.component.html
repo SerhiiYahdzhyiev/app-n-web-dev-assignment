@@ -7,7 +7,7 @@
       +</div>
   </div>
 
-  <div class="main">
+  <div class="main {{!isCreatingStarted && !activeProductId ? 'empty': ''}}">
     <div *ngIf="activeProductId" class="main-content">
       <div class="main-item">
         <span>Title:</span>
@@ -30,6 +30,7 @@
       <div class="main-item">
         <span>Image URLs:</span>
         <div style="display:flex;flex-direction:column:center;gap:10px;padding-top:10px;flex-wrap:wrap;">
+          <span *ngIf="!activeProduct.imageUrls.length">No Image Urls</span>
           <button *ngFor="let url of activeProduct.imageUrls" mat-flat-button (click)="removeImageUrl(url)">
             {{url}}
             <mat-icon>close</mat-icon>
@@ -71,6 +72,7 @@
       <div class="main-item">
         <span>Image URLs:</span>
         <div style="display:flex;flex-direction:column:center;gap:10px;padding-top:10px;flex-wrap:wrap;">
+          <span *ngIf="!newProduct.imageUrls.length">No Image Urls</span>
           <button *ngFor="let url of newProduct.imageUrls" mat-flat-button (click)="removeImageUrl(url)">
             {{url}}
             <mat-icon>close</mat-icon>
@@ -83,10 +85,10 @@
         </mat-form-field>
         <button mat-flat-button color="primary" (click)="addNewImageUrl()">Add New Image URL</button>
       </div>
-      <div *ngIf="isCreatingStarted" class="main-actions">
-        <button mat-flat-button [disabled]="isCreating" color="primary" (click)="createProduct()">{{isCreating ?
-          "Saving...":
-          "Save"}}</button>
-      </div>
+    </div>
+    <div *ngIf="isCreatingStarted" class="main-actions">
+      <button mat-flat-button [disabled]="isCreating" color="primary" (click)="createProduct()">{{isCreating ?
+        "Saving...":
+        "Save"}}</button>
     </div>
   </div>

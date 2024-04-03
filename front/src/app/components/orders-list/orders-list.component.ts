@@ -22,6 +22,10 @@ const _newOrder = {
 @Component({
   selector: "orders-list",
   standalone: true,
+  host: {
+    "[style.height]": "'calc(100vh - 60px)'",
+    "[style.display]": "'block'",
+  },
   templateUrl: "./orders-list.component.html",
   styleUrl: "./orders-list.component.css",
   imports: [
