@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -19,17 +18,16 @@ import { ApiService, AuthService } from "@services";
   styleUrl: "./register-form.component.css",
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule,
   ],
   providers: [
     ApiService,
     MatSnackBar,
     AuthService,
-    Router,
   ],
 })
 export class RegisterForm {
@@ -48,7 +46,6 @@ export class RegisterForm {
   constructor(
     private authService: AuthService,
     private notification: MatSnackBar,
-    private router: Router,
   ) { }
 
   onKeydown(event: KeyboardEvent) {
@@ -58,11 +55,15 @@ export class RegisterForm {
   }
 
   register() {
+    if (!this.canSend) {
+      this.notification.open("All fields are required!", "Closed");
+      return;
+    }
     this.isLoading = true;
     this.authService.register(this.payload).subscribe(
       () => {
         this.isLoading = false;
-        this.router.navigate(["landing"]);
+        window.location.pathname = "/login";
       },
       (err) => {
         this.error = err.message;
@@ -82,5 +83,15 @@ export class RegisterForm {
       phoneNumber: this.phoneNumber,
       deliveryAddress: this.deliveryAddress,
     }
+  }
+
+  get canSend() {
+    return this.firstName &&
+      this.lastName &&
+      this.email &&
+      this.password &&
+      this.countryCode &&
+      this.phoneNumber &&
+      this.deliveryAddress;
   }
 }

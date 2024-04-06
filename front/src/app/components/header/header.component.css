@@ -47,16 +47,35 @@
   text-decoration: none;
 }
 
+.nav-link.active,
 .nav-link:hover {
   border-bottom: 2px solid white;
   padding-bottom: 8px;
+
+  user-select: none;
 }
 
 .actions {
   display: flex;
   gap: 20px;
+
+  color: white;
+  align-items: center;
 }
 
+.actions h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.actions mat-icon {
+  --size: 42px;
+  width: var(--size);
+  height: var(--size);
+  font-size: var(--size);
+}
+
+.action-btn.active,
 .action-btn:hover {
   background: white;
   color: black;
@@ -69,7 +88,9 @@
 
   border: 2px solid white;
   border-radius: 20px;
+
   color: white;
+  text-decoration: none;
 
   padding: 0.5em 1em;
 

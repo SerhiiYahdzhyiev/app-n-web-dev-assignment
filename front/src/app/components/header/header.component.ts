@@ -1,7 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { MatIcon } from "@angular/material/icon";
+import { RouterLink, RouterLinkActive } from "@angular/router";
+
 import { IUser } from "@interfaces";
+import { ApiService, AuthService } from "@services";
 
 @Component({
   selector: "app-header",
@@ -12,20 +15,28 @@ import { IUser } from "@interfaces";
     CommonModule,
     RouterLink,
     RouterLinkActive,
+    MatIcon,
   ],
   providers: [
-    Router
+    ApiService,
+    AuthService,
   ]
 })
 export class HeaderComponent {
   @Input() user: IUser | null = null;
 
-  constructor(private router: Router) { }
+  isLoading = false;
 
-  toLogin() {
-    this.router.navigate(["login"]);
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  logout() {
+    this.isLoading = true;
+    this.authService.logout().subscribe(() => {
+      this.isLoading = false;
+      window.location.reload();
+    });
   }
-  toRegister() {
-    this.router.navigate(["register"]);
-  }
+
 }

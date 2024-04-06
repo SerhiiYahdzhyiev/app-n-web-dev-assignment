@@ -4,14 +4,21 @@
       <div class="logo">[ SY Commerce ]</div>
 
       <nav>
-        <a routerLink="/landing" routerLinkActive class="nav-link">Home</a>
-        <a routerLink="/products" routerLinkActive class="nav-link">Products</a>
+        <a routerLink="/landing" routerLinkActive="active" class="nav-link">Home</a>
+        <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
         <a *ngIf="user" routerLink="/orders" routerLinkActive class="nav-link">Orders</a>
       </nav>
 
-      <div class="actions">
-        <button class="action-btn" (click)="toLogin()">Log In</button>
-        <button class="action-btn" (click)="toRegister()">Sign Up</button>
+      <div *ngIf="!user" class="actions">
+        <a class="action-btn" routerLink="/login" routerLinkActive="active">Log In</a>
+        <a class="action-btn" routerLink="/register" routerLinkActive="active">Sign Up</a>
+      </div>
+
+      <div *ngIf="user" class="actions">
+        <h3>{{user.firstName}} {{user.lastName}}</h3>
+        <mat-icon>person</mat-icon>
+        <button class="action-btn" (click)="logout()">Logout</button>
+        <a *ngIf="user?.role === 'ADMIN'" class="action-btn" routerLink="/admin">Admin</a>
       </div>
     </div>
   </div>

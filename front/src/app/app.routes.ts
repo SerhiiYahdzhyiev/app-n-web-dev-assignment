@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: "landing", component: LandingPage },
   { path: "admin", component: AdminPage },
   { path: "login", component: LoginPage },
-  { path: "register", component: RegisterPage },
   { path: "products", component: ProductsPage },
+  { path: "register", component: RegisterPage },
   { path: "**", component: NotFoundPage },
 ];

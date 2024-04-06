@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-body {
+body:not(.admin) {
   min-height: 100vh;
   background: #67B26F;
   /* fallback for old browsers */

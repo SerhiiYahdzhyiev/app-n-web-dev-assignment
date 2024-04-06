@@ -1,8 +1,7 @@
 <mat-card style="max-width:600px; width:500px" (keydown)="onKeydown($event)">
   <mat-card-content>
     <div style="padding:10px;display:flex;flex-direction:column;justify-items:center;align-items:center;">
-      <mat-form-field>
-        <mat-label>First Name</mat-label>
+      <mat-form-field required> <mat-label>First Name</mat-label>
         <input matInput type="text" placeholder="First Name..." [(ngModel)]="firstName">
       </mat-form-field>
       <mat-form-field>

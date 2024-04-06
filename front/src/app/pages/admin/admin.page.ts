@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTabsModule } from "@angular/material/tabs";
@@ -48,7 +48,7 @@ import { RouterLink } from "@angular/router";
     MatSnackBar,
   ],
 })
-export class AdminPage implements OnInit {
+export class AdminPage implements OnInit, OnDestroy {
   private user: IUser = {} as IUser;
 
   users: IUser[] = [];
@@ -65,9 +65,14 @@ export class AdminPage implements OnInit {
     private productService: ProductService,
     private orderService: OrderService,
     private notification: MatSnackBar,
-  ) {}
+  ) { }
+
+  ngOnDestroy(): void {
+    document.querySelector("body")?.classList.remove("admin");
+  }
 
   ngOnInit(): void {
+    document.querySelector("body")?.classList.add("admin");
     this.isLoading = true;
     this.userService.getMe().subscribe(
       (user) => {
