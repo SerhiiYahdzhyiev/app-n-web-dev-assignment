@@ -8,6 +8,10 @@
 
   display: grid;
   place-items: center;
+
+  background: white;
+
+  z-index: 100;
 }
 
 .wall .content {
