@@ -1,0 +1,36 @@
+.wall {
+  position: fixed;
+
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  display: grid;
+  place-items: center;
+}
+
+.wall .content {
+  display: flex;
+  gap: 20px;
+
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.wall .content p {
+  color: gray;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+
+  line-height: 1.5;
+}
+
+.wall .content h2 mat-icon {
+  --size: 72px;
+  width: var(--size);
+  height: var(--size);
+  font-size: var(--size);
+}

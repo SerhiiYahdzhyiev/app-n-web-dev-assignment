@@ -1,1 +1,2 @@
-<router-outlet />
+<mobile-wall *ngIf="innerWidth < minViewportWidth" />
+<router-outlet *ngIf="innerWidth>= minViewportWidth" />
