@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -12,9 +13,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { ApiService, AuthService } from "@services";
 
 @Component({
-  selector: "login-form",
+  selector: "register-form",
   standalone: true,
   templateUrl: "./register-form.component.html",
+  styleUrl: "./register-form.component.css",
   imports: [
     CommonModule,
     MatCardModule,
@@ -27,44 +29,58 @@ import { ApiService, AuthService } from "@services";
     ApiService,
     MatSnackBar,
     AuthService,
+    Router,
   ],
 })
-export class LoginForm {
+export class RegisterForm {
   firstName: string = "";
   lastName: string = "";
   email: string = "";
   password: string = "";
   phoneNumber: string = "";
-  countryCode: string = "";
+  countryCode: string = "+1";
   deliveryAddress: string = "";
 
   error: string = "";
 
-  isLogging = false;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
     private notification: MatSnackBar,
+    private router: Router,
   ) { }
 
   onKeydown(event: KeyboardEvent) {
     if (event.key === "Enter") {
-      this.login();
+      this.register();
     }
   }
 
   register() {
     this.isLoading = true;
-    this.authService.register(this.login_, this.pass).subscribe(
+    this.authService.register(this.payload).subscribe(
       () => {
-        this.isLogging = false;
-        window.location.reload();
+        this.isLoading = false;
+        this.router.navigate(["landing"]);
       },
       (err) => {
         this.error = err.message;
-        this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLogging = false;
+        this.notification.open(err?.message || "Unknown error!", "Close");
+        this.isLoading = false;
       },
     );
+  }
+
+  get payload() {
+    return {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      password: this.password,
+      countryCode: this.countryCode,
+      phoneNumber: this.phoneNumber,
+      deliveryAddress: this.deliveryAddress,
+    }
   }
 }
