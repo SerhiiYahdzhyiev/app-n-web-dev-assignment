@@ -1,0 +1,18 @@
+<header class="header">
+  <div class="wrapper">
+    <div class="content">
+      <div class="logo">[ SY Commerce ]</div>
+
+      <nav>
+        <a routerLink="/landing" routerLinkActive class="nav-link">Home</a>
+        <a routerLink="/products" routerLinkActive class="nav-link">Products</a>
+        <a *ngIf="user" routerLink="/orders" routerLinkActive class="nav-link">Orders</a>
+      </nav>
+
+      <div class="actions">
+        <button class="action-btn" (click)="toLogin()">Log In</button>
+        <button class="action-btn" (click)="toRegister()">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</header>
