@@ -9,7 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 
-import { AuthService } from "@services";
+import { ApiService, AuthService } from "@services";
 
 @Component({
   selector: "login-form",
@@ -24,6 +24,7 @@ import { AuthService } from "@services";
     FormsModule,
   ],
   providers: [
+    ApiService,
     MatSnackBar,
     AuthService,
   ],
@@ -39,7 +40,7 @@ export class LoginForm {
   constructor(
     private authService: AuthService,
     private notification: MatSnackBar,
-  ) {}
+  ) { }
 
   onKeydown(event: KeyboardEvent) {
     if (event.key === "Enter") {
@@ -50,7 +51,7 @@ export class LoginForm {
   login() {
     this.isLogging = true;
     this.authService.login(this.login_, this.pass).subscribe(
-      (data) => {
+      () => {
         this.isLogging = false;
         window.location.reload();
       },
