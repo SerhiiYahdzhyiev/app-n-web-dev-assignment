@@ -4,3 +4,4 @@ export * from "./admin/admin.page";
 export * from "./loader/loader.page";
 export * from "./products/products.page";
 export * from "./login/login.page";
+export * from "./register/register.page";
