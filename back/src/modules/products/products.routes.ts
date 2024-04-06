@@ -4,9 +4,11 @@ import {
   getObjectIdValidationMiddleware,
   validateSchema,
 } from "../../common/middlewares/validation.middleware";
+import { auth } from "../../common/middlewares/auth.middleware";
 
 import { ProductsController } from "./products.controller";
 import { ProductSchema, ProductUpdatePayloadSchema } from "./products.dto";
+
 
 class UsersRouter {
   public router: Router;
@@ -24,6 +26,7 @@ class UsersRouter {
   public route(): void {
     this.router.post(
       "/create",
+      auth,
       validateSchema(ProductSchema),
       this.productsController.create,
     );
@@ -38,6 +41,7 @@ class UsersRouter {
 
     this.router.put(
       "/:productId",
+      auth,
       getObjectIdValidationMiddleware(this.productIdExtractor),
       validateSchema(ProductUpdatePayloadSchema),
       this.productsController.updateOneById,
@@ -45,6 +49,7 @@ class UsersRouter {
 
     this.router.delete(
       "/:productId",
+      auth,
       getObjectIdValidationMiddleware(this.productIdExtractor),
       this.productsController.removeOneById,
     );

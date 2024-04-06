@@ -5,6 +5,7 @@ import { validateSchema } from "../../common/middlewares/validation.middleware";
 import { AuthController } from "./auth.controller";
 import { LoginDataSchema } from "./auth.dto";
 import { auth } from "../../common/middlewares/auth.middleware";
+import { UserUpdatePayloadValidationSchema } from "../users/users.dto";
 
 class AuthRouter {
   public router: Router;
@@ -20,6 +21,11 @@ class AuthRouter {
       "/login",
       validateSchema(LoginDataSchema),
       this.authController.login,
+    );
+    this.router.post(
+      "/register",
+      validateSchema(UserUpdatePayloadValidationSchema),
+      this.authController.register,
     );
     this.router.get(
       "/logout",

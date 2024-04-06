@@ -1,8 +1,23 @@
-import { NextFunction, Request, Response } from "express";
-import { authService } from "./auth.service";
 import { StatusCodes } from "http-status-codes";
+import { NextFunction, Request, Response } from "express";
+
+import { authService } from "./auth.service";
+import { usersService } from "../users/users.service";
 
 export class AuthController {
+  public async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
+
+      const newUserId = usersService.create(payload);
+
+      res
+        .status(StatusCodes.OK)
+        .json({ id: newUserId });
+    } catch (error) {
+      next(error);
+    }
+  }
   public async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { login: email, password } = req.body;

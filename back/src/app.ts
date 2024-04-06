@@ -37,7 +37,7 @@ app.use(passport.initialize());
 
 app.use("/auth", authRouter);
 app.use("/users", auth, usersRouter);
-app.use("/products", auth, productsRouter);
+app.use("/products", productsRouter);
 app.use("/orders", auth, ordersRouter);
 
 app.use(handleError(logger));
