@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   register(payload: Partial<IUser>) {
-    return this.client.post("auth/register", payload);
+    return this.client.post("/auth/register", payload);
   }
 
   logout() {
