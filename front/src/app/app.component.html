@@ -1,2 +1,7 @@
-<mobile-wall *ngIf="innerWidth < minViewportWidth" />
-<router-outlet *ngIf="innerWidth>= minViewportWidth" />
+<div class="app">
+  <mobile-wall *ngIf="innerWidth < minViewportWidth" />
+  <ng-container *ngIf="innerWidth>= minViewportWidth">
+    <app-header />
+    <router-outlet />
+  </ng-container>
+</div>
