@@ -95,6 +95,8 @@ You can use this links for detailed installation instructions:
    docker-compose up -d --build
    ```
 
+   *!!! May take a while.*
+
 5. Once the containers are up and running, you can access the Angular SPA at
    `http://localhost:4200`.
 
