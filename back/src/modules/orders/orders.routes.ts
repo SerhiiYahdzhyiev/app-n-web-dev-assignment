@@ -29,6 +29,7 @@ class OrdersRouter {
     );
 
     this.router.get("/", this.ordersController.getAll);
+    this.router.get("/mine", this.ordersController.getAllByUserId);
 
     this.router.get(
       "/:orderId",

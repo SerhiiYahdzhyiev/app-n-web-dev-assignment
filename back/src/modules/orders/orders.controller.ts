@@ -71,6 +71,23 @@ export class OrdersController {
     }
   }
 
+  public async getAllByUserId(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = (req.user! as IUser)._id;
+      const orders = await ordersService.findManyByUserId(userId);
+
+      logger.info("Returned orders for userId " + userId, { label });
+
+      res.status(StatusCodes.OK).json({
+        success: true,
+        elements: orders,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
   public async updateOneById(req: Request, res: Response, next: NextFunction) {
     try {
       if (

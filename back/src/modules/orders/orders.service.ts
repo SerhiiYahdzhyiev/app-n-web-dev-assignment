@@ -43,6 +43,12 @@ class OrdersService implements IOrdersService {
     return order;
   }
 
+  public async findManyByUserId(id: string) {
+    const orders = await Order.find({ userId: id });
+
+    return orders;
+  }
+
   public async updateOneById(id: string, payload: TOrderUpdatePayload) {
     const order = await Order.findOneAndUpdate({ _id: id }, payload);
 
