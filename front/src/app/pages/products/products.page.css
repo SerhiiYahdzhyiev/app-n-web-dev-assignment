@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  width: 100%;
+
+  max-height: calc(100vh - 80px);
+
+  gap: 40px;
+
+  overflow: auto;
+}
