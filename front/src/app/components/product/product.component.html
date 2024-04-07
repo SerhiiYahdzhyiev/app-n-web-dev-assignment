@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="sub-container">
+    <div class="img-container">
+
+      <img [src]="product!.imageUrls[0]" alt="product image">
+    </div>
+
+    <div class="text-col">
+      <h3>{{product?.title}}</h3>
+      <p>{{product?.description}}</p>
+    </div>
+  </div>
+
+  <div class="sub-container">
+    <h3 class="price">{{price}}</h3>
+    <div class="actions">
+      <button class="action-btn" (click)="isAuthorized ? buy() : showAuthorizedNotification()">Buy Now</button>
+      <button class="action-btn" (click)="isAuthorized ? addToBasket() : showAuthorizedNotification()">Add to
+        Basket</button>
+    </div>
+
+  </div>
+</div>

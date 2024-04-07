@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  padding: 20px;
+
+  justify-content: space-between;
+
+  background: white;
+
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.sub-container:first-child {
+  display: flex;
+  gap: 40px;
+}
+
+.img-container {
+  position: relative;
+  width: 100px;
+  aspect-ratio: 1;
+
+  overflow: hidden;
+}
+
+.img-container img {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 100%;
+  height: auto;
+
+  transform: translate(-50%, -50%);
+
+  object-fit: cover;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.text-col h3 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.text-col p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.action-btn {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.5em 1em;
+
+  color: white;
+
+  border: none;
+  border-radius: 18px;
+
+  cursor: pointer;
+}
+
+.action-btn:nth-child(1) {
+  background-color: darkgreen;
+  margin-right: 10px;
+}
+
+.action-btn:nth-child(2) {
+  background-color: orange;
+}
