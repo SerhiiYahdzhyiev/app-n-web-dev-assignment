@@ -42,5 +42,6 @@ export class ProductComponent {
   }
   addToBasket() {
     this.basket.add(this.product!._id);
+    this.notification.open(`Add one ${this.product!.title} to basket!`, "Close");
   }
 }
