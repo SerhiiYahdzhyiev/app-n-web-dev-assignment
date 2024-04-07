@@ -12,6 +12,6 @@
     <product *ngFor="let product of fileredProducts" [product]="product" [isAuthorized]="hasUser" />
   </ng-container>
   <ng-container *ngIf="!products.length">
-    <h3>No products</h3>
+    <h3 style="color:white">No products</h3>
   </ng-container>
 </div>
