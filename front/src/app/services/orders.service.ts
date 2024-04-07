@@ -4,11 +4,17 @@ import { IOrder } from "@interfaces";
 
 @Injectable()
 export class OrderService {
-  constructor(private client: ApiService) {}
+  constructor(private client: ApiService) { }
 
   getAll() {
     return this.client.get<{ success: boolean; elements: IOrder[] }>(
       "/orders",
+    );
+  }
+
+  getMine() {
+    return this.client.get<{ success: boolean; elements: IOrder[] }>(
+      "/orders/mine",
     );
   }
 
