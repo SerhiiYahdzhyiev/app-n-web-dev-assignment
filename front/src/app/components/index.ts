@@ -6,3 +6,4 @@ export * from "./orders-list/orders-list.component";
 export * from "./mobile-wall/mobile-wall.component";
 export * from "./header/header.component";
 export * from "./product/product.component";
+export * from "./order/order.component";
