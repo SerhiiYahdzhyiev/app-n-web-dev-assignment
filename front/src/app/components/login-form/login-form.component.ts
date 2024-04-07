@@ -53,7 +53,11 @@ export class LoginForm {
     this.authService.login(this.login_, this.pass).subscribe(
       () => {
         this.isLogging = false;
-        window.location.reload();
+        if (window.location.pathname === "/login") {
+          window.location.pathname = "/landing";
+        } else {
+          window.location.reload();
+        }
       },
       (err) => {
         this.error = err.message;
