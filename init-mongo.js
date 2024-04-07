@@ -20,7 +20,7 @@ db.users.insertOne({
 });
 
 db.products.insertOne({
-  title: "Quantm Flux Capacitor",
+  title: "Quantum Flux Capacitor",
   description: "A crucial part for constructing time machine",
   price: 4200,
   imageUrls: [
