@@ -7,7 +7,8 @@ import {
   NotFoundPage,
   ProductsPage,
   RegisterPage,
-  CheckoutPage
+  CheckoutPage,
+  OrdersPage,
 } from "@pages";
 
 
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: "admin", component: AdminPage },
   { path: "login", component: LoginPage },
   { path: "products", component: ProductsPage },
+  { path: "orders", component: OrdersPage },
   { path: "register", component: RegisterPage },
   { path: "checkout", component: CheckoutPage },
   { path: "**", component: NotFoundPage },

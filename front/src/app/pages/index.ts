@@ -6,3 +6,4 @@ export * from "./products/products.page";
 export * from "./login/login.page";
 export * from "./register/register.page";
 export * from "./checkout/checkout.page";
+export * from "./orders/orders.page";
