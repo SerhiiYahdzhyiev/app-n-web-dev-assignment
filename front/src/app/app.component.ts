@@ -44,8 +44,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.isLoading = true;
+    console.log(this.userService.currentUser);
+    this.user = this.userService.currentUser;
+
     this.userService.getMe().subscribe(
-      (user) => { this.user = user as unknown as IUser; this.isLoading = false },
+      (user) => {
+        this.user = user as unknown as IUser;
+        this.userService.currentUser = user as unknown as IUser;
+        this.isLoading = false;
+      },
       () => this.isLoading = false
     )
   }
@@ -57,5 +64,6 @@ export class AppComponent implements OnInit {
 
   get isAdmin() {
     return window.location.pathname === "/admin";
+
   }
 }

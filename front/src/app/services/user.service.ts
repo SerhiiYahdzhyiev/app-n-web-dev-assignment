@@ -5,10 +5,13 @@ import { ApiService } from "./api.service";
 
 @Injectable()
 export class UserService {
-  constructor(private client: ApiService) {}
+  currentUser: IUser | null = null;
+
+  constructor(private client: ApiService) {
+  }
 
   getMe() {
-    return this.client.get<IUser>("/users/me");
+    return this.client.get<IUser>("/users/me")
   }
 
   getAll() {
