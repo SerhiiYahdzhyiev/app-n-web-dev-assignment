@@ -6,7 +6,8 @@ import {
   LandingPage,
   NotFoundPage,
   ProductsPage,
-  RegisterPage
+  RegisterPage,
+  CheckoutPage
 } from "@pages";
 
 
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: "login", component: LoginPage },
   { path: "products", component: ProductsPage },
   { path: "register", component: RegisterPage },
+  { path: "checkout", component: CheckoutPage },
   { path: "**", component: NotFoundPage },
 ];
