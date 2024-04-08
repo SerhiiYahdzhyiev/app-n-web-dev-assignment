@@ -10,7 +10,12 @@ export class BasketService {
   }
 
   remove(item: string) {
-    this._items.next(this._items.getValue().filter(i => i !== item));
+    const index = this._items.getValue().indexOf(item);
+    this._items.next([...this._items.getValue().slice(0, index), ...this._items.getValue().slice(index + 1)]);
+  }
+
+  reset() {
+    this._items.next([]);
   }
 
   get items() {

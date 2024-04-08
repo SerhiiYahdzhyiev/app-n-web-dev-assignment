@@ -14,10 +14,15 @@
 
   <div class="sub-container">
     <h3 class="price">{{price}}</h3>
-    <div class="actions">
+    <div *ngIf="!onCheckout" class="actions">
       <button class="action-btn" (click)="isAuthorized ? buy() : showAuthorizedNotification()">Buy Now</button>
       <button class="action-btn" (click)="isAuthorized ? addToBasket() : showAuthorizedNotification()">Add to
         Basket</button>
+    </div>
+
+    <div *ngIf="onCheckout" class="actions">
+      <button class="action-btn" (click)="isAuthorized ? addToBasket() : showAuthorizedNotification()">One More</button>
+      <button class="action-btn" (click)="isAuthorized ? removeFromBasket() : showAuthorizedNotification()">Remove From Basket</button>
     </div>
 
   </div>

@@ -20,7 +20,6 @@ import {
 import { IOrder, IProduct, IUser, UserRoles } from "@interfaces";
 
 import { LoaderPage } from "../loader/loader.page";
-import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "admin-page",
@@ -36,7 +35,6 @@ import { RouterLink } from "@angular/router";
     UserListCopmonent,
     ProductsListCopmonent,
     OrdersListCopmonent,
-    RouterLink,
   ],
   providers: [
     AuthService,

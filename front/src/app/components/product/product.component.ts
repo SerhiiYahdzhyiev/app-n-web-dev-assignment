@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 import { IProduct } from "@interfaces";
 import { BasketService } from "@services";
@@ -21,10 +22,12 @@ import { BasketService } from "@services";
 export class ProductComponent {
   @Input() product: IProduct | null = null;
   @Input() isAuthorized: boolean = false;
+  @Input() onCheckout: boolean = false;
 
   constructor(
     private notification: MatSnackBar,
     private basket: BasketService,
+    private router: Router,
   ) { }
 
   get price() {
@@ -34,13 +37,18 @@ export class ProductComponent {
   showAuthorizedNotification() {
     this.notification.open("To purchase an item you have to be registered!", "Close");
   }
+
   buy() {
-    //TODO: Resolve
     this.basket.add(this.product!._id);
-    console.log("Buying...")
+    this.router.navigate(["checkout"]);
   }
+
   addToBasket() {
     this.basket.add(this.product!._id);
     this.notification.open(`Add one ${this.product!.title} to basket!`, "Close");
+  }
+
+  removeFromBasket() {
+    this.basket.remove(this.product!._id);
   }
 }

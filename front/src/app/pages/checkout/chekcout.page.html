@@ -1,1 +1,20 @@
-<p>Checkout</p>
+<ng-container *ngIf="isLoading">
+  <loader-page />
+</ng-container>
+<ng-container *ngIf="!isLoading">
+  <div class="content">
+     <ng-container *ngIf="itemsIds.length && items.length && products.length">
+      <product *ngFor="let product of items" [product]="product!" [onCheckout]="true" [isAuthorized]="isAuthorized" />
+      <div class="footer">
+       <div class="total">
+         <h3>Total</h3>
+         <h2>$ {{totalPrice / 100}}</h2>
+       </div>
+       <button (click)="createOrder()">Create Order</button>
+      </div>
+     </ng-container>
+     <ng-container *ngIf="!itemsIds.length">
+       <h2 style="color:white;">No items in basket...</h2>
+     </ng-container>
+  </div>
+</ng-container>
