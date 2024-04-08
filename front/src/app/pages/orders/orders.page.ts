@@ -3,7 +3,7 @@ import { IOrder } from "@interfaces";
 import { LoaderPage } from "../loader/loader.page";
 import { OrderComponent } from "@components";
 import { CommonModule } from "@angular/common";
-import { OrderService } from "@services";
+import { ApiService, OrderService } from "@services";
 
 @Component({
   standalone: true,
@@ -16,26 +16,28 @@ import { OrderService } from "@services";
     OrderComponent,
   ],
   providers: [
+    ApiService,
     OrderService,
   ]
 })
 export class OrdersPage implements OnInit {
   orders: IOrder[] = [];
 
-  isLoading = false
+  isLoading = false;
 
   ngOnInit(): void {
-    this.isLoading = true;
+    this.api.isLoading.subscribe(
+      (isLoading) => this.isLoading = isLoading,
+    );
     this.ordersService.getMine().subscribe(
       (data) => {
         this.orders = (data as any).elements;
-        this.isLoading = false;
       },
-      () => this.isLoading = false
     )
   }
 
   constructor(
+    private api: ApiService,
     private ordersService: OrderService,
   ) { }
 }

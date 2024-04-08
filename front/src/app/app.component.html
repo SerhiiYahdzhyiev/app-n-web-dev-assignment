@@ -1,7 +1,4 @@
-<ng-container *ngIf="isLoading">
-  <loader-page />
-</ng-container>
-<div *ngIf="!isLoading" class="app">
+<div class="app">
   <mobile-wall *ngIf="innerWidth < minViewportWidth" />
   <ng-container *ngIf="innerWidth>= minViewportWidth">
     <app-header *ngIf="!isAdmin" [user]="user" />

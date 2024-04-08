@@ -2,12 +2,19 @@ import { Injectable } from "@angular/core";
 
 import { IUser } from "@interfaces";
 import { ApiService } from "./api.service";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class UserService {
-  currentUser: IUser | null = null;
+  private _currentUser: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public readonly currentUser = this._currentUser.asObservable();
 
   constructor(private client: ApiService) {
+    this.getMe().subscribe(
+      (user) => this._currentUser.next(user as unknown as IUser),
+      () => this._currentUser.next(null)
+    )
   }
 
   getMe() {
