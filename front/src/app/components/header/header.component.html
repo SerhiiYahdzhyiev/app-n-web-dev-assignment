@@ -15,6 +15,10 @@
       </div>
 
       <div *ngIf="user" class="actions">
+        <div class="cart" (click)="toCheckout()">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>{{cartItemsNumber}}</span>
+        </div>
         <h3>{{user.firstName}} {{user.lastName}}</h3>
         <mat-icon>person</mat-icon>
         <button class="action-btn" (click)="logout()">Logout</button>

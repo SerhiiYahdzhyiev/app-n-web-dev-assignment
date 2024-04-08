@@ -102,3 +102,31 @@
   margin: 0 auto;
   height: 100%;
 }
+
+.cart {
+  position:relative;
+  color: white;
+
+  cursor: pointer;
+}
+
+.cart mat-icon {
+  font-size:32px;
+  width: 32px;
+  height: 32px;
+}
+
+.cart span {
+  position: absolute;
+  display: block;
+  right: -6px;
+  bottom: -6px;
+
+  display: grid;
+  place-items: center;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: orange;
+}

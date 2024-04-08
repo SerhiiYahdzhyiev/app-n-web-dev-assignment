@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 
 import { IUser } from "@interfaces";
-import { ApiService, AuthService } from "@services";
+import { AuthService, BasketService } from "@services";
 
 @Component({
   selector: "app-header",
@@ -18,17 +18,27 @@ import { ApiService, AuthService } from "@services";
     MatIcon,
   ],
   providers: [
-    ApiService,
+    Router,
     AuthService,
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Input() user: IUser | null = null;
+
+  cartItemsNumber: number = 0;
 
   isLoading = false;
 
+  ngOnInit(): void {
+      this.basketService.items.subscribe(
+        (data) => this.cartItemsNumber = data.length
+      );
+   }
+
   constructor(
-    private authService: AuthService
+    private router: Router,
+    private authService: AuthService,
+    public basketService: BasketService,
   ) { }
 
   logout() {
@@ -39,4 +49,7 @@ export class HeaderComponent {
     });
   }
 
+  toCheckout() {
+    this.router.navigate(["checkout"]);
+  }
 }
