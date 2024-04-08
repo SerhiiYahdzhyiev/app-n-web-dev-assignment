@@ -2,7 +2,8 @@
   <div class="sub-container">
     <div class="img-container">
 
-      <img [src]="product!.imageUrls[0]" alt="product image">
+      <img *ngIf="product!.imageUrls.length" [src]="product!.imageUrls[0]" alt="product image">
+      <p *ngIf="!product!.imageUrls.length" style="color:white; margin:20px">No images</p>
     </div>
 
     <div class="text-col">

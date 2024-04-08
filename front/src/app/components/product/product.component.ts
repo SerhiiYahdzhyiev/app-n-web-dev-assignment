@@ -16,7 +16,6 @@ import { BasketService } from "@services";
   ],
   providers: [
     MatSnackBar,
-    BasketService
   ],
 })
 export class ProductComponent {

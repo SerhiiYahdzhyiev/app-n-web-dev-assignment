@@ -23,6 +23,8 @@
   width: 100px;
   aspect-ratio: 1;
 
+  background: gray;
+
   overflow: hidden;
 }
 
