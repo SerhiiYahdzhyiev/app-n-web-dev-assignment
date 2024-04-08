@@ -9,7 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 
-import { ApiService, AuthService } from "@services";
+import { AuthService } from "@services";
 
 @Component({
   selector: "login-form",
@@ -24,7 +24,6 @@ import { ApiService, AuthService } from "@services";
     FormsModule,
   ],
   providers: [
-    ApiService,
     MatSnackBar,
     AuthService,
   ],

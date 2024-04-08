@@ -12,7 +12,6 @@ import {
   UserListCopmonent,
 } from "@components";
 import {
-  ApiService,
   AuthService,
   OrderService,
   ProductService,
@@ -40,7 +39,6 @@ import { RouterLink } from "@angular/router";
     RouterLink,
   ],
   providers: [
-    ApiService,
     AuthService,
     UserService,
     ProductService,
