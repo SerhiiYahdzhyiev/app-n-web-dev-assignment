@@ -73,7 +73,7 @@ export class OrdersListCopmonent implements OnInit {
   constructor(
     private orderService: OrderService,
     private notification: MatSnackBar,
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
@@ -168,12 +168,17 @@ export class OrdersListCopmonent implements OnInit {
         (data) => {
           this.notification.open(
             "Successfully removed product with id " +
-              (data as unknown as any).removedId,
+            (data as unknown as any).removedId,
             "Close",
           );
           this.orders = this.orders.filter((o) => o._id !== this.activeOrderId);
-          this.activeOrder = this.orders[0];
-          this.activeOrderId = this.activeOrder._id;
+          if (this.orders.length) {
+            this.activeOrder = this.orders[0];
+            this.activeOrderId = this.activeOrder._id;
+          } else {
+            this.activeOrder = {} as IOrder;
+            this.activeOrderId = "";
+          }
           this.isUpdating = false;
         },
         (err) => {
@@ -197,7 +202,7 @@ export class OrdersListCopmonent implements OnInit {
       (data) => {
         this.notification.open(
           "Successfully updated order with id " +
-            (data as unknown as any).updatedId,
+          (data as unknown as any).updatedId,
           "Close",
         );
         let old = this.orders.find((o) => o._id === this.activeOrderId)!;
