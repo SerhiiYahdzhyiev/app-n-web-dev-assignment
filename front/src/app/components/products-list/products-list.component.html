@@ -12,26 +12,26 @@
       <div class="main-item">
         <span>Title:</span>
         <mat-form-field>
-          <input matInput [(ngModel)]="activeProduct.title">
+          <input matInput [(ngModel)]="activeProduct!.title">
         </mat-form-field>
       </div>
       <div class="main-item">
         <span>Description:</span>
         <mat-form-field>
-          <textarea matInput [(ngModel)]="activeProduct.description"></textarea>
+          <textarea matInput [(ngModel)]="activeProduct!.description"></textarea>
         </mat-form-field>
       </div>
       <div class="main-item">
         <span>Price (in cents):</span>
         <mat-form-field>
-          <input type="number" min="1" matInput [(ngModel)]="activeProduct.price">
+          <input type="number" min="1" matInput [(ngModel)]="activeProduct!.price">
         </mat-form-field>
       </div>
       <div class="main-item">
         <span>Image URLs:</span>
         <div style="display:flex;flex-direction:column:center;gap:10px;padding-top:10px;flex-wrap:wrap;">
-          <span *ngIf="!activeProduct.imageUrls.length">No Image Urls</span>
-          <button *ngFor="let url of activeProduct.imageUrls" mat-flat-button (click)="removeImageUrl(url)">
+          <span *ngIf="!activeProduct!.imageUrls.length">No Image Urls</span>
+          <button *ngFor="let url of activeProduct!.imageUrls" mat-flat-button (click)="removeImageUrl(url)">
             {{url}}
             <mat-icon>close</mat-icon>
           </button>

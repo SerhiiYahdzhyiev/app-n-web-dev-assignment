@@ -48,7 +48,7 @@ export class ProductsListCopmonent implements OnInit {
   products: IProduct[] = [];
 
   activeProductId = "";
-  activeProduct: IProduct = {} as IProduct;
+  activeProduct: IProduct | null = null;
 
   newProduct = Object.assign({}, _newProduct);
 
@@ -74,7 +74,7 @@ export class ProductsListCopmonent implements OnInit {
       target = this.activeProduct;
     }
 
-    target.imageUrls = target.imageUrls!.filter((u) => u !== url);
+    target!.imageUrls = target!.imageUrls!.filter((u) => u !== url);
   }
 
   addNewImageUrl() {
@@ -86,7 +86,7 @@ export class ProductsListCopmonent implements OnInit {
         target = this.activeProduct;
       }
 
-      target.imageUrls!.push(this.newImageUrl);
+      target!.imageUrls!.push(this.newImageUrl);
       this.newImageUrl = "";
     }
   }
@@ -148,8 +148,13 @@ export class ProductsListCopmonent implements OnInit {
           this.products = this.products.filter((p) =>
             p._id !== this.activeProductId
           );
-          this.activeProduct = this.products[0];
-          this.activeProductId = this.activeProduct._id;
+          if (this.products.length) {
+            this.activeProduct = this.products[0];
+            this.activeProductId = this.activeProduct._id;
+          } else {
+            this.activeProduct = null;
+            this.activeProductId = "";
+          }
           this.isUpdating = false;
         },
         (err) => {

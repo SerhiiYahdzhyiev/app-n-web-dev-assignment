@@ -49,7 +49,7 @@ export class UserListCopmonent implements OnInit {
   users: IUser[] = [];
 
   activeUserId = "";
-  activeUser: IUser = {} as IUser;
+  activeUser: IUser | null = null;
 
   newUser = Object.assign({}, _newUser);
 
@@ -120,8 +120,13 @@ export class UserListCopmonent implements OnInit {
             "Close",
           );
           this.users = this.users.filter((u) => u.id !== this.activeUserId);
-          this.activeUser = this.users[0];
-          this.activeUserId = this.activeUser.id;
+          if (this.users.length) {
+            this.activeUser = this.users[0];
+            this.activeUserId = this.activeUser.id;
+          } else {
+            this.activeUser = null;
+            this.activeUserId = "";
+          }
           this.isUpdating = false;
         },
         (err) => {
