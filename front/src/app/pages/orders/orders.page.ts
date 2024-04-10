@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { IOrder } from "@interfaces";
+import { IOrder, IProduct } from "@interfaces";
 import { LoaderPage } from "../loader/loader.page";
 import { OrderComponent } from "@components";
 import { CommonModule } from "@angular/common";
-import { ApiService, OrderService } from "@services";
+import { ApiService, OrderService, ProductService } from "@services";
 
 @Component({
   standalone: true,
@@ -18,10 +18,12 @@ import { ApiService, OrderService } from "@services";
   providers: [
     ApiService,
     OrderService,
+    ProductService,
   ]
 })
 export class OrdersPage implements OnInit {
   orders: IOrder[] = [];
+  products: IProduct[] = [];
 
   isLoading = false;
 
@@ -34,10 +36,16 @@ export class OrdersPage implements OnInit {
         this.orders = (data as any).elements;
       },
     )
+    this.productsService.getAll().subscribe(
+      (data) => {
+        this.products = (data as any).elements;
+      },
+    )
   }
 
   constructor(
     private api: ApiService,
     private ordersService: OrderService,
+    private productsService: ProductService,
   ) { }
 }

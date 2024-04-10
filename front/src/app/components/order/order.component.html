@@ -1,1 +1,26 @@
-<p>{{order?._id}}</p>
+<div class="container">
+  <div class="content">
+  
+    <h2>{{formattedDate}}</h2>
+    <div class="products">
+      <p *ngFor="let title of productTitles">{{title}}</p>
+    </div>
+    <div class="row">
+      <div class="row">
+        <h3>Status:</h3>
+        <h3 class="status" style={{orderStatusStyle}}>
+          {{order!.status}}
+        </h3>
+      </div>
+      <div class="row">
+        <h3>Payment:</h3>
+        <h3 class="payment-status" style={{paymentStatusStyle}}>
+          {{order!.paymentStatus}}
+        </h3>
+      </div>
+      <div class="actions">
+        <button (click)="pay()">Pay</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@
       <h3 style="color:white">No orders</h3>
     </ng-container>
     <ng-container *ngIf="orders.length">
-      <order *ngFor="let order of orders" [order]="order" />
+      <order *ngFor="let order of orders" [order]="order" [products]="products" />
     </ng-container>
   </div>
 </ng-container>
