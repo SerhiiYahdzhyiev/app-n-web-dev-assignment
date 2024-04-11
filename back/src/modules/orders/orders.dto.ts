@@ -55,7 +55,7 @@ export const orderUpdationSchema = z.object({
   ).array().nonempty({
     message: "Cannot create/update order with no products!",
   }),
-  totalPrice: z.number().min(1).nonnegative(),
+  totalPrice: z.number().min(1).nonnegative().optional(),
 }).strict();
 
 export type TOrderCreationPayload = z.infer<typeof orderCreationSchema>;
