@@ -25,7 +25,8 @@
               "src/styles/reset.css",
               "src/styles/global.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {

@@ -12,14 +12,15 @@
           {{order!.status}}
         </h3>
       </div>
-      <div class="row">
+      <div *ngIf="displayPaymentStatus" class="row">
         <h3>Payment:</h3>
         <h3 class="payment-status" style={{paymentStatusStyle}}>
           {{order!.paymentStatus}}
         </h3>
       </div>
-      <div class="actions">
-        <button (click)="pay()">Pay</button>
+      <div  class="actions">
+        <div #paypal></div>
+        <button *ngIf="canCancel" (click)="cancel()">Cancel</button>
       </div>
     </div>
   </div>
