@@ -30,7 +30,7 @@ import { LoaderPage } from "./pages/loader/loader.page";
 })
 export class AppComponent implements OnInit, OnChanges {
   innerWidth: number = 0;
-  minViewportWidth = 1000;
+  minViewportWidth = 1200;
 
   user: IUser | null = null;
 
