@@ -9,7 +9,7 @@ export class AuthController {
     try {
       const payload = req.body;
 
-      const newUserId = usersService.create(payload);
+      const newUserId = await usersService.create(payload);
 
       res
         .status(StatusCodes.OK)
