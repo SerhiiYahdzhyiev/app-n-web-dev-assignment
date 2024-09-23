@@ -55,6 +55,7 @@ export class ProductsController {
       res
         .status(StatusCodes.OK)
         .json({
+          success: true,
           elements,
         });
     } catch (error) {
