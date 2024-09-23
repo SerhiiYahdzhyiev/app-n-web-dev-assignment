@@ -108,6 +108,24 @@ You can use this links for detailed installation instructions:
    root
    ```
 
+## Running the tests
+
+Currently there are only couple core test case source files in the `back/__test__` folder.
+To run them follow this steps:
+
+1. Navigate to the `back` directory:
+   ```bash
+   cd back
+   ```
+2. Install the dependencies (if not installed earlier):
+   ```bash
+   <npm|yarn|pnpm> install
+   ```
+2. Run the test script
+   ```bash
+   npm run test
+   ```
+
 ## License<a name="license"></a>
 
 This project is licensed under the [MIT License](LICENSE.md).
