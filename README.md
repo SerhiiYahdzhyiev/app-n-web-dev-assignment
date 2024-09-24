@@ -11,6 +11,7 @@ the submited report of this assignment.
 - [Getting Started](#start)
   - [Prerequisites](#pre)
   - [Build and Run](#install)
+  - [Run the tests](#run-the-tests)
 - [License](#license)
 
 ## Getting Started<a name="start"></a>
@@ -106,6 +107,30 @@ You can use this links for detailed installation instructions:
    ```
    admin@mail.com
    root
+   ```
+
+### Run the tests
+
+1. In the project root checkout `testing` branch:
+   ```bash
+   git fetch --all
+   git switch testing
+   git pull
+   ```
+
+2. Navigate to the `back` folder.
+   ```bash
+   cd back
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Run test script:
+   ```bash
+   npm run test
    ```
 
 ## License<a name="license"></a>
