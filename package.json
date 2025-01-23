@@ -1,6 +1,6 @@
 {
   "name": "ecomm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This repository contains the code for the App and Web Development Module\r Assignment, which is a simple fullstach E-commerce Web App. The provided\r `docker-compose.yaml` file allows users to easily set up and run the entire\r application stack using Docker Compose. More detailed reviview will be provided\r in the submited report of this assignment.",
   "main": "init-mongo.js",
   "type": "module",
