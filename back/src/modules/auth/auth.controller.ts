@@ -3,11 +3,20 @@ import { NextFunction, Request, Response } from "express";
 
 import { authService } from "./auth.service";
 import { usersService } from "../users/users.service";
+import { UserRoles } from "../users/users.dto";
+import { BadRequest } from "../../common/exceptions";
 
 export class AuthController {
   public async register(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = req.body;
+
+      if (
+        "role" in payload
+        && payload.role === UserRoles.ADMIN
+      ) {
+        throw new BadRequest("Admin user registration is not allowed!");
+      }
 
       const newUserId = await usersService.create(payload);
 
