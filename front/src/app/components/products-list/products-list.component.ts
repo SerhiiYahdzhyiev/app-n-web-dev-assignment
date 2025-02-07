@@ -16,6 +16,7 @@ import { ProductService } from "@services";
 const _newProduct: IProduct = {
   title: "New Product",
   description: "New description",
+  category: "Unknown",
   price: 1,
   imageUrls: [],
 };
