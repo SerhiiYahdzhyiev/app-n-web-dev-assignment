@@ -11,6 +11,7 @@ the submited report of this assignment.
 - [Getting Started](#start)
   - [Prerequisites](#pre)
   - [Build and Run](#install)
+  - [Run the tests](#run-the-tests)
 - [License](#license)
 
 ## Getting Started<a name="start"></a>
@@ -108,20 +109,26 @@ You can use this links for detailed installation instructions:
    root
    ```
 
-## Running the tests
+### Run the tests
 
-Currently there are only couple core test case source files in the `back/__test__` folder.
-To run them follow this steps:
+1. In the project root checkout `testing` branch:
+   ```bash
+   git fetch --all
+   git switch testing
+   git pull
+   ```
 
-1. Navigate to the `back` directory:
+2. Navigate to the `back` folder.
    ```bash
    cd back
    ```
-2. Install the dependencies (if not installed earlier):
+
+3. Install dependencies:
    ```bash
-   <npm|yarn|pnpm> install
+   npm install
    ```
-2. Run the test script
+
+4. Run test script:
    ```bash
    npm run test
    ```
