@@ -22,6 +22,7 @@ db.users.insertOne({
 db.products.insertOne({
   title: "Quantum Flux Capacitor",
   description: "A crucial part for constructing time machine",
+  category: "Hobby",
   price: 4200,
   imageUrls: [
     "https://m.media-amazon.com/images/I/71cy3X1C6PL._AC_SL1500_.jpg",
@@ -31,6 +32,7 @@ db.products.insertOne({
 db.products.insertOne({
   title: "Light Sabre",
   description: "A legendary weapon of Jedi Knights",
+  category: "Hobby",
   price: 6600,
   imageUrls: [
     "https://www.sciencefriday.com/wp-content/uploads/2015/12/lightsaber6.jpg",
@@ -40,6 +42,7 @@ db.products.insertOne({
 db.products.insertOne({
   title: "Whip",
   description: "Favaorite tool of archologists/adventurers",
+  category: "Hobby",
   price: 6900,
   imageUrls: [
     "https://m.media-amazon.com/images/I/612ioBkqObL._AC_SL1000_.jpg",
