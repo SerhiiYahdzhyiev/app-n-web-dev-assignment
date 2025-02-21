@@ -30,6 +30,13 @@
           },
           "configurations": {
             "production": {
+              "assets": [
+                {
+	              "glob": "**/*",
+	              "input": "src/assets",
+                      "output": "/assets/"
+                },
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -45,6 +52,13 @@
               "outputHashing": "all"
             },
             "development": {
+              "assets": [
+                {
+	              "glob": "**/*",
+	              "input": "src/assets",
+                      "output": "/assets/"
+                },
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
