@@ -23,25 +23,195 @@
   "description": "A crucial part for constructing time machine",
   "category": "Hobby",
   "price": 4200,
-  "imageUrls": [
-    "https://m.media-amazon.com/images/I/71cy3X1C6PL._AC_SL1500_.jpg"
-  ]
+  "imageUrls": []
 },
 {
   "title": "Light Sabre",
   "description": "A legendary weapon of Jedi Knights",
   "category": "Hobby",
   "price": 6600,
-  "imageUrls": [
-    "https://www.sciencefriday.com/wp-content/uploads/2015/12/lightsaber6.jpg"
-  ]
+  "imageUrls": []
 },
 {
   "title": "Whip",
   "description": "Favaorite tool of archologists/adventurers",
   "category": "Hobby",
   "price": 6900,
-  "imageUrls": [
-    "https://m.media-amazon.com/images/I/612ioBkqObL._AC_SL1000_.jpg"
-  ]
+  "imageUrls": []
+},
+ 
+{
+  "title": "Smartphone",
+  "description": "A high-quality smartphone from Electronics category",
+  "category": "Electronics",
+  "price": 1299,
+  "imageUrls": [],
+},
+{
+  "title": "Laptop",
+  "description": "A high-quality laptop from Electronics category",
+  "category": "Electronics",
+  "price": 2499,
+  "imageUrls": [],
+},
+{
+  "title": "Smartwatch",
+  "description": "A high-quality smartwatch from Electronics category",
+  "category": "Electronics",
+  "price": 499,
+  "imageUrls": [],
+},
+{
+  "title": "Tablet",
+  "description": "A high-quality tablet from Electronics category",
+  "category": "Electronics",
+  "price": 899,
+  "imageUrls": [],
+},
+{
+  "title": "Wireless Headphones",
+  "description": "A high-quality wireless headphones from Electronics category",
+  "category": "Electronics",
+  "price": 299,
+  "imageUrls": [],
+},
+{
+  "title": "Cordless Drill",
+  "description": "A high-quality cordless drill from Tools category",
+  "category": "Tools",
+  "price": 159,
+  "imageUrls": [],
+},
+{
+  "title": "Hammer",
+  "description": "A high-quality hammer from Tools category",
+  "category": "Tools",
+  "price": 49,
+  "imageUrls": [],
+},
+{
+  "title": "Wrench Set",
+  "description": "A high-quality wrench set from Tools category",
+  "category": "Tools",
+  "price": 79,
+  "imageUrls": [],
+},
+{
+  "title": "Circular Saw",
+  "description": "A high-quality circular saw from Tools category",
+  "category": "Tools",
+  "price": 229,
+  "imageUrls": [],
+},
+{
+  "title": "Electric Screwdriver",
+  "description": "A high-quality electric screwdriver from Tools category",
+  "category": "Tools",
+  "price": 89,
+  "imageUrls": [],
+},
+{
+  "title": "LEGO Set",
+  "description": "A fun LEGO Set from Toys category",
+  "category": "Toys",
+  "price": 119,
+  "imageUrls": [],
+},
+{
+  "title": "RC Car",
+  "description": "A high-quality RC car from Toys category",
+  "category": "Toys",
+  "price": 189,
+  "imageUrls": [],
+},
+{
+  "title": "Board Game",
+  "description": "A classic board game from Toys category",
+  "category": "Toys",
+  "price": 49,
+  "imageUrls": [],
+},
+{
+  "title": "Action Figure",
+  "description": "A collectible action figure from Toys category",
+  "category": "Toys",
+  "price": 79,
+  "imageUrls": [],
+},
+{
+  "title": "Puzzle Box",
+  "description": "A challenging puzzle box from Toys category",
+  "category": "Toys",
+  "price": 39,
+  "imageUrls": [],
+},
+{
+  "title": "Sci-Fi Novel",
+  "description": "A gripping sci-fi novel from Books category",
+  "category": "Books",
+  "price": 29,
+  "imageUrls": [],
+},
+{
+  "title": "Mystery Thriller",
+  "description": "An exciting mystery thriller from Books category",
+  "category": "Books",
+  "price": 35,
+  "imageUrls": [],
+},
+{
+  "title": "Fantasy Epic",
+  "description": "An epic fantasy novel from Books category",
+  "category": "Books",
+  "price": 40,
+  "imageUrls": [],
+},
+{
+  "title": "Self-Help Guide",
+  "description": "A useful self-help guide from Books category",
+  "category": "Books",
+  "price": 25,
+  "imageUrls": [],
+},
+{
+  "title": "Biography",
+  "description": "An inspiring biography from Books category",
+  "category": "Books",
+  "price": 45,
+  "imageUrls": [],
+},
+{
+  "title": "Table Lamp",
+  "description": "A stylish table lamp from Home Decor category",
+  "category": "Home Decor",
+  "price": 89,
+  "imageUrls": [],
+},
+{
+  "title": "Wall Clock",
+  "description": "A decorative wall clock from Home Decor category",
+  "category": "Home Decor",
+  "price": 120,
+  "imageUrls": [],
+},
+{
+  "title": "Canvas Painting",
+  "description": "A beautiful canvas painting from Home Decor category",
+  "category": "Home Decor",
+  "price": 299,
+  "imageUrls": [],
+},
+{
+  "title": "Decorative Vase",
+  "description": "A stunning decorative vase from Home Decor category",
+  "category": "Home Decor",
+  "price": 99,
+  "imageUrls": [],
+},
+{
+  "title": "Throw Pillow",
+  "description": "A cozy throw pillow from Home Decor category",
+  "category": "Home Decor",
+  "price": 39,
+  "imageUrls": [],
 }]
