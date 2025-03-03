@@ -68,6 +68,12 @@ export class ProductsController {
       // TODO: Realize....
       logger.info(req.user as string, {label});
 
+      const response = await fetch("http://localhost:3001/echo");
+
+      const data = await response.json();
+
+      console.log(data);
+
       const elements = await productService.findAll();
 
       logger.info("Returning recommended list...", { label });

@@ -11,9 +11,20 @@ import { handleError } from "./common/middlewares/error.middleware";
 const app: Express = express();
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "http://localhost:4818",
 }));
 app.use(json(jsonMiddlewareOptions));
+
+app.get("/echo", (req, res) => {
+  console.log(req.headers);
+  console.log(req.body);
+
+  res.status(200);
+  res.json({
+    success: true,
+    payload: req.body
+  });
+});
 
 app.use(handleError(logger));
 
