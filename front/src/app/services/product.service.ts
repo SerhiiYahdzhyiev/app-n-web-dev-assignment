@@ -12,6 +12,12 @@ export class ProductService {
     );
   }
 
+  getRecommended() {
+    return this.client.get<{ success: boolean; elements: IProduct[] }>(
+      "/products/recommended",
+    );
+  }
+
   createOne(payload: Partial<IProduct>) {
     return this.client.post<{ id: string }>("/products/create", payload);
   }

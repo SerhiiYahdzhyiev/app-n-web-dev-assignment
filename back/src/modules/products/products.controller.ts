@@ -63,6 +63,26 @@ export class ProductsController {
     }
   }
 
+  public async getRecommended(req: Request, res: Response, next: NextFunction) {
+    try {
+      // TODO: Realize....
+      logger.info(req.user as string, {label});
+
+      const elements = await productService.findAll();
+
+      logger.info("Returning recommended list...", { label });
+
+      res
+        .status(StatusCodes.OK)
+        .json({
+          success: true,
+          elements: elements.slice(0,3),
+        });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   public async getOneById(req: Request, res: Response, next: NextFunction) {
     try {
       const { productId } = req.params;

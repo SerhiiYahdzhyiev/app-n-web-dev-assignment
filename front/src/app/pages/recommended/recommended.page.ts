@@ -32,10 +32,14 @@ export class RecommendedPage implements OnInit {
     this.api.isLoading.subscribe(
       (isLoading) => this.isLoading = isLoading,
     );
+
     this.userService.currentUser.subscribe(
-      (user) => this.user = user,
+      (user) => {
+        this.user = user
+      },
     );
-    this.productsService.getAll().subscribe(
+
+    this.productsService.getRecommended().subscribe(
       (products) => {
         this.products = (products as any).elements as unknown as IProduct[];
       },

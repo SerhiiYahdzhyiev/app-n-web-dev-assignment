@@ -34,6 +34,12 @@ class UsersRouter {
     this.router.get("/", this.productsController.getAll);
 
     this.router.get(
+      "/recommended",
+      auth,
+      this.productsController.getRecommended
+    );
+
+    this.router.get(
       "/:productId",
       getObjectIdValidationMiddleware(this.productIdExtractor),
       this.productsController.getOneById,
