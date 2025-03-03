@@ -50,7 +50,7 @@ export class ProductsController {
         elements = await productService.findAll();
       }
 
-      logger.info("Reutrned products list.", { label });
+      logger.info("Returned products list.", { label });
 
       res
         .status(StatusCodes.OK)
