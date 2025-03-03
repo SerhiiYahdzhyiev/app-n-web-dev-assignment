@@ -7,6 +7,7 @@
         <a routerLink="/landing" routerLinkActive="active" class="nav-link">Home</a>
         <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
         <a *ngIf="user" routerLink="/orders" routerLinkActive class="nav-link">Orders</a>
+        <a *ngIf="user" routerLink="/recommended" routerLinkActive class="nav-link">Recommended</a>
       </nav>
 
       <div *ngIf="!user" class="actions">

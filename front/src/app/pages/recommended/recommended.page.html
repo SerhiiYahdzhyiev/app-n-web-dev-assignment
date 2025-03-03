@@ -1,0 +1,11 @@
+<ng-container *ngIf="isLoading">
+  <loader-page />
+</ng-container>
+<div *ngIf="!isLoading" class="content">
+  <ng-container *ngIf="products.length">
+    <product *ngFor="let product of products" [product]="product" [isAuthorized]="hasUser" />
+  </ng-container>
+  <ng-container *ngIf="!products.length">
+    <h3 style="color:white">No products</h3>
+  </ng-container>
+</div>
