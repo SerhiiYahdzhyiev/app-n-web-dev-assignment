@@ -1,6 +1,18 @@
 import { Document, model, Schema, Types } from "mongoose";
 
-import { OrderPaymentStatus, OrderStatus } from "./orders.dto";
+export enum OrderPaymentStatus {
+  PENDING = "PENDING",
+  SUCCESSFULL = "SUCCESS",
+  FAILED = "FAILED",
+}
+
+export enum OrderStatus {
+  PENDING = "PENDING",
+  IN_PROCESS = "IN_PROCESS",
+  DELIVERING = "IN_DELIVERY",
+  DELIVERED = "DELIVERED",
+  CANCELED = "CANCELED",
+}
 
 export interface IOrder extends Document {
   totalPrice: number;
