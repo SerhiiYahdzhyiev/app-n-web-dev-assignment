@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 
 import { BadRequest, BaseHttpError } from "../../common/exceptions";
 
+import { appConfig } from "../../config/app";
+
 import { IUser } from "../users/users.model";
 import { UserRoles } from "../users/users.dto";
 import { productService } from "./products.service";
@@ -66,15 +68,11 @@ export class ProductsController {
   public async getRecommended(req: Request, res: Response, next: NextFunction) {
     try {
       // TODO: Realize....
-      logger.info(req.user as string, {label});
+      const response = await fetch(
+        appConfig.recommenderUrl + "/" +(req.user as IUser)._id
+      );
 
-      const response = await fetch("http://localhost:3001/echo");
-
-      const data = await response.json();
-
-      console.log(data);
-
-      const elements = await productService.findAll();
+      const elements = await response.json();
 
       logger.info("Returning recommended list...", { label });
 
