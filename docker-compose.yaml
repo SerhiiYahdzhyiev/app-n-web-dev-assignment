@@ -1,11 +1,26 @@
 name: ecommerce-app
 
 services:
+  recommend:
+    image: ecommerce-recommender:latest
+    build: ./recommender
+    depends_on:
+      - db
+    environment:
+      - APP_HOST=${REC_HOST}
+      - APP_PORT=${REC_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+
   backend:
     image: ecommerce-backend:latest
     build: ./back
     depends_on:
       - db
+      - recommend
     environment:
       - APP_HOST=${APP_HOST}
       - APP_PORT=${APP_PORT}
