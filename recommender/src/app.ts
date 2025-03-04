@@ -8,6 +8,8 @@ import {
 import { logger } from "./logger";
 import { handleError } from "./common/middlewares/error.middleware";
 
+import Product from "./models/product";
+
 const app: Express = express();
 
 app.use(cors({
@@ -15,15 +17,13 @@ app.use(cors({
 }));
 app.use(json(jsonMiddlewareOptions));
 
-app.get("/echo", (req, res) => {
-  console.log(req.headers);
-  console.log(req.body);
+app.get("/:userId", async (req, res) => {
+  //TODO: Realize
+  console.log(req.params.userId);
+  const products = await Product.find().limit(3);
 
   res.status(200);
-  res.json({
-    success: true,
-    payload: req.body
-  });
+  res.json(products);
 });
 
 app.use(handleError(logger));
