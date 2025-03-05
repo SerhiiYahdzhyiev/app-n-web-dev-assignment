@@ -86,3 +86,9 @@
 .action-btn:nth-child(2) {
   background-color: orange;
 }
+
+.category {
+  color: rgba(0,0,0,0.5);
+  font-weight: 400;
+  margin-left: 40px;
+}
