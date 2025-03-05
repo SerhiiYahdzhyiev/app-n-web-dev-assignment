@@ -7,6 +7,8 @@ import Order, { OrderStatus } from "../models/order";
 const K = recommenderConfig.productsCount;
 
 async function getFallbackProducts() {
+    // TODO: Sort by product rating in future (currently there is no rating
+    //       for products realized)
     const products = Product.find().limit(recommenderConfig.productsCount);
     return products;
 }
@@ -44,7 +46,7 @@ function getJaccardSimilarities(otherOrders: any[], userProducts: Set<string>) {
 export async function getRecommendedProducts(userId: string) {
   const uid = new mongoose.Types.ObjectId(userId);
 
-  const userOrders = await Order.find({userId: uid, staus: OrderStatus.DELIVERED});
+  const userOrders = await Order.find({userId: uid, status: OrderStatus.DELIVERED});
 
   if (!userOrders.length) return await getFallbackProducts();
 
@@ -58,6 +60,7 @@ export async function getRecommendedProducts(userId: string) {
 
   const similarities = getJaccardSimilarities(otherOrders, userProducts);
 
+  // TODO: There should be a way to avoid all this nested loops...
   const recommendedProductCounts: Record<string, number> = {};
   for (const { userId } of similarities) {
     const orders = await Order.find({ userId, status: "DELIVERED" });
