@@ -8,7 +8,7 @@ import {
 import { logger } from "./logger";
 import { handleError } from "./common/middlewares/error.middleware";
 
-import Product from "./models/product";
+import {getRecommendedProducts} from "./modules/recommend";
 
 const app: Express = express();
 
@@ -17,13 +17,14 @@ app.use(cors({
 }));
 app.use(json(jsonMiddlewareOptions));
 
-app.get("/:userId", async (req, res) => {
-  //TODO: Realize
-  console.log(req.params.userId);
-  const products = await Product.find().limit(3);
-
-  res.status(200);
-  res.json(products);
+app.get("/:userId", async (req, res, next) => {
+  try {
+    const products = await getRecommendedProducts(req.params.userId);
+    res.status(200);
+    res.json(products);
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.use(handleError(logger));
