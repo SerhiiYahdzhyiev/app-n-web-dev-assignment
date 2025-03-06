@@ -20,6 +20,7 @@ app.use(json(jsonMiddlewareOptions));
 app.get("/:userId", async (req, res, next) => {
   try {
     const products = await getRecommendedProducts(req.params.userId);
+    logger.info("Returning recommended products...", {label: "recommender"});
     res.status(200);
     res.json(products);
   } catch (err) {
