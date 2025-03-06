@@ -7,10 +7,15 @@ import Order, { OrderStatus } from "../models/order";
 const K = recommenderConfig.productsCount;
 
 async function getFallbackProducts() {
-    // TODO: Sort by product rating in future (currently there is no rating
-    //       for products realized)
-    const products = Product.find().limit(recommenderConfig.productsCount);
-    return products;
+  // INFO: While we don't have product ratings system based on customer reviews
+  //       we will simply sort fallback products by total number of purchases.
+  return await Order.aggregate([
+    { $match: { status: OrderStatus.DELIVERED } },
+    { $unwind: "$productsIds" },
+    { $group: { _id: "$productsIds", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: K }
+  ]).then(res => Product.find({ _id: { $in: res.map(p => p._id) } }));
 }
 
 async function getOtherUsersOrders(userId: mongoose.Types.ObjectId) {
