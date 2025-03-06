@@ -18,6 +18,16 @@ async function getFallbackProducts() {
   ]).then(res => Product.find({ _id: { $in: res.map(p => p._id) } }));
 }
 
+async function getRecommendedProductsBy(similarUserIds: mongoose.Types.ObjectId[]) {
+  return await Order.aggregate([
+    { $match: { userId: { $in: similarUserIds }, status: OrderStatus.DELIVERED } },
+    { $unwind: "$productsIds" },
+    { $group: { _id: "$productsIds", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: K }
+  ]);
+}
+
 async function getOtherUsersOrders(userId: mongoose.Types.ObjectId) {
   return await Order.aggregate([
     {$match: {userId: {$ne:userId},status:OrderStatus.DELIVERED}},
@@ -64,30 +74,12 @@ export async function getRecommendedProducts(userId: string) {
   if (!otherOrders.length) return await getFallbackProducts();
 
   const similarities = getJaccardSimilarities(otherOrders, userProducts);
+  const similarUserIds = similarities.map(
+    s => new mongoose.Types.ObjectId(s.userId)
+  );
 
-  // TODO: There should be a way to avoid all this nested loops...
-  const recommendedProductCounts: Record<string, number> = {};
-  for (const { userId } of similarities) {
-    const orders = await Order.find({ userId, status: "DELIVERED" });
-    for (const order of orders) {
-      for (const productId of order.productsIds) {
-        const idStr = productId.toString();
-        if (!userProducts.has(idStr)) {
-          recommendedProductCounts[idStr] =
-            (recommendedProductCounts[idStr] || 0) + 1;
-        }
-      }
-    }
-  }
-
-  const topRecommendedIds = Object.entries(recommendedProductCounts)
-      .sort(([, countA], [, countB]) => countB - countA)
-      .slice(0, K)
-      .map(([productId]) => new mongoose.Types.ObjectId(productId));
-
-  const recommendedProducts = await Product.find({
-    _id: { $in: topRecommendedIds },
-  });
+  const recommendedIds = await getRecommendedProductsBy(similarUserIds);
+  const recommendedProducts = await Product.find({_id: {$in: recommendedIds}});
 
   return recommendedProducts;
 }
