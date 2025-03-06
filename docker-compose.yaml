@@ -1,11 +1,18 @@
 name: ecommerce-app
 
 services:
+  cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:${REDIS_PORT}"
+
   recommend:
     image: ecommerce-recommender:latest
     build: ./recommender
     depends_on:
       - db
+      - cache
     environment:
       - APP_HOST=${REC_HOST}
       - APP_PORT=${REC_PORT}
@@ -15,6 +22,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - REC_COUNT=${REC_COUNT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
 
   backend:
     image: ecommerce-backend:latest
