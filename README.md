@@ -11,6 +11,7 @@ the submited report of this assignment.
 - [Getting Started](#start)
   - [Prerequisites](#pre)
   - [Build and Run](#install)
+  - [Restore Dump](#restore-dump)
   - [Run the tests](#run-the-tests)
 - [License](#license)
 
@@ -108,6 +109,34 @@ You can use this links for detailed installation instructions:
    admin@mail.com
    root
    ```
+
+### Restore Dump
+
+This is completely optional.
+
+The dump included in this repo has slightly more users, and some mock orders.
+It was made primarily for the evaluators of on of the university assignments
+related to integration of recommendation system into initial minimalistic
+e-commerce platform.
+
+In order to restore the db from `dump.zip`:
+
+1. Unpack the `dump.zip` archive into project's root directory.
+
+   *Linux Example using unzip:*
+   ```bash
+   unzip dump.zip
+   ```
+
+2. Run the `restore_dump` script from `sctipts` subdirectory.
+
+   **Important:** The script should be run from this project's root directory.
+
+   To see the usage of the script simply run it with no arguments.
+
+   The next screenshot aims to demonstrate an overview of the whole process:
+
+   ![Image](./misc/images/restore_dump.png)
 
 ### Run the tests
 
