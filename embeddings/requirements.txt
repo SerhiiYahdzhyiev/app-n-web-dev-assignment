@@ -1,0 +1,7 @@
+bson
+flask
+python-dotenv
+redis
+sentence-transformers
+waitress
+qdrant-client
