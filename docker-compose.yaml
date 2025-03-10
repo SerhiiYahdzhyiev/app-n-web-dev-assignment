@@ -68,6 +68,18 @@ services:
     ports:
       - 4200:80
 
+  qdrant:
+    image: qdrant/qdrant
+    restart: always
+    volumes:
+      - quadrant_data:/qdrant/storage
+    environment:
+      - QDRANT_LOG_LEVEL=info
+    ports:
+      - ${QD_PORT}:6333
+
 volumes:
   db-data:
+    driver: local
+  qdrant_storage:
     driver: local
