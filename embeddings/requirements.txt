@@ -1,4 +1,3 @@
-bson
 flask
 python-dotenv
 redis
