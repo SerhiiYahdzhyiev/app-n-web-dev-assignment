@@ -43,6 +43,11 @@ def embed_text():
     id = data.get("id", "")
     text = data.get("text", "")
 
+    cached = cache.get(id)
+    if cached:
+        logger.info("Returning cached embedding...")
+        return json.loads(cached)
+
     _uuid = int(id, 16) % (2**63) # to int64
     logger.info(f"uuid: {_uuid}")
 
@@ -61,10 +66,6 @@ def embed_text():
     if not text:
         return jsonify({"error": "Text is required!"}), 400
 
-    cached = cache.get(id)
-    if cached:
-        logger.info("Returning cached embedding...")
-        return json.loads(cached)
 
     embedding = generate_embedding(text)
     logger.info("Saving embedding to Qdrant...")
