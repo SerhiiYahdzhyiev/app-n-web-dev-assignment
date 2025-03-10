@@ -1,14 +1,12 @@
 import os
 import json
 import logging
-import uuid
 
 from flask import Flask, request, jsonify
 from model import generate_embedding
 from waitress import serve
 from dotenv import load_dotenv
 from redis import Redis
-from bson import ObjectId
 
 from qdrant_client.models import PointStruct
 
@@ -23,21 +21,21 @@ load_dotenv()
 HOST = os.environ.get("HOST")
 PORT = int(os.environ.get("PORT"))
 
-# CACHE_HOST = os.environ.get("CACHE_HOST")
-# CACHE_PORT = int(os.environ.get("CACHE_PORT"))
-# CACHE_EXP = int(os.environ.get("CACHE_EXP"))
+CACHE_HOST = os.environ.get("CACHE_HOST")
+CACHE_PORT = int(os.environ.get("CACHE_PORT"))
+CACHE_EXP = int(os.environ.get("CACHE_EXP"))
 
 QD_HOST = os.environ.get("QD_HOST")
 QD_PORT = int(os.environ.get("QD_PORT"))
 
 app = Flask(__name__)
 
-# cache = Redis(
-#     host=CACHE_HOST,
-#     port=CACHE_PORT,
-#     db=0,
-#     decode_responses=True
-# )
+cache = Redis(
+    host=CACHE_HOST,
+    port=CACHE_PORT,
+    db=0,
+    decode_responses=True
+)
 
 @app.route("/embed", methods=["POST"])
 def embed_text():
@@ -63,10 +61,10 @@ def embed_text():
     if not text:
         return jsonify({"error": "Text is required!"}), 400
 
-    # cached = cache.get(id)
-    # if cached:
-    #     logger.info("Returning cached embedding...")
-    #     return json.loads(cached)
+    cached = cache.get(id)
+    if cached:
+        logger.info("Returning cached embedding...")
+        return json.loads(cached)
 
     embedding = generate_embedding(text)
     logger.info("Saving embedding to Qdrant...")
@@ -77,7 +75,7 @@ def embed_text():
     )
     logger.info(o_info)
     logger.info("Caching the embedding...")
-    # cache.setex(id, CACHE_EXP, json.dumps(embedding))
+    cache.setex(id, CACHE_EXP, json.dumps(embedding))
 
     return jsonify({"embedding": embedding})
 
