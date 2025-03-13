@@ -72,7 +72,7 @@ services:
     image: qdrant/qdrant
     restart: always
     volumes:
-      - quadrant_data:/qdrant/storage
+      - qdrant_storage:/qdrant/storage
     environment:
       - QDRANT_LOG_LEVEL=info
     ports:
