@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   webserver:
-    image: ./webserver
+    build: ./webserver
     container_name: ecom-webserver
     volumes:
       - ./webserver/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -12,6 +12,8 @@ services:
       - database
     networks:
       - ecom_net
+    ports:
+      - 80:80
 
   frontend:
     image: ecommerce-frontend:latest
@@ -21,7 +23,6 @@ services:
       - ecom_net
 
   backend:
-    image: ecommerce-backend:latest
     build: ./backend
     container_name: ecom-backend
     depends_on:
@@ -37,13 +38,11 @@ services:
       - PSWD_HASH_SALT=${PSWD_HASH_SALT}
       - SECRET=${SECRET}
       - TOKEN_EXPIRES=${TOKEN_EXPIRES}
-    ports:
-      - ${APP_PORT}:${APP_PORT}
     networks:
       - ecom_net
 
   database:
-    image: ./database
+    build: ./database
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
