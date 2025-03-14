@@ -3,7 +3,7 @@ import {config} from "dotenv";
 config();
 
 class AppConfig {
-  host: string = process.env.APP_HOST!;
+  host: string = "0.0.0.0";
   port: number = +process.env.APP_PORT!;
 }
 
