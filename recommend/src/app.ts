@@ -17,8 +17,7 @@ const app: Express = express();
 const cache = new Redis({
   host: cacheConfig.host,
   port: cacheConfig.port,
-
-})
+});
 
 cache.on("error", (err) => {
   logger.error(String(err), {label: "cache"});

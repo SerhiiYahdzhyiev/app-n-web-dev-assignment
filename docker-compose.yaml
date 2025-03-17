@@ -1,17 +1,11 @@
 version: '3.8'
 
 services:
-  cache:
-    image: redis:latest
-    restart: always
-    ports:
-      - "6379:${REDIS_PORT}"
-
   recommend:
-    image: ecommerce-recommender:latest
-    build: ./recommender
+    build: ./recommend
+    container_name: ecom-recommend
     depends_on:
-      - db
+      - database
       - cache
     environment:
       - APP_HOST=${REC_HOST}
@@ -24,13 +18,11 @@ services:
       - REC_COUNT=${REC_COUNT}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
+    ports:
+      - ${REC_PORT}:${REC_PORT}
+    networks:
+      - ecom_net
 
-  backend:
-    image: ecommerce-backend:latest
-    build: ./back
-    depends_on:
-      - db
-      - recommend
   webserver:
     build: ./webserver
     container_name: ecom-webserver
@@ -56,6 +48,7 @@ services:
     container_name: ecom-backend
     depends_on:
       - database
+      - cache
     environment:
       - DB_PORT=${DB_PORT}
       - REC_HOST=${REC_HOST}
@@ -86,15 +79,12 @@ services:
     networks:
       - ecom_net
 
-  qdrant:
-    image: qdrant/qdrant
+  cache:
+    build: ./cache
+    container_name: ecom-cache
     restart: always
-    volumes:
-      - qdrant_storage:/qdrant/storage
-    environment:
-      - QDRANT_LOG_LEVEL=info
-    ports:
-      - ${QD_PORT}:6333
+    networks:
+      - ecom_net
 
 volumes:
   db-data:

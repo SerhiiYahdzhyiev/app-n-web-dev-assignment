@@ -5,6 +5,10 @@ config();
 class AppConfig {
   host: string = "0.0.0.0";
   port: number = 5000;
+
+  get recommenderUrl(): string {
+    return `http://${process.env.REC_HOST || "recommend"}:${process.env.REC_PORT || 3000}`
+  }
 }
 
 const jsonMiddlewareOptions = {
