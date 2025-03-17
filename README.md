@@ -8,11 +8,20 @@ the submited report of this assignment.
 
 ## Table of Contents
 
+- [Services Summary](#services)
 - [Getting Started](#start)
   - [Prerequisites](#pre)
   - [Build and Run](#install)
+     - [Troubleshooting](README#Troubleshooting)
   - [Run the tests](#run-the-tests)
 - [License](#license)
+
+## Serivces
+
+1. `database` - MongoDB for handling data storage.
+2. `backend` - Application Server on Express.js.
+3. `frontend` - An SPA written on Angular.js.
+4. `webserver` - A Reverse Proxy (NGINX).
 
 ## Getting Started<a name="start"></a>
 
@@ -45,50 +54,14 @@ You can use this links for detailed installation instructions:
 
    ```bash
    cd app-n-web-dev-assignment
+
+   ```
+3. Prepare `.env` file:
+
+   ```bash
+   cp .env.example .env
    ```
 
-3. Optional configuration and customization
-
-   The configuration of the project buiild and run is done via `.env` file. You
-   can check `.env.example` in the root folder for details. The root also has
-   default `.env` and in case you do not want to customize the values from it
-   you can just skip to next step.
-
-   Most of the customizations do not require any aditional steps, but there are
-   some exceptions:
-
-   - `DB_NAME`
-
-     In case you want to change that you'll need to make changes to the
-     `init-mongo.js` file. In the line below change `ecom` to the value you want
-     to name the database (`DB_NAME` in `.env`)
-
-     ```js
-     db = new Mongo().getDB("ecom");
-     ```
-
-   - `INIT_ADMIN_PASSWORD`
-
-     After changing this value in `.env` run: `node get-passwd.js`. It will
-     print the hashed password to the console. Copy it and paste to the
-     `init-mongo.js`:
-
-     ```js
-     db.users.insertOne({
-       firstName: "Initial",
-       lastName: "Admin",
-       email: "admin@mail.com",
-       password: <your_custom_hased_password>,
-       role: "ADMIN",
-     });
-     ```
-
-     `<your_custom_hased_password>` should be replaced with the value that
-     you've got from `get-passwd.js`.
-
-     By the way you could also change the email of the default admin user in
-     `init-mongo.js`. But keep in mind that it should look like a valid email
-     (in terms of format).
 
 4. Build and start the Docker containers:
 
@@ -99,7 +72,7 @@ You can use this links for detailed installation instructions:
    *!!! May take a while.*
 
 5. Once the containers are up and running, you can access the Angular SPA at
-   `http://localhost:4200`.
+   `http://localhost/`.
 
    If you haven't customized your `.env` then you can enter the admin page with
    default credentials:
@@ -108,6 +81,16 @@ You can use this links for detailed installation instructions:
    admin@mail.com
    root
    ```
+
+#### Troubleshooting
+
+There are possible failures in container starts for `webserver` and `backend`
+services. If you face issues like `Bad Gateway` responses, inspect running
+conteniers with `docker ps -a`, and try to re-start failed services:
+
+```bash
+docker-compose up -d --build <service_name>
+```
 
 ### Run the tests
 

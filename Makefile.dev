@@ -1,0 +1,25 @@
+SERVICES = database backend frontend webserver
+
+FILE = docker-compose.dev.yaml
+
+DCMD = docker-compose -f $(FILE)
+
+all: up
+
+up:
+	$(DCMD) up -d --build
+
+down:
+	$(DCMD) down
+
+$(SERVICES):
+	$(DCMD) up -d --build $@
+
+clean:
+	rm -rf frontend/.angular
+	rm -rf frontend/dist
+	rm -rf frontend/node_modules
+	rm -rf backend/node_modules
+	rm -rf backend/logs
+
+.PHONY: $(SERVICES)

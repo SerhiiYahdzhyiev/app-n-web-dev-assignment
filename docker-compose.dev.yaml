@@ -5,7 +5,7 @@ services:
     build: ./webserver
     container_name: ecom-webserver
     volumes:
-      - ./webserver/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./webserver/nginx.dev.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - frontend
       - backend
@@ -16,17 +16,27 @@ services:
       - 80:80
 
   frontend:
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile.dev
     container_name: ecom-frontend
+    volumes: 
+      - ./frontend:/usr/src/app
+    ports:
+      - 4200:4200
     networks:
       - ecom_net
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.dev
     container_name: ecom-backend
+    volumes: [./backend:/usr/src/app]
     depends_on:
       - database
     environment:
+      - APP_PORT=${APP_PORT}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}

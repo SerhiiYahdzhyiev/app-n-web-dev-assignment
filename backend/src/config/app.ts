@@ -4,7 +4,7 @@ config();
 
 class AppConfig {
   host: string = "0.0.0.0";
-  port: number = +process.env.APP_PORT!;
+  port: number = 5000;
 }
 
 const jsonMiddlewareOptions = {
