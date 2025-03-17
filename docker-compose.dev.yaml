@@ -1,6 +1,32 @@
 version: '3.8'
 
 services:
+  recommend:
+    build:
+      context: .
+      dockerfile: ./recommend/Dockerfile.dev
+    container_name: ecom-recommend
+    depends_on:
+      - database
+      - cache
+    volumes:
+      - ./recommend:/usr/src/app
+    environment:
+      - APP_HOST=${REC_HOST}
+      - APP_PORT=${REC_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REC_COUNT=${REC_COUNT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    ports:
+      - ${REC_PORT}:${REC_PORT}
+    networks:
+      - ecom_net
+
   webserver:
     build: ./webserver
     container_name: ecom-webserver
@@ -10,6 +36,7 @@ services:
       - frontend
       - backend
       - database
+      - cache
     networks:
       - ecom_net
     ports:
@@ -32,9 +59,11 @@ services:
       context: .
       dockerfile: ./backend/Dockerfile.dev
     container_name: ecom-backend
-    volumes: [./backend:/usr/src/app]
+    volumes: 
+      - ./backend:/usr/src/app
     depends_on:
       - database
+      - recommend
     environment:
       - APP_PORT=${APP_PORT}
       - DB_PORT=${DB_PORT}
@@ -44,8 +73,17 @@ services:
       - PSWD_HASH_SALT=${PSWD_HASH_SALT}
       - SECRET=${SECRET}
       - TOKEN_EXPIRES=${TOKEN_EXPIRES}
+      - REC_HOST=${REC_HOST}
+      - REC_PORT=${REC_PORT}
     ports:
       - 5000:5000
+    networks:
+      - ecom_net
+
+  cache:
+    build: ./cache
+    container_name: ecom-cache
+    restart: always
     networks:
       - ecom_net
 
