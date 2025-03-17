@@ -1,0 +1,9 @@
+FROM node:lts-alpine
+
+WORKDIR /usr/src/app
+
+RUN yarn install
+
+CMD ["yarn", "dev"]
+
+EXPOSE 5000

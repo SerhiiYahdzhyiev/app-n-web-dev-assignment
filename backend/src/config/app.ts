@@ -3,16 +3,8 @@ import {config} from "dotenv";
 config();
 
 class AppConfig {
-  host: string = process.env.APP_HOST!;
-  port: number = +process.env.APP_PORT!;
-
-  recHost: string = process.env.REC_HOST!;
-  recPort: number = +process.env.REC_PORT!;
-
-  get recommenderUrl() {
-    return `http://${this.recHost}:${this.recPort}`
-  }
-
+  host: string = "0.0.0.0";
+  port: number = 5000;
 }
 
 const jsonMiddlewareOptions = {

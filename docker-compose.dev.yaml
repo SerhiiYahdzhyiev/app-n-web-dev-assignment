@@ -1,41 +1,11 @@
 version: '3.8'
 
 services:
-  cache:
-    image: redis:latest
-    restart: always
-    ports:
-      - "6379:${REDIS_PORT}"
-
-  recommend:
-    image: ecommerce-recommender:latest
-    build: ./recommender
-    depends_on:
-      - db
-      - cache
-    environment:
-      - APP_HOST=${REC_HOST}
-      - APP_PORT=${REC_PORT}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REC_COUNT=${REC_COUNT}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-
-  backend:
-    image: ecommerce-backend:latest
-    build: ./back
-    depends_on:
-      - db
-      - recommend
   webserver:
     build: ./webserver
     container_name: ecom-webserver
     volumes:
-      - ./webserver/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./webserver/nginx.dev.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - frontend
       - backend
@@ -46,20 +16,28 @@ services:
       - 80:80
 
   frontend:
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile.dev
     container_name: ecom-frontend
+    volumes: 
+      - ./frontend:/usr/src/app
+    ports:
+      - 4200:4200
     networks:
       - ecom_net
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.dev
     container_name: ecom-backend
+    volumes: [./backend:/usr/src/app]
     depends_on:
       - database
     environment:
+      - APP_PORT=${APP_PORT}
       - DB_PORT=${DB_PORT}
-      - REC_HOST=${REC_HOST}
-      - REC_PORT=${REC_PORT}
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -86,21 +64,8 @@ services:
     networks:
       - ecom_net
 
-  qdrant:
-    image: qdrant/qdrant
-    restart: always
-    volumes:
-      - qdrant_storage:/qdrant/storage
-    environment:
-      - QDRANT_LOG_LEVEL=info
-    ports:
-      - ${QD_PORT}:6333
-
 volumes:
   db-data:
-    driver: local
-  qdrant_storage:
-    driver: local
 
 networks:
   ecom_net:
