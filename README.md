@@ -1,10 +1,10 @@
 # App and Web Development Module Assignment
 
 This repository contains the code for the App and Web Development Module
-Assignment, which is a simple fullstach E-commerce Web App. The provided
+Assignment, which is a simple full-stack E-commerce Web App. The provided
 `docker-compose.yaml` file allows users to easily set up and run the entire
 application stack using Docker Compose. More detailed review will be provided in
-the submited report of this assignment.
+the submitted report of this assignment.
 
 ## Table of Contents
 
@@ -74,7 +74,7 @@ You can use this links for detailed installation instructions:
 5. Once the containers are up and running, you can access the Angular SPA at
    `http://localhost/`.
 
-   If you haven't customized your `.env` then you can enter the admin page with
+   You can enter the admin page with
    default credentials:
 
    ```
@@ -86,7 +86,7 @@ You can use this links for detailed installation instructions:
 
 There are possible failures in container starts for `webserver` and `backend`
 services. If you face issues like `Bad Gateway` responses, inspect running
-conteniers with `docker ps -a`, and try to re-start failed services:
+containers with `docker ps -a`, and try to re-start failed services:
 
 ```bash
 docker-compose up -d --build <service_name>
