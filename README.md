@@ -83,6 +83,16 @@ You can use this links for detailed installation instructions:
    root
    ```
 
+#### Troubleshooting
+
+There are possible failures in container starts for `webserver` and `backend`
+services. If you face issues like `Bad Gateway` responses, inspect running
+containers with `docker ps -a`, and try to re-start failed services:
+
+```bash
+docker-compose up -d --build <service_name>
+```
+
 ### Restore Dump
 
 This is completely optional.
@@ -110,15 +120,6 @@ In order to restore the db from `dump.zip`:
    The next screenshot aims to demonstrate an overview of the whole process:
 
    ![Image](./misc/images/restore_dump.png)
-#### Troubleshooting
-
-There are possible failures in container starts for `webserver` and `backend`
-services. If you face issues like `Bad Gateway` responses, inspect running
-containers with `docker ps -a`, and try to re-start failed services:
-
-```bash
-docker-compose up -d --build <service_name>
-```
 
 ### Run the tests
 
