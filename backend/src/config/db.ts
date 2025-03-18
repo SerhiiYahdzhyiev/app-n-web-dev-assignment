@@ -3,7 +3,7 @@ import { Defaults } from "./defaults";
 
 config();
 
-const port: number = parseInt(process.env.DB_PORT!) ?? Defaults.db.PORT;
+const port:number = Defaults.db.PORT;
 const host: string = "database";
 const dbName: string = process.env.DB_NAME!;
 const user: string = process.env.DB_USER!;

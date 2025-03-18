@@ -7,7 +7,7 @@ class AppConfig {
   port: number = 5000;
 
   get recommenderUrl(): string {
-    return `http://${process.env.REC_HOST || "recommend"}:${process.env.REC_PORT || 3000}`
+    return `http://recommend:3000`
   }
 }
 

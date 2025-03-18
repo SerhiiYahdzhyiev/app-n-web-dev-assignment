@@ -1,28 +1,6 @@
 version: '3.8'
 
 services:
-  recommend:
-    build: ./recommend
-    container_name: ecom-recommend
-    depends_on:
-      - database
-      - cache
-    environment:
-      - APP_HOST=${REC_HOST}
-      - APP_PORT=${REC_PORT}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REC_COUNT=${REC_COUNT}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-    ports:
-      - ${REC_PORT}:${REC_PORT}
-    networks:
-      - ecom_net
-
   webserver:
     build: ./webserver
     container_name: ecom-webserver
@@ -36,13 +14,26 @@ services:
       - ecom_net
     ports:
       - 80:80
-
+  recommend:
+    build: ./recommend
+    container_name: ecom-recommend
+    depends_on:
+      - database
+      - cache
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REC_COUNT=${REC_COUNT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    networks:
+      - ecom_net
   frontend:
     build: ./frontend
     container_name: ecom-frontend
     networks:
       - ecom_net
-
   backend:
     build: ./backend
     container_name: ecom-backend
@@ -59,11 +50,8 @@ services:
       - PSWD_HASH_SALT=${PSWD_HASH_SALT}
       - SECRET=${SECRET}
       - TOKEN_EXPIRES=${TOKEN_EXPIRES}
-    ports:
-      - 5000:5000
     networks:
       - ecom_net
-
   database:
     build: ./database
     container_name: ecom-database
@@ -71,14 +59,11 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
-    ports:
-      - ${DB_PORT}:27017
     volumes:
       - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - db-data:/data/db
     networks:
       - ecom_net
-
   cache:
     build: ./cache
     container_name: ecom-cache
