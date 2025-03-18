@@ -23,6 +23,8 @@ the submitted report of this assignment.
 2. `backend` - Application Server on Express.js.
 3. `frontend` - An SPA written on Angular.js.
 4. `webserver` - A Reverse Proxy (NGINX).
+5. `cache` - A simple Redis cache service.
+6. `recommend` - A recommendation system service (Express.js).
 
 ## Getting Started<a name="start"></a>
 
@@ -71,6 +73,14 @@ You can use this links for detailed installation instructions:
    ```
 
    *!!! May take a while.*
+
+   If you have UNIX OS with `make` feel free to use provided `Makefiles`:
+      - `make up` to build and start all services
+      - `make down` to stop and remove containers (services)
+      - `make <service_name>` to build and start individual service
+
+   You can use the same commands for launching dev setup, by explicitly specifying
+   `Makefile.dev` as a target `Makefile`.
 
 5. Once the containers are up and running, you can access the Angular SPA at
    `http://localhost/`.
