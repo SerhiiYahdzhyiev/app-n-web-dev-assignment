@@ -1,4 +1,4 @@
-SERVICES = database backend frontend webserver
+SERVICES = database backend frontend webserver recommend embed cache
 
 FILE = docker-compose.dev.yaml
 
