@@ -1,0 +1,6 @@
+flask
+waitress
+sentence_transformers
+faiss-cpu
+python-dotenv
+pymongo
