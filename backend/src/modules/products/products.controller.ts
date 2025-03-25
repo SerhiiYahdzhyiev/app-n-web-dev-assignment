@@ -37,6 +37,25 @@ export class ProductsController {
       }
 
       const newProduct= await productService.create(req.body);
+      const embedderPayload = {
+        id: String(newProduct.id),
+        text: newProduct.category +
+         " " + newProduct.title +
+         " " + newProduct.description,
+      };
+
+      // TODO: Refactor
+      fetch("http://embed:3096/embed", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(embedderPayload)
+      }).then(
+        () =>
+          logger.info("Embeddings created for product with id: " + newProduct._id),
+        (err) => error(err),
+      );
 
       info("Created product with id " + newProduct._id);
 
@@ -60,7 +79,7 @@ export class ProductsController {
         elements = await productService.findAll();
       }
 
-      logger.info("Returned products list.", { label });
+      info("Returned products list.");
 
       res
         .status(StatusCodes.OK)
@@ -75,7 +94,6 @@ export class ProductsController {
 
   public async getRecommended(req: Request, res: Response, next: NextFunction) {
     try {
-      // TODO: Realize....
       const response = await fetch(
         appConfig.recommenderUrl + "/" +(req.user as IUser)._id
       );
@@ -147,6 +165,8 @@ export class ProductsController {
 
       logger.info("Updated user with id " + updatedId, { label });
 
+      // TODO: Update embeddings on text fields updation...
+
       res
         .status(StatusCodes.OK)
         .json({
@@ -175,8 +195,6 @@ export class ProductsController {
       const removedId = await productService.removeOneById(
         productId,
       );
-
-      console.log(removedId, productId);
 
       if (String(removedId) !== productId) {
         throw new BaseHttpError(
