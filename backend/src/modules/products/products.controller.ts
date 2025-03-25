@@ -14,6 +14,14 @@ import { logger } from "../../logger";
 
 let label = "ProductsController";
 
+function info(msg: any) {
+  logger.info(msg, {label});
+}
+
+function error(err: any) {
+  logger.error(err, {label});
+}
+
 export class ProductsController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
