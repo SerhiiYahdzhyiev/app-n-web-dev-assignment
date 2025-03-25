@@ -1,4 +1,4 @@
-SERVICES = database backend frontend webserver recommend cache
+SERVICES = database backend frontend webserver recommend cache embed
 DCMD = docker-compose
 
 all: up
