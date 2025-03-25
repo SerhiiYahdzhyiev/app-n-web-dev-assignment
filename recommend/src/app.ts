@@ -24,7 +24,7 @@ cache.on("error", (err) => {
 });
 
 app.use(cors({
-  origin: "http://localhost:4818",
+  origin: "http://backend:5000",
 }));
 app.use(json(jsonMiddlewareOptions));
 
