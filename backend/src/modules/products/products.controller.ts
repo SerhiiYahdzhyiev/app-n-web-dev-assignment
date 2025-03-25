@@ -36,13 +36,13 @@ export class ProductsController {
         return;
       }
 
-      const newProductId = await productService.create(req.body);
+      const newProduct= await productService.create(req.body);
 
-      logger.info("Created product with id " + newProductId, { label });
+      info("Created product with id " + newProduct._id);
 
       res
         .status(StatusCodes.OK)
-        .json({ id: newProductId });
+        .json({ id: newProduct._id});
     } catch (error) {
       next(error);
     }

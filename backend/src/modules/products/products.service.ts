@@ -6,7 +6,7 @@ import { TProductUpdatePayload } from "./products.dto";
 import Product, { IProduct } from "./products.model";
 
 export interface IProductService {
-  create: (payload: IProduct) => Promise<ObjectId>;
+  create: (payload: IProduct) => Promise<IProduct>;
   findAll: () => Promise<IProduct[]>;
   findManyByTitle: (title: string) => Promise<IProduct[]>;
   findOneById: (id: string) => Promise<IProduct>;
@@ -26,7 +26,7 @@ class ProductService implements IProductService {
 
     await newProduct.save();
 
-    return newProduct._id;
+    return newProduct;
   }
 
   public async findAll() {
