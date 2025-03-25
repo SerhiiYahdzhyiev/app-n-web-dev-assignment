@@ -55,12 +55,8 @@ services:
     networks:
       - ecom_net
   backend:
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile.dev
+    build: ./backend
     container_name: ecom-backend
-    volumes: 
-      - ./backend:/usr/src/app
     depends_on:
       - database
       - recommend
