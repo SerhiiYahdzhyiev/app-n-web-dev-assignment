@@ -14,6 +14,17 @@ services:
       - ecom_net
     ports:
       - 80:80
+  embed:
+    build: ./embed
+    container_name: ecom-embeddings
+    depends_on:
+      - database
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      - ecom_net
   recommend:
     build: ./recommend
     container_name: ecom-recommend
