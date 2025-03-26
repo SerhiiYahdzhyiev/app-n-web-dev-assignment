@@ -25,6 +25,7 @@ the submitted report of this assignment.
 4. `webserver` - A Reverse Proxy (NGINX).
 5. `cache` - A simple Redis cache service.
 6. `recommend` - A recommendation system service (Express.js).
+7. `embed` - An embeddings service (Flask + Sentence Transformers + FAISS).
 
 ## Getting Started<a name="start"></a>
 
