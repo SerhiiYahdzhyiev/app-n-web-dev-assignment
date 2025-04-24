@@ -50,10 +50,6 @@ def build_initial_index():
     except Exception as e:
         app.logger.error(f"Failed to build FAISS index: {e}")
 
-@app.get("/")
-def hello():
-    return "Hello, FAISS!"
-
 @app.post("/embed")
 def embed():
     payload = request.json or {}
