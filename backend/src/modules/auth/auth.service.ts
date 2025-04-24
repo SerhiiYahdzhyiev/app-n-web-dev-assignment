@@ -20,6 +20,8 @@ class AuthService implements IAuthService {
       throw new Unauthorized(unauthorizedMessage);
     }
 
+    // TODO: Resolve typescript issues with this call.
+    //@ts-ignore
     const token = jwt.sign({ userId: user._id, role: user.role }, SECRET, {
       expiresIn: TOKEN_EXPIRES,
     });
