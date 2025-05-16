@@ -3,13 +3,12 @@ FROM node:lts-alpine as build
 WORKDIR /usr/src/app
 
 COPY package.json .
-COPY yarn.lock .
 
-RUN yarn install
+RUN npm i --legacy-peer-deps
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 FROM nginx:latest
 
