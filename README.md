@@ -134,28 +134,4 @@ In order to restore the db from `dump.zip`:
 
 ### Run the tests
 
-1. In the project root checkout `testing` branch:
-   ```bash
-   git fetch --all
-   git switch testing
-   git pull
-   ```
-
-2. Navigate to the `back` folder.
-   ```bash
-   cd back
-   ```
-
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-4. Run test script:
-   ```bash
-   npm run test
-   ```
-
-## License<a name="license"></a>
-
-This project is licensed under the [MIT License](LICENSE.md).
+TODO: Write the section
