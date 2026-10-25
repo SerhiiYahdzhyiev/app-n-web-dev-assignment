@@ -6,85 +6,49 @@ Assignment, which is a simple full-stack E-commerce Web App. The provided
 application stack using Docker Compose. More detailed review will be provided in
 the submitted report of this assignment.
 
+UPD: Currently this repo is used for lab works on studying k8s and micro-service
+architecture for applications (see [docs](./docs))
+
 ## Table of Contents
 
+- [Prerequisites](#pre)
 - [Services Summary](#services)
-- [Getting Started](#start)
-  - [Prerequisites](#pre)
-  - [Build and Run](#install)
+- [Build and Run](#build-and-run)
+  - [Troubleshooting](README#Troubleshooting)
   - [Restore Dump](#restore-dump)
-     - [Troubleshooting](README#Troubleshooting)
   - [Run the tests](#run-the-tests)
 - [License](#license)
+
+## Prerequisites<a name="pre"></a>
+
+The following software needs to be installed on your machine:
+
+- [Docker](https://docker.com) + [Docker Compose](https://docs.docker.com/compose/install/linux/)
+- [Make](https://gnu.org/software/make)
 
 ## Serivces
 
 1. `database` - MongoDB for handling data storage.
-2. `backend` - Application Server on Express.js.
-3. `frontend` - An SPA written on Angular.js.
-4. `webserver` - A Reverse Proxy (NGINX).
-5. `cache` - A simple Redis cache service.
-6. `recommend` - A recommendation system service (Express.js).
-7. `embed` - An embeddings service (Flask + Sentence Transformers + FAISS).
+1. `backend` - Application Server on Express.js.
+1. `frontend` - An SPA written on Angular.js.
+1. `webserver` - A Reverse Proxy (NGINX).
+1. `cache` - A simple Redis cache service.
+1. `recommend` - A recommendation system service (Express.js).
+1. `embed` - An embeddings service (Flask + Sentence Transformers + FAISS).
 
-## Getting Started<a name="start"></a>
+## Build and Run<a name="build-and-run"></a>
 
-To get started with running the application, follow these instructions:
-
-### Prerequisites<a name="pre"></a>
-
-The following software needs to be installed on your machine:
-
-- Node.js
-- Docker
-- Docker Compose
-
-You can use this links for detailed installation instructions:
-
-- [How to install Node.js](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
-- [Get Docker](https://docs.docker.com/get-docker/)
-- [Install Docker Engine](https://docs.docker.com/engine/install/)
-- [Install Docker Compose](https://docs.docker.com/compose/install/)
-
-### Build and Run<a name="install"></a>
-
-1. Clone this repository to your local machine:
+1. Clone this repository and navigate to its root.
+1. Build and start the Docker containers:
 
    ```bash
-   git clone https://github.com/SerhiiYahdzhyiev/app-n-web-dev-assignment.git
-   ```
-
-2. Navigate into the project directory:
-
-   ```bash
-   cd app-n-web-dev-assignment
-
-   ```
-3. Prepare `.env` file:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-
-4. Build and start the Docker containers:
-
-   ```bash
-   docker-compose up -d --build
-   ```
+   make build
+      ```
 
    *!!! May take a while.*
 
-   If you have UNIX OS with `make` feel free to use provided `Makefiles`:
-      - `make up` to build and start all services
-      - `make down` to stop and remove containers (services)
-      - `make <service_name>` to build and start individual service
-
-   You can use the same commands for launching dev setup, by explicitly specifying
-   `Makefile.dev` as a target `Makefile`.
-
-5. Once the containers are up and running, you can access the Angular SPA at
-   `http://localhost/`.
+1. Once the containers are up and running, you can access the Angular SPA at
+   `http://localhost:8080/`.
 
    You can enter the admin page with
    default credentials:
@@ -94,14 +58,14 @@ You can use this links for detailed installation instructions:
    root
    ```
 
-#### Troubleshooting
+### Troubleshooting
 
 There are possible failures in container starts for `webserver` and `backend`
 services. If you face issues like `Bad Gateway` responses, inspect running
 containers with `docker ps -a`, and try to re-start failed services:
 
 ```bash
-docker-compose up -d --build <service_name>
+docker compose up -d --build <service_name>
 ```
 
 ### Restore Dump
