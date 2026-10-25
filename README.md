@@ -122,7 +122,7 @@ In order to restore the db from `dump.zip`:
    unzip dump.zip
    ```
 
-2. Run the `restore_dump` script from `sctipts` subdirectory.
+1. Run the `restore_dump.sh` script from `sctipts` subdirectory.
 
    **Important:** The script should be run from this project's root directory.
 
