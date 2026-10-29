@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, HostListener, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, HostListener, OnChanges, OnInit, signal, SimpleChanges } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 
 import { HeaderComponent, MobileWallComponent } from "@components";
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnChanges {
   innerWidth: number = 0;
   minViewportWidth = 1200;
 
-  user: IUser | null = null;
+  user = signal<IUser | null>(null);
 
   constructor(
     private userService: UserService,
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    this.userService.currentUser.subscribe((user) =>  this.user = user as IUser);
+    this.userService.currentUser.subscribe((user) => this.user.set(user as IUser | null));
   }
 
   @HostListener("window:resize")

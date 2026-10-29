@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, signal } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -41,7 +41,7 @@ export class RegisterForm {
 
   error: string = "";
 
-  isLoading = false;
+  isLoading = signal(false);
 
   constructor(
     private authService: AuthService,
@@ -59,16 +59,16 @@ export class RegisterForm {
       this.notification.open("All fields are required!", "Closed");
       return;
     }
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.authService.register(this.payload).subscribe(
       () => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         window.location.pathname = "/login";
       },
       (err) => {
         this.error = err.message;
         this.notification.open(err?.message || "Unknown error!", "Close");
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
     );
   }

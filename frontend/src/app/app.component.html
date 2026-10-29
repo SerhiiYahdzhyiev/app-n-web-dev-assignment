@@ -1,7 +1,7 @@
 <div class="app">
   <mobile-wall *ngIf="innerWidth < minViewportWidth" />
   <ng-container *ngIf="innerWidth>= minViewportWidth">
-    <app-header *ngIf="!isAdmin" [user]="user" />
+    <app-header *ngIf="!isAdmin" [user]="user()" />
     <div *ngIf="!isAdmin" class="wrapper">
       <router-outlet />
     </div>

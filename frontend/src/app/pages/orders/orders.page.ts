@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { IOrder, IProduct } from "@interfaces";
 import { LoaderPage } from "../loader/loader.page";
 import { OrderComponent } from "@components";
 import { CommonModule } from "@angular/common";
-import { ApiService, OrderService, ProductService } from "@services";
+import { OrderService, ProductService } from "@services";
+import { finalize, forkJoin } from "rxjs";
 
 @Component({
   standalone: true,
@@ -16,7 +17,6 @@ import { ApiService, OrderService, ProductService } from "@services";
     OrderComponent,
   ],
   providers: [
-    ApiService,
     OrderService,
     ProductService,
   ]
@@ -25,26 +25,22 @@ export class OrdersPage implements OnInit {
   orders: IOrder[] = [];
   products: IProduct[] = [];
 
-  isLoading = false;
+  isLoading = signal(false);
 
   ngOnInit(): void {
-    this.api.isLoading.subscribe(
-      (isLoading) => this.isLoading = isLoading,
-    );
-    this.ordersService.getMine().subscribe(
-      (data) => {
-        this.orders = (data as any).elements;
-      },
-    )
-    this.productsService.getAll().subscribe(
-      (data) => {
-        this.products = (data as any).elements;
-      },
-    )
+    this.isLoading.set(true);
+    forkJoin({
+      orders: this.ordersService.getMine(),
+      products: this.productsService.getAll(),
+    }).pipe(
+      finalize(() => this.isLoading.set(false)),
+    ).subscribe(({ orders, products }) => {
+      this.orders = (orders as any).elements;
+      this.products = (products as any).elements;
+    });
   }
 
   constructor(
-    private api: ApiService,
     private ordersService: OrderService,
     private productsService: ProductService,
   ) { }

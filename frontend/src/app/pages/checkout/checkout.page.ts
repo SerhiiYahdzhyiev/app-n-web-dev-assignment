@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { ProductComponent } from "@components";
 import { IProduct, IUser } from "@interfaces";
-import { ApiService, BasketService, OrderService, ProductService, UserService } from "@services";
+import { BasketService, OrderService, ProductService, UserService } from "@services";
+import { finalize } from "rxjs";
 import { LoaderPage } from "../loader/loader.page";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
@@ -28,25 +29,19 @@ export class CheckoutPage implements OnInit {
   user: IUser | null = null;
   products: IProduct[] = [];
 
-  isLoading = false;
+  isLoading = signal(false);
   isCreating = false;
 
   ngOnInit(): void {
     this.basket.items.subscribe(
       (items) => this.itemsIds = items,
     );
-    this.api.isLoading.subscribe(
-      (isLoading) => {
-        console.log(isLoading);
-        this.isLoading = isLoading
-      },
-    );
-    this.productsService.getAll().subscribe(
-      (data) => {
-        console.log(data);
-        this.products = (data as any).elements
-      },
-    )
+    this.isLoading.set(true);
+    this.productsService.getAll().pipe(
+      finalize(() => this.isLoading.set(false)),
+    ).subscribe((data) => {
+      this.products = (data as any).elements;
+    });
     this.userService.currentUser.subscribe(
       (user) => this.user = user,
     );
@@ -54,7 +49,6 @@ export class CheckoutPage implements OnInit {
   
   constructor(
     private router: Router,
-    private api: ApiService,
     private basket: BasketService,
     private productsService: ProductService,
     private userService: UserService,

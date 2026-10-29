@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { finalize, forkJoin, of, switchMap, tap } from "rxjs";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTabsModule } from "@angular/material/tabs";
@@ -38,7 +39,6 @@ import { LoaderPage } from "../loader/loader.page";
   ],
   providers: [
     AuthService,
-    UserService,
     ProductService,
     OrderService,
     MatSnackBar,
@@ -51,7 +51,7 @@ export class AdminPage implements OnInit, OnDestroy {
   products: IProduct[] = [];
   orders: IOrder[] = [];
 
-  isLoading = false;
+  isLoading = signal(false);
 
   activeTab = "users";
 
@@ -69,58 +69,34 @@ export class AdminPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.querySelector("body")?.classList.add("admin");
-    this.isLoading = true;
-    this.userService.getMe().subscribe(
-      (user) => {
-        this.user = user as any;
-        this.isLoading = false;
-        this.loadData();
+    this.isLoading.set(true);
+    this.userService.getMe().pipe(
+      tap((user) => this.user = user),
+      switchMap((user) => {
+        if (user.role !== UserRoles.ADMIN) {
+          return of(null);
+        }
+        return forkJoin({
+          users: this.userService.getAll(),
+          products: this.productService.getAll(),
+          orders: this.orderService.getAll(),
+        });
+      }),
+      finalize(() => this.isLoading.set(false)),
+    ).subscribe({
+      next: (data) => {
+        if (!data) {
+          return;
+        }
+        this.users = (data.users as any).elements;
+        this.products = (data.products as any).elements;
+        this.orders = (data.orders as any).elements;
       },
-      (err) => {
+      error: (err) => {
         console.error(err);
         this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLoading = false;
       },
-    );
-  }
-
-  loadData() {
-    this.isLoading = true;
-    this.userService.getAll().subscribe(
-      (data) => {
-        this.users = (data as any).elements;
-        this.isLoading = false;
-      },
-      (err) => {
-        console.error(err);
-        this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLoading = false;
-      },
-    );
-
-    this.productService.getAll().subscribe(
-      (data) => {
-        this.products = (data as any).elements;
-        this.isLoading = false;
-      },
-      (err) => {
-        console.error(err);
-        this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLoading = false;
-      },
-    );
-
-    this.orderService.getAll().subscribe(
-      (data) => {
-        this.orders = (data as any).elements;
-        this.isLoading = false;
-      },
-      (err) => {
-        console.error(err);
-        this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLoading = false;
-      },
-    );
+    });
   }
 
   setActiveTab(value: "users" | "products" | "orders") {
@@ -132,6 +108,6 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   get isAuthorized() {
-    return !this.isLoading && this.user.role === UserRoles.ADMIN;
+    return !this.isLoading() && this.user.role === UserRoles.ADMIN;
   }
 }

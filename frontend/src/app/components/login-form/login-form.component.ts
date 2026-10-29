@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -9,7 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 
-import { AuthService } from "@services";
+import { AuthService, UserService } from "@services";
 
 @Component({
   selector: "login-form",
@@ -34,10 +34,11 @@ export class LoginForm {
 
   error: string = "";
 
-  isLogging = false;
+  isLogging = signal(false);
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private notification: MatSnackBar,
   ) { }
 
@@ -48,20 +49,22 @@ export class LoginForm {
   }
 
   login() {
-    this.isLogging = true;
+    this.isLogging.set(true);
     this.authService.login(this.login_, this.pass).subscribe(
       () => {
-        this.isLogging = false;
-        if (window.location.pathname === "/login") {
-          window.location.pathname = "/landing";
-        } else {
-          window.location.reload();
-        }
+        this.userService.refreshCurrentUser().subscribe(() => {
+          this.isLogging.set(false);
+          if (window.location.pathname === "/login") {
+            window.location.pathname = "/landing";
+          } else {
+            window.location.reload();
+          }
+        });
       },
       (err) => {
         this.error = err.message;
         this.notification.open(err.message || "Unknown error!", "Close");
-        this.isLogging = false;
+        this.isLogging.set(false);
       },
     );
   }

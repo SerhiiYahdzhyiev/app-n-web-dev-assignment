@@ -1,7 +1,7 @@
-<ng-container *ngIf="isLoading">
+<ng-container *ngIf="isLoading()">
   <loader-page />
 </ng-container>
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!isLoading()">
   <div class="content">
      <ng-container *ngIf="itemsIds.length && items.length && products.length">
       <product *ngFor="let product of items" [product]="product!" [onCheckout]="true" [isAuthorized]="isAuthorized" />

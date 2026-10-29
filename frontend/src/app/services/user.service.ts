@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { IUser } from "@interfaces";
 import { ApiService } from "./api.service";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, catchError, of, tap } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -11,10 +11,17 @@ export class UserService {
   public readonly currentUser = this._currentUser.asObservable();
 
   constructor(private client: ApiService) {
-    this.getMe().subscribe(
-      (user) => this._currentUser.next(user as unknown as IUser),
-      () => this._currentUser.next(null)
-    )
+    this.refreshCurrentUser().subscribe();
+  }
+
+  refreshCurrentUser() {
+    return this.getMe().pipe(
+      tap((user) => this._currentUser.next(user)),
+      catchError(() => {
+        this._currentUser.next(null);
+        return of(null);
+      }),
+    );
   }
 
   getMe() {

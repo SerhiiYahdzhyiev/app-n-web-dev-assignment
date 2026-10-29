@@ -1,7 +1,7 @@
-<ng-container *ngIf="isLoading">
+<ng-container *ngIf="isLoading()">
   <loader-page />
 </ng-container>
-<ng-container *ngIf="!isLoading && !isAuthorized">
+<ng-container *ngIf="!isLoading() && !isAuthorized">
   <main style="background:whitesmoke">
     <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
       <div style="display:flex;align-items:center;gap:10px">

@@ -29,7 +29,7 @@
         <input matInput type="text" placeholder="Phone Number..." [(ngModel)]="deliveryAddress">
       </mat-form-field>
       <button mat-flat-button style="width:100%;" color="primary" (click)="register()">
-        {{ isLoading ? "Registering...": "Register"}}
+        {{ isLoading() ? "Registering...": "Register"}}
       </button>
     </div>
   </mat-card-content>

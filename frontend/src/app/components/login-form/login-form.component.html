@@ -8,7 +8,7 @@
         <input matInput type="password" placeholder="Password..." [(ngModel)]="pass">
       </mat-form-field>
       <button mat-flat-button style="width:100%;" color="primary" [disabled]="!login_ || !pass" (click)="login()">
-        {{ isLogging ? "Loging...": "Log In"}}
+        {{ isLogging() ? "Loging...": "Log In"}}
       </button>
     </div>
   </mat-card-content>

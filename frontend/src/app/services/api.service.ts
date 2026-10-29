@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, Observable, tap, throwError } from "rxjs";
 
 @Injectable()
 export class ApiService {
@@ -41,43 +41,43 @@ export class ApiService {
     this._isLoading.next(value);
   }
 
-  get<T>(path: string, options?: any) {
+  get<T>(path: string, options?: any): Observable<T> {
     this._isLoading.next(true);
-    return this.client.get<T>(`${this.baseUrl}${path}`, {
+    return (this.client.get<T>(`${this.baseUrl}${path}`, {
       ...this.httpOptions,
       ...options,
-    }).pipe(
+    }) as Observable<T>).pipe(
       tap(() => this.setLoadingFlag(false)),
       catchError(this.handleError),
     );
   }
-  post<T>(path: string, payload?: any, options?: any) {
+  post<T>(path: string, payload?: any, options?: any): Observable<T> {
     if (!path.includes("auth")) this._isLoading.next(true);
-    return this.client.post<T>(`${this.baseUrl}${path}`, payload, {
+    return (this.client.post<T>(`${this.baseUrl}${path}`, payload, {
       ...this.httpOptions,
       ...options,
-    }).pipe(
+    }) as Observable<T>).pipe(
       tap(() => this.setLoadingFlag(false)),
       catchError(this.handleError),
     );
   }
-  put<T>(path: string, payload?: any, options?: any) {
+  put<T>(path: string, payload?: any, options?: any): Observable<T> {
     this._isLoading.next(true);
-    return this.client.put<T>(`${this.baseUrl}${path}`, payload, {
+    return (this.client.put<T>(`${this.baseUrl}${path}`, payload, {
       ...this.httpOptions,
       ...options,
-    }).pipe(
+    }) as Observable<T>).pipe(
       tap(() => this.setLoadingFlag(false)),
       catchError(this.handleError),
     );
   }
 
-  delete<T>(path: string, options?: any) {
+  delete<T>(path: string, options?: any): Observable<T> {
     this._isLoading.next(true);
-    return this.client.delete<T>(`${this.baseUrl}${path}`, {
+    return (this.client.delete<T>(`${this.baseUrl}${path}`, {
       ...this.httpOptions,
       ...options,
-    }).pipe(
+    }) as Observable<T>).pipe(
       tap(() => this.setLoadingFlag(false)),
       catchError(this.handleError),
     );
