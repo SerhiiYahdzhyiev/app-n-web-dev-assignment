@@ -26,7 +26,7 @@ passport.use(strategy);
 const app: Express = express();
 
 app.use(cors({
-  origin: "http://localhost:4200",
+  origin: "http://localhost:8080",
   credentials: true,
 }));
 app.use(json(jsonMiddlewareOptions));
