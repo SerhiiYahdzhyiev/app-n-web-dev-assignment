@@ -2,13 +2,12 @@ FROM node:lts-alpine
 
 WORKDIR /usr/src/app
 
-COPY package.json .
-COPY yarn.lock .
+COPY package*.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm build
 
 CMD ["node", "dist/index.js"]
