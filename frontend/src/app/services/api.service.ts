@@ -8,7 +8,7 @@ export class ApiService {
 
   public readonly isLoading = this._isLoading.asObservable();
 
-  private baseUrl = "http://localhost/api";
+  private baseUrl = "http://localhost:5000";
   private httpOptions = {
     headers: {
       "Content-Type": "application/json",
