@@ -25,7 +25,8 @@ services:
     networks:
       - ecom_net
     ports:
-      - 80:80
+      - 127.0.0.1:8080:80
+
   embed:
     build: ./embed
     container_name: ecom-embeddings
@@ -38,6 +39,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     networks:
       - ecom_net
+
   recommend:
     build: ./recommend
     container_name: ecom-recommend
@@ -53,11 +55,13 @@ services:
       - REC_COUNT=${REC_COUNT}
     networks:
       - ecom_net
+
   frontend:
     build: ./frontend
     container_name: ecom-frontend
     networks:
       - ecom_net
+
   backend:
     build:
       context: ./backend
