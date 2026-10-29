@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM redis:8.10-alpine
 
 COPY redis.conf /usr/local/etc/redis/redis.conf
 
