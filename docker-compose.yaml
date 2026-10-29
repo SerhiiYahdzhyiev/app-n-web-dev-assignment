@@ -10,34 +10,35 @@ networks:
   ecom_net:
 
 services:
-  # embed:
-  #   build: ./embed
-  #   container_name: ecom-embeddings
-  #   depends_on:
-  #     database:
-  #       condition: service_healthy
-  #   environment:
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_USER=${DB_USER}
-  #     - DB_PASSWORD=${DB_PASSWORD}
-  #   networks:
-  #     - ecom_net
+  embed:
+    build: ./embed
+    container_name: ecom-embeddings
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      DB_NAME: ecom
+      DB_USER: ecom
+      DB_PASSWORD: ecomsecret
+    networks:
+      - ecom_net
 
-  # recommend:
-  #   build: ./recommend
-  #   container_name: ecom-recommend
-  #   depends_on:
-  #     cache:
-  #       condition: service_healthy
-  #     database:
-  #       condition: service_healthy
-  #   environment:
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_USER=${DB_USER}
-  #     - DB_PASSWORD=${DB_PASSWORD}
-  #     - REC_COUNT=${REC_COUNT}
-  #   networks:
-  #     - ecom_net
+  recommend:
+    build: ./recommend
+    container_name: ecom-recommend
+    depends_on:
+      cache:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+    environment:
+      DB_NAME: ecom
+      DB_USER: ecom
+      DB_PASSWORD: ecomsecret
+      REC_COUNT: 3
+      CAHCE_EXP: 600
+    networks:
+      - ecom_net
 
   frontend:
     build:
