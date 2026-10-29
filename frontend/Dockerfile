@@ -16,7 +16,8 @@ CMD ["npm", "run", "dev"]
 
 FROM deps AS builder
 
-COPY ./ /app/
+WORKDIR /app
+COPY . .
 
 RUN npm run build
 
