@@ -37,7 +37,7 @@ export class AuthController {
         httpOnly: true,
         sameSite: true,
         signed: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
 
       res
@@ -53,7 +53,7 @@ export class AuthController {
         httpOnly: true,
         sameSite: true,
         signed: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
 
       res
