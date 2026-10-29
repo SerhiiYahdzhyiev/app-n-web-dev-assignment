@@ -3,9 +3,6 @@ DCMD = docker compose
 
 .PHONY: $(SERVICES)
 
-.env: .env.example
-	@cp .env.example .env
-
 all: up
 
 up:
