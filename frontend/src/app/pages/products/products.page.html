@@ -1,13 +1,13 @@
-<ng-container *ngIf="isLoading">
+<ng-container *ngIf="isLoading()">
   <loader-page />
 </ng-container>
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!isLoading()">
   <mat-form-field>
     <mat-label>Search</mat-label>
     <input matInput type="text" placeholder="Search product..." [(ngModel)]="searchName">
   </mat-form-field>
 </ng-container>
-<div *ngIf="!isLoading" class="content">
+<div *ngIf="!isLoading()" class="content">
   <ng-container *ngIf="products.length">
     <product *ngFor="let product of fileredProducts" [product]="product" [isAuthorized]="hasUser" />
   </ng-container>
