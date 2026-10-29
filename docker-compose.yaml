@@ -59,7 +59,9 @@ services:
     networks:
       - ecom_net
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      target: dev
     container_name: ecom-backend
     depends_on:
       database:
@@ -67,15 +69,26 @@ services:
       cache:
         condition: service_healthy
     environment:
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - PSWD_HASH_SALT=${PSWD_HASH_SALT}
-      - SECRET=${SECRET}
-      - TOKEN_EXPIRES=${TOKEN_EXPIRES}
+      DB_PORT: 27017
+      DB_NAME: ecom
+      DB_USER: ecom
+      DB_PASSWORD: ecomsecret
+      PSWD_HASH_SALT: 42
+      SECRET: ecomsecret
+      TOKEN_EXPIRES: 1d
+      LOGS_PATH: /tmp/ecom-logs
     networks:
       - ecom_net
+    volumes:
+      - ./backend/:/home/node/app:ro
+    ports:
+      - 127.0.0.1:5000:5000
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:5000/health",]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
 
   database:
     build: ./database
