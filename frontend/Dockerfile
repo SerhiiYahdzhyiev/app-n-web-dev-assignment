@@ -1,19 +1,28 @@
-FROM node:lts-alpine as build
+FROM node:lts-alpine AS deps
 
-WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci
 
-COPY package.json .
-COPY yarn.lock .
+FROM node:lts-alpine AS dev
 
-RUN yarn install
+COPY --from=deps --chown=node:node /node_modules /home/node/node_modules
 
-COPY . .
+ENV PATH=/home/node/node_modules:$PATH
 
-RUN yarn build
+USER node
+WORKDIR /home/node/app
 
-FROM nginx:latest
+CMD ["npm", "run", "dev"]
 
-COPY --from=build /usr/src/app/dist/sy-ecommerce/browser/ /usr/share/nginx/html
+FROM deps AS builder
+
+COPY ./ /app/
+
+RUN npm run build
+
+FROM nginx:1.31-alpine
+
+COPY --from=builder /app/dist/sy-ecommerce/browser/ /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
