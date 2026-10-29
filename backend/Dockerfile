@@ -1,13 +1,19 @@
-FROM node:lts-alpine
-
-WORKDIR /usr/src/app
+FROM node:lts-alpine AS deps
 
 COPY package*.json ./
+RUN npm ci
 
-RUN npm install
+FROM node:lts-alpine AS dev
 
-COPY . .
+# INFO: For healthcheck
+RUN apk add --no-cache curl
 
-RUN npm build
+COPY --from=deps --chown=node:node /node_modules /home/node/node_modules
 
-CMD ["node", "dist/index.js"]
+ENV PATH=/home/node/node_modules/.bin:$PATH
+
+USER node
+
+WORKDIR /home/node/app
+
+CMD [ "npm", "run", "dev" ]
