@@ -1,1 +1,1 @@
-FROM mongo:8.0-noble
+FROM mongo:7.0-jammy
