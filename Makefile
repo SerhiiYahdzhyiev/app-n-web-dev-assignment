@@ -1,5 +1,5 @@
 SERVICES = database backend frontend webserver recommend cache embed
-DCMD = docker-compose
+DCMD = docker compose
 
 .PHONY: $(SERVICES)
 
@@ -9,18 +9,14 @@ DCMD = docker-compose
 all: up
 
 up:
-	$(DCMD) up -d
+	@$(DCMD) up -d
 
 down:
-	$(DCMD) down
+	@$(DCMD) down --remove-orphans
 
 .PHONY: clean
 clean:
-	rm -rf frontend/.angular
-	rm -rf frontend/dist
-	rm -rf frontend/node_modules
-	rm -rf backend/node_modules
-	rm -rf backend/logs
+	@$(DCMD) down --remove-orphans --rmi all -v
 
 $(SERVICES):
 	$(DCMD) up -d --build $@
