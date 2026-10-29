@@ -1,4 +1,4 @@
-import data from "../../init-data.json";
+import data from "../init-data.json";
 import app from "../src/app";
 import mongoose from "mongoose";
 import request from "supertest";
@@ -36,7 +36,7 @@ describe("Users", () => {
 
         res = await agent.post("/auth/login").send({
             login: data[1].email,
-            password:"Secret42", 
+            password:"Secret42",
         });
         token = res.header["set-cookie"]?.[0];
     });

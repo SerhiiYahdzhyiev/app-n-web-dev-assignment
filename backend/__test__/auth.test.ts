@@ -1,5 +1,5 @@
 import app from "../src/app";
-import data from "../../init-data.json"
+import data from "../init-data.json"
 import mongoose from "mongoose";
 import request from "supertest";
 

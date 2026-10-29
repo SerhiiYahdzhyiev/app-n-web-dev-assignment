@@ -1,4 +1,4 @@
-import data from "../../init-data.json";
+import data from "../init-data.json";
 import app from "../src/app";
 import mongoose from "mongoose";
 import request from "supertest";
@@ -39,7 +39,7 @@ describe("Orders", () => {
             .post("/auth/login")
             .send({
                 login: data[1].email,
-                password:"Secret42", 
+                password:"Secret42",
              });
         token = res.header["set-cookie"]?.[0];
 
@@ -98,7 +98,7 @@ describe("Orders", () => {
             .send({
                 userId,
                 productsIds: [productId],
-                totalPrice: 1337 
+                totalPrice: 1337
             });
 
         expect(res.statusCode).toBe(200);
