@@ -1,5 +1,14 @@
 version: '3.8'
 
+volumes:
+  db-data:
+    driver: local
+  qdrant_storage:
+    driver: local
+
+networks:
+  ecom_net:
+
 services:
   webserver:
     build: ./webserver
@@ -77,12 +86,4 @@ services:
     restart: always
     networks:
       - ecom_net
-
-volumes:
-  db-data:
-    driver: local
-  qdrant_storage:
-    driver: local
-
-networks:
-  ecom_net:
+    mem_limit: 128m
