@@ -12,7 +12,7 @@ export function validateSchema(schema: ZodSchema) {
     } catch (error) {
       if (error instanceof ZodError) {
         const formattedErrors: Record<string, string> = {};
-        error.errors.forEach((err) => {
+        error.issues.forEach((err) => {
           const path = err.path.join(".");
           formattedErrors[path] = err.message;
         });

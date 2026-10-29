@@ -23,7 +23,7 @@ export class UsersController {
         throw new Unauthorized("Unauthorized!");
       }
 
-      const userData = await usersService.findOneById(userId);
+      const userData = await usersService.findOneById(userId.toString());
 
       res
         .status(StatusCodes.OK)

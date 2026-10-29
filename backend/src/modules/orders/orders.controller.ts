@@ -74,7 +74,7 @@ export class OrdersController {
   public async getAllByUserId(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = (req.user! as IUser)._id;
-      const orders = await ordersService.findManyByUserId(userId);
+      const orders = await ordersService.findManyByUserId(userId.toString());
 
       logger.info("Returned orders for userId " + userId, { label });
 

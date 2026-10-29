@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 import { BadRequest, NotFound } from "../../common/exceptions";
 
@@ -8,15 +8,15 @@ import User, { IUser } from "./users.model";
 import { HASH_SALT } from "../../config/bcrypt";
 
 export interface IUsersService {
-  create: (payload: IUser) => Promise<ObjectId>;
+  create: (payload: IUser) => Promise<Types.ObjectId>;
 
   getAll: () => Promise<IUser[]>;
   findOneById: (id: string) => Promise<IUser>;
   findOneByEmail: (email: string) => Promise<IUser>;
 
-  updateOneById: (id: string, pyload: TUserUpdatePayload) => Promise<ObjectId>;
+  updateOneById: (id: string, pyload: TUserUpdatePayload) => Promise<Types.ObjectId>;
 
-  removeOneById: (id: string) => Promise<ObjectId>;
+  removeOneById: (id: string) => Promise<Types.ObjectId>;
 }
 
 class UsersService implements IUsersService {

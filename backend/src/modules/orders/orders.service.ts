@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 import { NotFound } from "../../common/exceptions";
 
@@ -8,7 +8,7 @@ import { TOrderCreationPayload, TOrderUpdatePayload } from "./orders.dto";
 export interface IOrdersService {
   create: (
     payload: TOrderCreationPayload & { totalPrice: number },
-  ) => Promise<ObjectId>;
+  ) => Promise<Types.ObjectId>;
 
   getAll: () => Promise<IOrder[]>;
 
@@ -17,8 +17,8 @@ export interface IOrdersService {
   updateOneById: (
     id: string,
     payload: TOrderUpdatePayload,
-  ) => Promise<ObjectId>;
-  removeOneById: (id: string) => Promise<ObjectId>;
+  ) => Promise<Types.ObjectId>;
+  removeOneById: (id: string) => Promise<Types.ObjectId>;
 }
 
 class OrdersService implements IOrdersService {

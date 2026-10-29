@@ -24,10 +24,10 @@ export const orderCreationSchema = z.object({
       OrderPaymentStatus.PENDING,
     ).optional(),
   status: z.nativeEnum(OrderStatus).default(OrderStatus.PENDING).optional(),
-  userId: z.string().nonempty().refine<string>(objectIdValidationCallback, {
+  userId: z.string().nonempty().refine(objectIdValidationCallback, {
     message: "Not valid userId format!",
   }),
-  productsIds: z.string().refine<string>(
+  productsIds: z.string().refine(
     objectIdValidationCallback,
     {
       message: "Not valid productId format!",
@@ -44,10 +44,10 @@ export const orderUpdationSchema = z.object({
       OrderPaymentStatus.PENDING,
     ).optional(),
   status: z.nativeEnum(OrderStatus).default(OrderStatus.PENDING).optional(),
-  userId: z.string().nonempty().refine<string>(objectIdValidationCallback, {
+  userId: z.string().nonempty().refine(objectIdValidationCallback, {
     message: "Not valid userId format or empty userId!",
   }),
-  productsIds: z.string().refine<string>(
+  productsIds: z.string().refine(
     objectIdValidationCallback,
     {
       message: "Not valid productId format!",

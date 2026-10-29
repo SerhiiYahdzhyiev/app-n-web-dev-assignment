@@ -25,7 +25,7 @@ const getTransports = () => {
     new File(outFileOptions),
     new File(errorFileOptions),
     new Console({
-      // json: false 
+      // json: false
     }),
   ];
 };

@@ -35,6 +35,10 @@ app.use(cookieParser(SECRET));
 
 app.use(passport.initialize());
 
+app.get("/health", (_, res) => {
+  res.status(200);
+  res.json({"message": "ok!"});
+});
 app.use("/auth", authRouter);
 app.use("/users", auth, usersRouter);
 app.use("/products", productsRouter);

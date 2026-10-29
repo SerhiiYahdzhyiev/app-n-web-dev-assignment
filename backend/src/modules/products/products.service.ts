@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 import { NotFound } from "../../common/exceptions";
 
@@ -16,8 +16,8 @@ export interface IProductService {
   updateOneById: (
     id: string,
     payload: TProductUpdatePayload,
-  ) => Promise<ObjectId>;
-  removeOneById: (id: string) => Promise<ObjectId>;
+  ) => Promise<Types.ObjectId>;
+  removeOneById: (id: string) => Promise<Types.ObjectId>;
 }
 
 class ProductService implements IProductService {
