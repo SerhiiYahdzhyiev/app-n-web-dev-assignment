@@ -1,14 +1,23 @@
-FROM node:lts-alpine
+FROM node:lts-alpine AS deps
 
-WORKDIR /usr/src/app
+COPY package*.json ./
 
-COPY package.json .
-COPY yarn.lock .
+RUN npm ci
 
-RUN yarn install
+FROM deps AS builder
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
-CMD ["node", "dist/index.js"]
+FROM node:lts-alpine AS dev
+
+ENV PATH=/home/node/node_modules/.bin:$PATH
+
+COPY --from=deps --chown=node:node /node_modules /home/node/node_modules
+
+USER node
+
+WORKDIR /home/node/app
+
+CMD ["npm", "run", "dev"]
