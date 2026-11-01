@@ -20,9 +20,21 @@ services:
       DB_PASSWORD: ecomsecret
     networks:
       - ecom_net
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:3096/health', timeout=2).close()"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 300s
 
   recommend:
-    build: ./recommend
+    build:
+      context: ./recommend
+      target: dev
     container_name: ecom-recommend
     depends_on:
       cache:
@@ -34,9 +46,22 @@ services:
       DB_USER: ecom
       DB_PASSWORD: ecomsecret
       REC_COUNT: 3
-      CAHCE_EXP: 600
+      CACHE_EXP: 600
+      LOGS_PATH: /tmp/ecom-logs
     networks:
       - ecom_net
+    volumes:
+      - ./recommend/:/home/node/app:ro
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/health', { signal: AbortSignal.timeout(2000) }).then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
 
   frontend:
     build:

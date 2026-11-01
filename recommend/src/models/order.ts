@@ -46,12 +46,11 @@ const ordersSchema = new Schema<IOrder>({
   productsIds: [Types.ObjectId],
 }, { timestamps: true });
 
-ordersSchema.pre("save", async function (next): Promise<void> {
+ordersSchema.pre("save", async function (): Promise<void> {
   const order = this;
 
   order.userId = new Types.ObjectId(order.userId);
   order.productsIds = order.productsIds.map((id) => new Types.ObjectId(id));
-  next();
 });
 
 export default model("Order", ordersSchema);

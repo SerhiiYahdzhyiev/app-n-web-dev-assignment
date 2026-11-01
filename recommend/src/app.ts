@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import mongoose from "mongoose";
 import express, { Express, json } from "express";
 import cors from "cors";
 
@@ -27,6 +28,18 @@ app.use(cors({
   origin: "http://backend:5000",
 }));
 app.use(json(jsonMiddlewareOptions));
+
+// Register before /:userId so "health" is not treated as a MongoDB ID.
+app.get("/health", (_req, res) => {
+  const databaseReady = mongoose.connection.readyState === 1;
+  const cacheReady = cache.status === "ready";
+  const ready = databaseReady && cacheReady;
+  res.status(ready ? 200 : 503).json({
+    status: ready ? "ok" : "not_ready",
+    database: databaseReady,
+    cache: cacheReady,
+  });
+});
 
 app.get("/:userId", async (req, res, next) => {
   try {

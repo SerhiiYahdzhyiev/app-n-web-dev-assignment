@@ -17,8 +17,11 @@ app.logger.setLevel(INFO)
 
 index_: IndexIDMap = load_faiss(app.logger) or index
 id_map = {}
+index_ready = False
 
 def build_initial_index():
+    global index_ready
+    index_ready = False
     app.logger.info("Building initial FAISS index...") 
     try:
         name = os.environ.get("DB_USER")
@@ -45,6 +48,7 @@ def build_initial_index():
             index_.add_with_ids(embedding, np.array([int_id], dtype=np.int64))
             id_map[int_id] = str_id
 
+        index_ready = True
         app.logger.info("FAISS index built successfully.")
 
     except Exception as e:
@@ -53,6 +57,14 @@ def build_initial_index():
 @app.get("/")
 def hello():
     return "Hello, FAISS!"
+
+@app.get("/health")
+def health():
+    return jsonify({
+        "status": "ok" if index_ready else "not_ready",
+        "index_ready": index_ready,
+        "indexed_vectors": int(index_.ntotal),
+    }), 200 if index_ready else 503
 
 @app.post("/embed")
 def embed():
