@@ -4,6 +4,7 @@ import express, { Express, json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import {
   jsonMiddlewareOptions,
@@ -35,9 +36,16 @@ app.use(cookieParser(SECRET));
 
 app.use(passport.initialize());
 
+app.get("/health/live", (_, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.get("/health", (_, res) => {
-  res.status(200);
-  res.json({"message": "ok!"});
+  const databaseReady = mongoose.connection.readyState === 1;
+  res.status(databaseReady ? 200 : 503).json({
+    status: databaseReady ? "ok" : "not_ready",
+    database: databaseReady,
+  });
 });
 app.use("/auth", authRouter);
 app.use("/users", auth, usersRouter);
