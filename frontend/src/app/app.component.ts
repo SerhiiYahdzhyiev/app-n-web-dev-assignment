@@ -2,10 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, HostListener, OnChanges, OnInit, signal, SimpleChanges } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 
-import { HeaderComponent, MobileWallComponent } from "@components";
+import { HeaderComponent } from "./components/header/header.component";
+import { MobileWallComponent } from "./components/mobile-wall/mobile-wall.component";
 import { ApiService, UserService } from "@services";
 import { IUser } from "@interfaces";
-import { LoaderPage } from "./pages/loader/loader.page";
 
 @Component({
   selector: "app-root",
@@ -21,7 +21,6 @@ import { LoaderPage } from "./pages/loader/loader.page";
     RouterOutlet,
     MobileWallComponent,
     HeaderComponent,
-    LoaderPage,
   ],
   providers: [
     ApiService,

@@ -23,7 +23,7 @@
         <h3>{{user.firstName}} {{user.lastName}}</h3>
         <mat-icon>person</mat-icon>
         <button class="action-btn" (click)="logout()">Logout</button>
-        <a *ngIf="user?.role === 'ADMIN'" class="action-btn" routerLink="/admin">Admin</a>
+        <a *ngIf="user.role === 'ADMIN'" class="action-btn" routerLink="/admin">Admin</a>
       </div>
     </div>
   </div>
