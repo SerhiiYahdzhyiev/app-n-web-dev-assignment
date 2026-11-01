@@ -5,6 +5,9 @@ DCMD = docker compose
 
 all: up
 
+build:
+	@$(DCMD) build
+
 up:
 	@$(DCMD) up -d
 
@@ -17,4 +20,3 @@ clean:
 
 $(SERVICES):
 	$(DCMD) up -d --build $@
-
